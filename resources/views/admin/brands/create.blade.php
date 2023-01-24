@@ -1,5 +1,9 @@
 @extends('admin.layouts.admin')
 
+@section('title')
+create brand
+@endsection
+
 @section('content')
     <!-- Content Row -->
     <div class="row">
