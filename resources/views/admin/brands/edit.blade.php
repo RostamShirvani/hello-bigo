@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
 @section('title')
-create brand
+edit brand
 @endsection
 
 @section('content')
