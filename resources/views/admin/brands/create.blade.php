@@ -9,6 +9,7 @@
                 <h5 class="font-weight-bold">ایجاد برند</h5>
             </div>
             <hr>
+            @include('admin.sections.errors')
             <form action="{{route('admin.brands.store')}}" method="POST">
                 @csrf
                 <div class="form-row">
