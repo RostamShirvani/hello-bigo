@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
 @section('title')
-create category
+    create category
 @endsection
 
 @section('content')
@@ -41,10 +41,29 @@ create category
                             <option value="0">غیرفعال</option>
                         </select>
                     </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="is_active">ویژگی</label>
+                        <select id="attributeSelect" name="attribute_ids[]" class="form-control" multiple
+                                data-live-search="true">
+                            @foreach($attributes as $attribute)
+                                <option value="{{$attribute->id}}">{{$attribute->name}}</option>
+                            @endforeach
+                        </select>
+
+                    </div>
                 </div>
                 <button class="btn btn-outline-primary mt-5" type="submit">ثبت</button>
                 <a href="{{route('admin.categories.index')}}" class="btn btn-dark mt-5 mr-3">بازگشت</a>
             </form>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $('#attributeSelect').selectpicker({
+            'title': 'انتخاب ویژگی'
+        });
+    </script>
 @endsection
