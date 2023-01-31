@@ -96,7 +96,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        $parentCategories = Category::query()->where('parent_id', 0)->get();
+        $attributes = Attribute::all();
+        return view('admin.categories.edit', compact('category','parentCategories', 'attributes'));
     }
 
     /**
@@ -108,7 +110,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        dd($request->all());
     }
 
     /**

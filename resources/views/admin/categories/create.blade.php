@@ -121,7 +121,7 @@
             'title': 'انتخاب ویژگی'
         });
         $('#variationSelect').selectpicker({
-            'title': 'انتخاب ویژگی'
+            'title': 'انتخاب متغیر'
         });
     </script>
 @endsection

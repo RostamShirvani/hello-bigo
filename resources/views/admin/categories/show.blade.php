@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
 @section('title')
-    show attribute
+    show category
 @endsection
 
 @section('content')
