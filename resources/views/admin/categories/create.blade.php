@@ -19,11 +19,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="name">نام</label>
-                        <input class="form-control" id="name" name="name" type="text">
+                        <input class="form-control" id="name" name="name" type="text" value="{{old('name')}}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="slug">نام انگلیسی</label>
-                        <input class="form-control" id="slug" name="slug" type="text">
+                        <input class="form-control" id="slug" name="slug" type="text" value="{{old('name')}}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="parent_id">والد</label>
@@ -67,11 +67,12 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="icon">آیکون</label>
-                        <input class="form-control" id="icon" name="icon" type="text">
+                        <input class="form-control" id="icon" name="icon" type="text" value="{{old('icon')}}">
                     </div>
                     <div class="form-group col-md-12">
                         <label for="description">توضیحات</label>
-                        <textarea class="form-control" id="description" name="description" type="text"></textarea>
+                        <textarea class="form-control" id="description" name="description"
+                                  type="text">{{old('description')}}</textarea>
                     </div>
 
                 </div>
