@@ -64,13 +64,13 @@
 
                     <div class="col-md-3">
                         <label for="primary_image">انتخاب تصویر اصلی</label>
-                        <input type="file" name="primary_image" id="primary_image" class="custom-file-input" />
+                        <input type="file" name="primary_image" id="primary_image" class="custom-file-input"/>
                         <label class="custom-file-label" for="primary_image"> انتخاب فایل </label>
                     </div>
 
                     <div class="col-md-3">
                         <label for="images">انتخاب تصاویر</label>
-                        <input type="file" name="images[]" id="images" class="custom-file-input" multiple />
+                        <input type="file" name="images[]" id="images" class="custom-file-input" multiple/>
                         <label class="custom-file-label" for="images"> انتخاب فایل ها </label>
                     </div>
 
@@ -85,15 +85,19 @@
                         <div class="row justify-content-center">
                             <div class="form-group col-md-3">
                                 <label for="category_id">دسته بندی</label>
-                                <select id="categorySelect" name="category_id" class="form-control" data-live-search="true">
+                                <select id="categorySelect" name="category_id" class="form-control"
+                                        data-live-search="true">
                                     @foreach($categories as $category)
-                                        <option value="{{$category->id}}">{{$category->name}} - {{$category->parent->name}}</option>
+                                        <option value="{{$category->id}}">{{$category->name}}
+                                            - {{$category->parent->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
-
+                    <div id="attributesContainer" class="col-md-12">
+                        <div id="attributes" class="row"></div>
+                    </div>
                 </div>
                 <button class="btn btn-outline-primary mt-5" type="submit">ثبت</button>
                 <a href="{{route('admin.products.index')}}" class="btn btn-dark mt-5 mr-3">بازگشت</a>
@@ -114,14 +118,14 @@
             'title': 'انتخاب دسته بندی'
         });
         // show file name
-        $('#primary_image').change(function(){
+        $('#primary_image').change(function () {
             // get the file name
             var filename = $(this).val();
             // replace the "Choose s file" label
             $(this).next('.custom-file-label').html(filename)
         });
 
-        $('#images').change(function(){
+        $('#images').change(function () {
             // get the file name
             var filename = $(this).val();
             // replace the "Choose s file" label
@@ -130,14 +134,37 @@
 
         $('#categorySelect').on('changed.bs.select', function () {
             let categoryId = $(this).val();
-            $.get(`{{url('/admin-panel/management/category-attributes/${categoryId}')}}`, function (response, status){
-                if(status == 'success'){
-                    console.log(response);
-                }else{
+            $.get(`{{url('/admin-panel/management/category-attributes/${categoryId}')}}`, function (response, status) {
+                if (status == 'success') {
+                    // console.log(response.attributes);
+
+                    //Empty attributes container
+                    $('#attributes').find('div').remove();
+
+                    //Create and append attributes input
+                    response.attributes.forEach(attribute => {
+                        let attributeFormGroup = $('<div/>', {
+                            class: 'form-group col-md-3'
+                        });
+
+                        attributeFormGroup.append($('<label/>', {
+                            for: attribute.name,
+                            text: attribute.name
+                        }));
+
+                        attributeFormGroup.append($('<input/>', {
+                            type: 'text',
+                            class: 'form-control',
+                            id: attribute.name,
+                            name: `attribute_ids[${attribute.id}]`
+                        }));
+                        $('#attributes').append(attributeFormGroup);
+                    });
+                } else {
                     alert('مشکل در دریافت لیست ویژگی ها');
                 }
-            }).fail(function (){
-               alert('مشکل در دریافت لیست ویژگی ها');
+            }).fail(function () {
+                alert('مشکل در دریافت لیست ویژگی ها');
             });
 
             // console.log(categoryId);
