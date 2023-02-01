@@ -97,6 +97,10 @@
                     </div>
                     <div id="attributesContainer" class="col-md-12">
                         <div id="attributes" class="row"></div>
+                        <div class="col-md-12">
+                            <hr>
+                            <p>افزودن و قیمت وموجودی برای متغیر <span class="font-weight-bold" id="variationName"></span> :</p>
+                        </div>
                     </div>
                 </div>
                 <button class="btn btn-outline-primary mt-5" type="submit">ثبت</button>
@@ -132,12 +136,13 @@
             $(this).next('.custom-file-label').html(filename)
         });
 
+        $('#attributesContainer').hide();
         $('#categorySelect').on('changed.bs.select', function () {
             let categoryId = $(this).val();
             $.get(`{{url('/admin-panel/management/category-attributes/${categoryId}')}}`, function (response, status) {
                 if (status == 'success') {
                     // console.log(response.attributes);
-
+                    $('#attributesContainer').fadeIn();
                     //Empty attributes container
                     $('#attributes').find('div').remove();
 
@@ -160,6 +165,8 @@
                         }));
                         $('#attributes').append(attributeFormGroup);
                     });
+
+                    $('#variationName').text(response.variation.name);
                 } else {
                     alert('مشکل در دریافت لیست ویژگی ها');
                 }
