@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
 @section('title')
-create product
+    create product
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@ create product
             </div>
             <hr>
             @include('admin.sections.errors')
-            <form action="{{route('admin.products.store')}}" method="POST">
+            <form action="{{route('admin.products.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-row">
                     <div class="form-group col-md-3">
@@ -48,10 +48,30 @@ create product
                             @endforeach
                         </select>
                     </div>
+
                     <div class="form-group col-md-12">
                         <label for="description">توضیحات</label>
                         <textarea class="form-control" id="description" name="description"
                                   type="text">{{old('description')}}</textarea>
+                    </div>
+
+                    {{-- Product Image Section --}}
+
+                    <div class="col-md-12">
+                        <hr>
+                        <p>تصاویر محصول: </p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="primary_image">انتخاب تصویر اصلی</label>
+                        <input type="file" name="primary_image" id="primary_image" class="custom-file-input" />
+                        <label class="custom-file-label" for="primary_image"> انتخاب فایل </label>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="images">انتخاب تصاویر</label>
+                        <input type="file" name="images[]" id="images" class="custom-file-input" multiple />
+                        <label class="custom-file-label" for="images"> انتخاب فایل ها </label>
                     </div>
 
                 </div>
@@ -69,6 +89,20 @@ create product
         });
         $('#tagSelect').selectpicker({
             'title': 'انتخاب تگ'
+        });
+        // show file name
+        $('#primary_image').change(function(){
+            // get the file name
+            var filename = $(this).val();
+            // replace the "Choose s file" label
+            $(this).next('.custom-file-label').html(filename)
+        });
+
+        $('#images').change(function(){
+            // get the file name
+            var filename = $(this).val();
+            // replace the "Choose s file" label
+            $(this).next('.custom-file-label').html(filename)
         });
     </script>
 @endsection
