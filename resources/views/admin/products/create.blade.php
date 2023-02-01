@@ -127,10 +127,20 @@
             // replace the "Choose s file" label
             $(this).next('.custom-file-label').html(filename)
         });
+
         $('#categorySelect').on('changed.bs.select', function () {
             let categoryId = $(this).val();
-            // $.get()
-            console.log(categoryId);
+            $.get(`{{url('/admin-panel/management/category-attributes/${categoryId}')}}`, function (response, status){
+                if(status == 'success'){
+                    console.log(response);
+                }else{
+                    alert('مشکل در دریافت لیست ویژگی ها');
+                }
+            }).fail(function (){
+               alert('مشکل در دریافت لیست ویژگی ها');
+            });
+
+            // console.log(categoryId);
         });
 
     </script>

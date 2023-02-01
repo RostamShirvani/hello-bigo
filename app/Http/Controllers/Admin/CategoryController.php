@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use function alert;
+use function redirect;
+use function view;
 
 class CategoryController extends Controller
 {
@@ -157,5 +161,12 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+    }
+
+    public function getCategoryAttributes(Category $category)
+    {
+        $attributes = $category->attributes()->wherePivot('is_variation', 0)->get();
+        $variation = $category->attributes()->wherePivot('is_variation', 1)->get();
+        return ['attributes' => $attributes, 'variation' => $variation];
     }
 }
