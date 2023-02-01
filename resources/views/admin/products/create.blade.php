@@ -74,6 +74,26 @@
                         <label class="custom-file-label" for="images"> انتخاب فایل ها </label>
                     </div>
 
+                    {{-- Category&Attributes Section --}}
+
+                    <div class="col-md-12">
+                        <hr>
+                        <p>دسته بندی و ویژگی ها: </p>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="row justify-content-center">
+                            <div class="form-group col-md-3">
+                                <label for="category_id">دسته بندی</label>
+                                <select id="categorySelect" name="category_id" class="form-control" data-live-search="true">
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}">{{$category->name}} - {{$category->parent->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <button class="btn btn-outline-primary mt-5" type="submit">ثبت</button>
                 <a href="{{route('admin.products.index')}}" class="btn btn-dark mt-5 mr-3">بازگشت</a>
@@ -90,6 +110,9 @@
         $('#tagSelect').selectpicker({
             'title': 'انتخاب تگ'
         });
+        $('#categorySelect').selectpicker({
+            'title': 'انتخاب دسته بندی'
+        });
         // show file name
         $('#primary_image').change(function(){
             // get the file name
@@ -104,5 +127,11 @@
             // replace the "Choose s file" label
             $(this).next('.custom-file-label').html(filename)
         });
+        $('#categorySelect').on('changed.bs.select', function () {
+            let categoryId = $(this).val();
+            // $.get()
+            console.log(categoryId);
+        });
+
     </script>
 @endsection
