@@ -101,6 +101,32 @@
                             <hr>
                             <p>افزودن و قیمت وموجودی برای متغیر <span class="font-weight-bold" id="variationName"></span> :</p>
                         </div>
+
+                        <div id="czContainer">
+                            <div id="first">
+                                <div class="recordset">
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <label>نام</label>
+                                            <input class="form-control" name="variation_values[value][]" type="text">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>قیمت</label>
+                                            <input class="form-control" name="variation_values[price][]" type="text">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>تعداد</label>
+                                            <input class="form-control" name="variation_values[quantity][]" type="text">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>شناسه ی انبار</label>
+                                            <input class="form-control" name="variation_values[sku][]" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <button class="btn btn-outline-primary mt-5" type="submit">ثبت</button>
@@ -177,5 +203,6 @@
             // console.log(categoryId);
         });
 
+        $("#czContainer").czMore();
     </script>
 @endsection
