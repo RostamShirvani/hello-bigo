@@ -128,6 +128,23 @@
                         </div>
 
                     </div>
+
+                    {{-- Delivery Section --}}
+
+                    <div class="col-md-12">
+                        <hr>
+                        <p>هزینه ی ارسال: </p>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="delivery_amount">هزینه ی ارسال</label>
+                        <input class="form-control" id="delivery_amount" name="delivery_amount" type="text" value="{{old('delivery_amount')}}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="delivery_amount_per_product">هزینه ی ارسال به ازای محصول اضافی</label>
+                        <input class="form-control" id="delivery_amount_per_product" name="delivery_amount_per_product"
+                               type="text" value="{{old('delivery_amount_per_product')}}">
+                    </div>
                 </div>
                 <button class="btn btn-outline-primary mt-5" type="submit">ثبت</button>
                 <a href="{{route('admin.products.index')}}" class="btn btn-dark mt-5 mr-3">بازگشت</a>
