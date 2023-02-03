@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -17,7 +19,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-       //
+        //
     }
 
     /**
@@ -29,7 +31,7 @@ class ProductController extends Controller
     {
         $brands = Brand::all();
         $tags = Tag::all();
-        $categories = Category::query()->where('parent_id' , '!=', 0)->get();
+        $categories = Category::query()->where('parent_id', '!=', 0)->get();
 
         return view('admin.products.create', compact('brands', 'tags', 'categories'));
     }
@@ -37,7 +39,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -63,14 +65,30 @@ class ProductController extends Controller
 //        ]);
 
         $productImageController = new ProductImageController();
-        $fileNamePrimaryImage= $productImageController->upload($request->primary_image, $request->images);
-        dd($fileNamePrimaryImage);
+        $fileNameImages = $productImageController->upload($request->primary_image, $request->images);
+        $product = Product::create([
+            'name' => $request->name,
+            'brand_id' => $request->brand_id,
+            'category_id' => $request->category_id,
+            'primary_image' => $fileNameImages['fileNamePrimaryImage'],
+            'description' => $request->description,
+            'is_active' => $request->is_active,
+            'delivery_amount' => $request->delivery_amount,
+            'delivery_amount_per_product' => $request->delivery_amount_per_product
+        ]);
+
+        foreach ($fileNameImages['fileNameImages'] as $fileNameImage) {
+            ProductImage::create([
+                'product_id' => $product->id,
+                'image' => $fileNameImage
+            ]);
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -81,7 +99,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -92,8 +110,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -104,7 +122,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
