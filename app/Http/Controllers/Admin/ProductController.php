@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductAttribute;
 use App\Models\ProductImage;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -83,6 +84,10 @@ class ProductController extends Controller
                 'image' => $fileNameImage
             ]);
         }
+
+        $productAttributeController = new ProductAttributeController();
+        $productAttributeController->store($request->attribute_ids, $product);
+
     }
 
     /**
