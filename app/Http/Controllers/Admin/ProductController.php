@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductAttribute;
 use App\Models\ProductImage;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -87,6 +86,10 @@ class ProductController extends Controller
 
         $productAttributeController = new ProductAttributeController();
         $productAttributeController->store($request->attribute_ids, $product);
+
+        $category = Category::query()->find($request->category_id);
+        $productVariationController = new ProductVariationController();
+        $productVariationController->store($request->variation_values, $category->attributes()->wherePivot('is_variation', 1)->first()->id, $product);
 
     }
 
