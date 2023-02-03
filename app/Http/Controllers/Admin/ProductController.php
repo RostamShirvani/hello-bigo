@@ -42,7 +42,28 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+//        dd($request->all());
+        $request->validate([
+            'name' => 'required',
+            'brand_id' => 'required',
+            'is_active' => 'required',
+            'tag_ids' => 'required',
+            'description' => 'required',
+            'primary_image' => 'required|mimes:jpg,jpeg,png,svg',
+            'images' => 'required',
+            'images.*' => 'required',
+            'category_id' => 'required',
+            'attribute_ids' => 'required',
+            'attribute_ids.*' => 'required',
+            'variation_values' => 'required',
+            'variation_values.*.*' => 'required',
+            'variation_values.price.*' => 'integer',
+            'variation_values.quantity.*' => 'integer',
+            'delivery_amount' => 'required|integer',
+            'delivery_amount_per_product' => 'nullable|integer'
+        ]);
+
+        dd('Done!');
     }
 
     /**
