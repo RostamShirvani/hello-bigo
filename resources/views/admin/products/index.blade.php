@@ -33,7 +33,11 @@
                     @foreach($products as $key=>$product)
                         <tr>
                             <th>{{$products->firstItem() + $key}}</th>
-                            <th>{{$product->name}}</th>
+                            <th>
+                                <a href="{{route('admin.products.show', $product->id)}}">
+                                    {{$product->name}}
+                                </a>
+                            </th>
                             <th>
                                 <a href="{{route('admin.brands.show', $product->brand_id)}}">
                                     {{$product->brand->name}}
