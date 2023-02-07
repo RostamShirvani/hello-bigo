@@ -130,12 +130,10 @@
                     </div>
 
                     {{-- Delivery Section --}}
-
                     <div class="col-md-12">
                         <hr>
                         <p>هزینه ی ارسال: </p>
                     </div>
-
                     <div class="form-group col-md-3">
                         <label for="delivery_amount">هزینه ی ارسال</label>
                         <input class="form-control" id="delivery_amount" name="delivery_amount" type="text" value="{{old('delivery_amount')}}">

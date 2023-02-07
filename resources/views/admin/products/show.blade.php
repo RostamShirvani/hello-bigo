@@ -26,10 +26,17 @@
                     <label>دسته بندی</label>
                     <input class="form-control" type="text" value="{{$product->category->name}}" disabled>
                 </div>
-
                 <div class="form-group col-md-3">
                     <label>وضعیت</label>
                     <input class="form-control" type="text" value="{{$product->is_active}}" disabled>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>تگ ها</label>
+                    <div class="form-control div-disabled">
+                        @foreach($product->tags as $tag)
+                            {{$tag->name}} {{$loop->last ? '': ','}}
+                            @endforeach
+                    </div>
                 </div>
                 <div class="form-group col-md-3">
                     <label>تاریخ ایجاد</label>

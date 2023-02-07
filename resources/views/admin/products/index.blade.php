@@ -61,7 +61,7 @@
                                     </button>
                                     <div class="dropdown-menu">
 
-                                        <a href="#"
+                                        <a href="{{route('admin.products.edit', $product->id)}}"
                                            class="dropdown-item text-right"> ویرایش محصول </a>
 
                                         <a href="#"
