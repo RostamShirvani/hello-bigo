@@ -32,9 +32,14 @@ Route::prefix('/admin-panel/management')->name('admin.')->group(function (){
 
     // Get category attributes
     Route::get('/category-attributes/{category}', [CategoryController::class, 'getCategoryAttributes']);
+
     // Edit product images
     Route::get('/products/{product}/edit-images', [ProductImageController::class, 'edit'])->name('products.images.edit');
     Route::delete('/products/{product}/images-destroy', [ProductImageController::class, 'destroy'])->name('products.images.destroy');
     Route::put('/products/{product}/images-set-primary', [ProductImageController::class, 'setPrimary'])->name('products.images.set_primary');
     Route::post('/products/{product}/images-add', [ProductImageController::class, 'add'])->name('products.images.add');
+
+    // Edit product category
+    Route::get('/products/{product}/edit-category', [ProductController::class, 'editCategory'])->name('products.category.edit');
+    Route::put('/products/{product}/update-category', [ProductController::class, 'updateCategory'])->name('products.category.update');
 });

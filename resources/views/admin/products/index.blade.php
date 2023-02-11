@@ -67,7 +67,7 @@
                                         <a href="{{route('admin.products.images.edit', $product->id)}}"
                                            class="dropdown-item text-right"> ویرایش تصاویر </a>
 
-                                        <a href="#"
+                                        <a href="{{route('admin.products.category.edit', $product->id)}}"
                                            class="dropdown-item text-right"> ویرایش دسته بندی و ویژگی </a>
 
                                     </div>
