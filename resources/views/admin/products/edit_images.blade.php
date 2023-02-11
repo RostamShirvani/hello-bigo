@@ -64,14 +64,20 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="primary_image">انتخاب تصویر اصلی</label>
-                        <input type="file" name="primary_image" id="primary_image" class="custom-file-input"/>
-                        <label class="custom-file-label" for="primary_image"> انتخاب فایل </label>
+                        <div class="custom-file">
+                            <input type="file" name="primary_image" id="primary_image" class="custom-file-input"/>
+                            <label class="custom-file-label" for="primary_image"> انتخاب فایل </label>
+                        </div>
+
                     </div>
 
                     <div class="col-md-4">
                         <label for="images">انتخاب تصاویر</label>
-                        <input type="file" name="images[]" id="images" class="custom-file-input" multiple/>
-                        <label class="custom-file-label" for="images"> انتخاب فایل ها </label>
+                        <div class="custom-file">
+                            <input type="file" name="images[]" id="images" class="custom-file-input" multiple/>
+                            <label class="custom-file-label" for="images"> انتخاب فایل ها </label>
+                        </div>
+
                     </div>
                 </div>
 
@@ -83,7 +89,7 @@
     </div>
 @endsection
 
-@section('js')
+@section('script')
 <script>
     // show file name
     $('#primary_image').change(function () {

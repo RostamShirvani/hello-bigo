@@ -64,14 +64,19 @@
 
                     <div class="col-md-3">
                         <label for="primary_image">انتخاب تصویر اصلی</label>
-                        <input type="file" name="primary_image" id="primary_image" class="custom-file-input"/>
-                        <label class="custom-file-label" for="primary_image"> انتخاب فایل </label>
+                        <div class="custom-file">
+                            <input type="file" name="primary_image" id="primary_image" class="custom-file-input"/>
+                            <label class="custom-file-label" for="primary_image"> انتخاب فایل </label>
+                        </div>
                     </div>
 
                     <div class="col-md-3">
                         <label for="images">انتخاب تصاویر</label>
-                        <input type="file" name="images[]" id="images" class="custom-file-input" multiple/>
-                        <label class="custom-file-label" for="images"> انتخاب فایل ها </label>
+                        <div class="custom-file">
+                            <input type="file" name="images[]" id="images" class="custom-file-input" multiple/>
+                            <label class="custom-file-label" for="images"> انتخاب فایل ها </label>
+                        </div>
+
                     </div>
 
                     {{-- Category&Attributes Section --}}
