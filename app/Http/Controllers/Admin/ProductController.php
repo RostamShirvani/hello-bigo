@@ -54,7 +54,7 @@ class ProductController extends Controller
             'description' => 'required',
             'primary_image' => 'required|mimes:jpg,jpeg,png,svg',
             'images' => 'required',
-            'images.*' => 'required',
+            'images.*' => 'required|mimes:jpg,jpeg,png,svg',
             'category_id' => 'required',
             'attribute_ids' => 'required',
             'attribute_ids.*' => 'required',
