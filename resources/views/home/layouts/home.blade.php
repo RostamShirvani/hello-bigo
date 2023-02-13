@@ -19,7 +19,19 @@
 </head>
 
 <body>
-@yield('content')
+
+<div class="wrapper">
+
+    @include('home.sections.header')
+
+    @include('home.sections.mobile_off_canvas')
+
+    @yield('content')
+
+    @include('home.sections.footer')
+
+</div>
+
 <!-- JavaScript-->
 <script src="{{ asset('/js/home/jquery-1.12.4.min.js') }}"></script>
 <script src="{{ asset('/js/home/plugins.js') }}"></script>
