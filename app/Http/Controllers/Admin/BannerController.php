@@ -32,39 +32,39 @@ class BannerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
-           'image'  => 'required|mimes:jpg,jpeg,png,svg',
-           'priority'  => 'required|integer',
-           'type'  => 'required',
+            'image' => 'required|mimes:jpg,jpeg,png,svg',
+            'priority' => 'required|integer',
+            'type' => 'required',
         ]);
 
         $imageFileName = generateFileName($request->image->getClientOriginalName());
         $request->image->move(public_path(env('BANNER_IMAGES_UPLOAD_PATH')), $imageFileName);
 
         Banner::create([
-           'image' => $imageFileName,
-           'title' => $request->title,
-           'text' => $request->text,
-           'priority' => $request->priority,
-           'is_active' => $request->is_active,
-           'type' => $request->type,
-           'button_text' => $request->button_text,
-           'button_link' => $request->button_link,
-           'button_icon' => $request->button_icon,
+            'image' => $imageFileName,
+            'title' => $request->title,
+            'text' => $request->text,
+            'priority' => $request->priority,
+            'is_active' => $request->is_active,
+            'type' => $request->type,
+            'button_text' => $request->button_text,
+            'button_link' => $request->button_link,
+            'button_icon' => $request->button_icon,
         ]);
-        alert()->success( 'با تشکر', 'بنر مورد نظر ایجاد شد.');
+        alert()->success('با تشکر', 'بنر مورد نظر ایجاد شد.');
         return redirect()->route('admin.banners.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -75,30 +75,53 @@ class BannerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Banner $banner)
     {
-        //
+        return view('admin.banners.edit', compact('banner'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Banner $banner)
     {
-        //
+        $request->validate([
+            'image' => 'nullable|mimes:jpg,jpeg,png,svg',
+            'priority' => 'required|integer',
+            'type' => 'required',
+        ]);
+
+        if ($request->has('image')) {
+            $imageFileName = generateFileName($request->image->getClientOriginalName());
+            $request->image->move(public_path(env('BANNER_IMAGES_UPLOAD_PATH')), $imageFileName);
+        }
+
+        $banner->update([
+            'image' => $request->has('image') ? $imageFileName : $banner->image,
+            'title' => $request->title,
+            'text' => $request->text,
+            'priority' => $request->priority,
+            'is_active' => $request->is_active,
+            'type' => $request->type,
+            'button_text' => $request->button_text,
+            'button_link' => $request->button_link,
+            'button_icon' => $request->button_icon,
+        ]);
+        alert()->success('با تشکر', 'بنر مورد نظر ویرایش شد.');
+        return redirect()->route('admin.banners.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
