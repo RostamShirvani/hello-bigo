@@ -11,4 +11,10 @@ class Banner extends Model
 
     protected $table = "banners";
     protected $guarded = [];
+
+
+    public function getIsActiveAttribute($is_active)
+    {
+        return $is_active ? 'فعال' : 'غیرفعال';
+    }
 }
