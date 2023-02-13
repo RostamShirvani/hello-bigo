@@ -124,8 +124,10 @@ class BannerController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Banner $banner)
     {
-        //
+        $banner->delete();
+        alert()->success('با تشکر', 'بنر مورد نظر حذف شد.');
+        return redirect()->route('admin.banners.index');
     }
 }
