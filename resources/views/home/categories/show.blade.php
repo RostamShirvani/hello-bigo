@@ -11,7 +11,7 @@
                     <li>
                         <a href="{{route('home.index')}}">صفحه ای اصلی</a>
                     </li>
-                    <li class="active">فروشگاه </li>
+                    <li class="active">فروشگاه</li>
                 </ul>
             </div>
         </div>
@@ -39,99 +39,50 @@
                             <h4 class="pro-sidebar-title"> دسته بندی </h4>
                             <div class="sidebar-widget-list mt-30">
                                 <ul>
-                                    <li>
-                                        مردانه
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            پیراهن
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            تی شرت
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            پالتو
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            لباس راحتی
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            لباس راحتی
-                                        </a>
-                                    </li>
+                                    <li>{{ $category->parent->name }}</li>
+                                    @foreach($category->parent->children as $childCategory)
+                                        <li>
+                                            <a href="{{route('home.categories.show', $childCategory->slug)}}"
+                                               style="{{$category->slug == $childCategory->slug ? 'color: #ff3535' : ''}}"
+                                            >
+                                                {{$childCategory->name}}
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
                         <hr>
-
-                        <div class="sidebar-widget mt-30">
-                            <h4 class="pro-sidebar-title">رنگ </h4>
-                            <div class="sidebar-widget-list mt-20">
-                                <ul>
-                                    <li>
-                                        <div class="sidebar-widget-list-left">
-                                            <input type="checkbox" value=""> <a href="#">سبز </a>
-                                            <span class="checkmark"></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="sidebar-widget-list-left">
-                                            <input type="checkbox" value=""> <a href="#">کرم </a>
-                                            <span class="checkmark"></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="sidebar-widget-list-left">
-                                            <input type="checkbox" value=""> <a href="#">آبی </a>
-                                            <span class="checkmark"></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="sidebar-widget-list-left">
-                                            <input type="checkbox" value=""> <a href="#">مشکی </a>
-                                            <span class="checkmark"></span>
-                                        </div>
-                                    </li>
-                                </ul>
+                        @foreach($attributes as $attribute)
+                            <div class="sidebar-widget mt-30">
+                                <h4 class="pro-sidebar-title">{{$attribute->name}}</h4>
+                                <div class="sidebar-widget-list mt-20">
+                                    <ul>
+                                        @foreach($attribute->values as $value)
+                                            <li>
+                                                <div class="sidebar-widget-list-left">
+                                                    <input type="checkbox" value=""> <a href="#">{{$value->value}}</a>
+                                                    <span class="checkmark"></span>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <hr>
+                            <hr>
+                        @endforeach
                         <div class="sidebar-widget mt-30">
-                            <h4 class="pro-sidebar-title">سایز </h4>
+                            <h4 class="pro-sidebar-title">{{$variation->name}}</h4>
                             <div class="sidebar-widget-list mt-20">
                                 <ul>
-                                    <li>
-                                        <div class="sidebar-widget-list-left">
-                                            <input type="checkbox" value=""> <a href="#">XL </a>
-                                            <span class="checkmark"></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="sidebar-widget-list-left">
-                                            <input type="checkbox" value=""> <a href="#">L </a>
-                                            <span class="checkmark"></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="sidebar-widget-list-left">
-                                            <input type="checkbox" value=""> <a href="#">SM </a>
-                                            <span class="checkmark"></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="sidebar-widget-list-left">
-                                            <input type="checkbox" value=""> <a href="#">XXL </a>
-                                            <span class="checkmark"></span>
-                                        </div>
-                                    </li>
+                                    @foreach($variation->variationValues as $value)
+                                        <li>
+                                            <div class="sidebar-widget-list-left">
+                                                <input type="checkbox" value=""> <a href="#">{{$value->value}}</a>
+                                                <span class="checkmark"></span>
+                                            </div>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -147,11 +98,11 @@
                         <div class="select-shoing-wrap">
                             <div class="shop-select">
                                 <select>
-                                    <option value=""> مرتب سازی </option>
-                                    <option value=""> بیشترین قیمت </option>
-                                    <option value=""> کم ترین قیمت </option>
-                                    <option value=""> جدیدترین </option>
-                                    <option value=""> قدیمی ترین </option>
+                                    <option value=""> مرتب سازی</option>
+                                    <option value=""> بیشترین قیمت</option>
+                                    <option value=""> کم ترین قیمت</option>
+                                    <option value=""> جدیدترین</option>
+                                    <option value=""> قدیمی ترین</option>
                                 </select>
                             </div>
 
@@ -165,29 +116,35 @@
                             <div class="row ht-products" style="direction: rtl;">
                                 <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
                                     <!--Product Start-->
-                                    <div class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
+                                    <div
+                                        class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
                                         <div class="ht-product-inner">
                                             <div class="ht-product-image-wrap">
                                                 <a href="product-details.html" class="ht-product-image">
-                                                    <img src="assets/img/product/product-1.svg" alt="Universal Product Style" />
+                                                    <img src="assets/img/product/product-1.svg"
+                                                         alt="Universal Product Style"/>
                                                 </a>
                                                 <div class="ht-product-action">
                                                     <ul>
                                                         <li>
                                                             <a href="#" data-toggle="modal" data-target="#exampleModal"><i
-                                                                    class="sli sli-magnifier"></i><span class="ht-product-action-tooltip"> مشاهده سریع
+                                                                    class="sli sli-magnifier"></i><span
+                                                                    class="ht-product-action-tooltip"> مشاهده سریع
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-heart"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-heart"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     افزودن به علاقه مندی ها </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-refresh"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-refresh"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     مقایسه </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-bag"></i><span class="ht-product-action-tooltip"> افزودن
+                                                            <a href="#"><i class="sli sli-bag"></i><span
+                                                                    class="ht-product-action-tooltip"> افزودن
                                     به سبد خرید </span></a>
                                                         </li>
                                                     </ul>
@@ -236,31 +193,37 @@
                                 </div>
                                 <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
                                     <!--Product Start-->
-                                    <div class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
+                                    <div
+                                        class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
                                         <div class="ht-product-inner">
                                             <div class="ht-product-image-wrap">
                                                 <a href="product-details.html" class="ht-product-image">
-                                                    <img src="assets/img/product/product-2.svg" alt="Universal Product Style" />
+                                                    <img src="assets/img/product/product-2.svg"
+                                                         alt="Universal Product Style"/>
                                                 </a>
                                                 <div class="ht-product-action">
                                                     <ul>
                                                         <li>
                                                             <a href="#" data-toggle="modal" data-target="#exampleModal"><i
-                                                                    class="sli sli-magnifier"></i><span class="ht-product-action-tooltip"> مشاهده سریع
+                                                                    class="sli sli-magnifier"></i><span
+                                                                    class="ht-product-action-tooltip"> مشاهده سریع
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-heart"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-heart"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     افزودن به
                                     علاقه مندی ها </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-refresh"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-refresh"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     مقایسه
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-bag"></i><span class="ht-product-action-tooltip"> افزودن
+                                                            <a href="#"><i class="sli sli-bag"></i><span
+                                                                    class="ht-product-action-tooltip"> افزودن
                                     به سبد
                                     خرید </span></a>
                                                         </li>
@@ -306,31 +269,37 @@
                                 </div>
                                 <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
                                     <!--Product Start-->
-                                    <div class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
+                                    <div
+                                        class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
                                         <div class="ht-product-inner">
                                             <div class="ht-product-image-wrap">
                                                 <a href="product-details.html" class="ht-product-image">
-                                                    <img src="assets/img/product/product-3.svg" alt="Universal Product Style" />
+                                                    <img src="assets/img/product/product-3.svg"
+                                                         alt="Universal Product Style"/>
                                                 </a>
                                                 <div class="ht-product-action">
                                                     <ul>
                                                         <li>
                                                             <a href="#" data-toggle="modal" data-target="#exampleModal"><i
-                                                                    class="sli sli-magnifier"></i><span class="ht-product-action-tooltip"> مشاهده سریع
+                                                                    class="sli sli-magnifier"></i><span
+                                                                    class="ht-product-action-tooltip"> مشاهده سریع
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-heart"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-heart"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     افزودن به
                                     علاقه مندی ها </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-refresh"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-refresh"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     مقایسه
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-bag"></i><span class="ht-product-action-tooltip"> افزودن
+                                                            <a href="#"><i class="sli sli-bag"></i><span
+                                                                    class="ht-product-action-tooltip"> افزودن
                                     به سبد
                                     خرید </span></a>
                                                         </li>
@@ -380,31 +349,37 @@
                                 </div>
                                 <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
                                     <!--Product Start-->
-                                    <div class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
+                                    <div
+                                        class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
                                         <div class="ht-product-inner">
                                             <div class="ht-product-image-wrap">
                                                 <a href="product-details.html" class="ht-product-image">
-                                                    <img src="assets/img/product/product-4.svg" alt="Universal Product Style" />
+                                                    <img src="assets/img/product/product-4.svg"
+                                                         alt="Universal Product Style"/>
                                                 </a>
                                                 <div class="ht-product-action">
                                                     <ul>
                                                         <li>
                                                             <a href="#" data-toggle="modal" data-target="#exampleModal"><i
-                                                                    class="sli sli-magnifier"></i><span class="ht-product-action-tooltip"> مشاهده سریع
+                                                                    class="sli sli-magnifier"></i><span
+                                                                    class="ht-product-action-tooltip"> مشاهده سریع
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-heart"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-heart"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     افزودن به
                                     علاقه مندی ها </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-refresh"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-refresh"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     مقایسه
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-bag"></i><span class="ht-product-action-tooltip"> افزودن
+                                                            <a href="#"><i class="sli sli-bag"></i><span
+                                                                    class="ht-product-action-tooltip"> افزودن
                                     به سبد
                                     خرید </span></a>
                                                         </li>
@@ -449,31 +424,37 @@
                                 </div>
                                 <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
                                     <!--Product Start-->
-                                    <div class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
+                                    <div
+                                        class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
                                         <div class="ht-product-inner">
                                             <div class="ht-product-image-wrap">
                                                 <a href="product-details.html" class="ht-product-image">
-                                                    <img src="assets/img/product/product-2.svg" alt="Universal Product Style" />
+                                                    <img src="assets/img/product/product-2.svg"
+                                                         alt="Universal Product Style"/>
                                                 </a>
                                                 <div class="ht-product-action">
                                                     <ul>
                                                         <li>
                                                             <a href="#" data-toggle="modal" data-target="#exampleModal"><i
-                                                                    class="sli sli-magnifier"></i><span class="ht-product-action-tooltip"> مشاهده سریع
+                                                                    class="sli sli-magnifier"></i><span
+                                                                    class="ht-product-action-tooltip"> مشاهده سریع
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-heart"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-heart"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     افزودن به
                                     علاقه مندی ها </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-refresh"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-refresh"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     مقایسه
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-bag"></i><span class="ht-product-action-tooltip"> افزودن
+                                                            <a href="#"><i class="sli sli-bag"></i><span
+                                                                    class="ht-product-action-tooltip"> افزودن
                                     به سبد
                                     خرید </span></a>
                                                         </li>
@@ -518,29 +499,35 @@
                                 </div>
                                 <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
                                     <!--Product Start-->
-                                    <div class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
+                                    <div
+                                        class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
                                         <div class="ht-product-inner">
                                             <div class="ht-product-image-wrap">
                                                 <a href="product-details.html" class="ht-product-image">
-                                                    <img src="assets/img/product/product-1.svg" alt="Universal Product Style" />
+                                                    <img src="assets/img/product/product-1.svg"
+                                                         alt="Universal Product Style"/>
                                                 </a>
                                                 <div class="ht-product-action">
                                                     <ul>
                                                         <li>
                                                             <a href="#" data-toggle="modal" data-target="#exampleModal"><i
-                                                                    class="sli sli-magnifier"></i><span class="ht-product-action-tooltip"> مشاهده سریع
+                                                                    class="sli sli-magnifier"></i><span
+                                                                    class="ht-product-action-tooltip"> مشاهده سریع
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-heart"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-heart"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     افزودن به علاقه مندی ها </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-refresh"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-refresh"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     مقایسه </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-bag"></i><span class="ht-product-action-tooltip"> افزودن
+                                                            <a href="#"><i class="sli sli-bag"></i><span
+                                                                    class="ht-product-action-tooltip"> افزودن
                                     به سبد خرید </span></a>
                                                         </li>
                                                     </ul>
@@ -589,31 +576,37 @@
                                 </div>
                                 <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
                                     <!--Product Start-->
-                                    <div class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
+                                    <div
+                                        class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
                                         <div class="ht-product-inner">
                                             <div class="ht-product-image-wrap">
                                                 <a href="product-details.html" class="ht-product-image">
-                                                    <img src="assets/img/product/product-2.svg" alt="Universal Product Style" />
+                                                    <img src="assets/img/product/product-2.svg"
+                                                         alt="Universal Product Style"/>
                                                 </a>
                                                 <div class="ht-product-action">
                                                     <ul>
                                                         <li>
                                                             <a href="#" data-toggle="modal" data-target="#exampleModal"><i
-                                                                    class="sli sli-magnifier"></i><span class="ht-product-action-tooltip"> مشاهده سریع
+                                                                    class="sli sli-magnifier"></i><span
+                                                                    class="ht-product-action-tooltip"> مشاهده سریع
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-heart"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-heart"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     افزودن به
                                     علاقه مندی ها </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-refresh"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-refresh"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     مقایسه
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-bag"></i><span class="ht-product-action-tooltip"> افزودن
+                                                            <a href="#"><i class="sli sli-bag"></i><span
+                                                                    class="ht-product-action-tooltip"> افزودن
                                     به سبد
                                     خرید </span></a>
                                                         </li>
@@ -659,31 +652,37 @@
                                 </div>
                                 <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
                                     <!--Product Start-->
-                                    <div class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
+                                    <div
+                                        class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
                                         <div class="ht-product-inner">
                                             <div class="ht-product-image-wrap">
                                                 <a href="product-details.html" class="ht-product-image">
-                                                    <img src="assets/img/product/product-3.svg" alt="Universal Product Style" />
+                                                    <img src="assets/img/product/product-3.svg"
+                                                         alt="Universal Product Style"/>
                                                 </a>
                                                 <div class="ht-product-action">
                                                     <ul>
                                                         <li>
                                                             <a href="#" data-toggle="modal" data-target="#exampleModal"><i
-                                                                    class="sli sli-magnifier"></i><span class="ht-product-action-tooltip"> مشاهده سریع
+                                                                    class="sli sli-magnifier"></i><span
+                                                                    class="ht-product-action-tooltip"> مشاهده سریع
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-heart"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-heart"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     افزودن به
                                     علاقه مندی ها </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-refresh"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-refresh"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     مقایسه
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-bag"></i><span class="ht-product-action-tooltip"> افزودن
+                                                            <a href="#"><i class="sli sli-bag"></i><span
+                                                                    class="ht-product-action-tooltip"> افزودن
                                     به سبد
                                     خرید </span></a>
                                                         </li>
@@ -733,31 +732,37 @@
                                 </div>
                                 <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
                                     <!--Product Start-->
-                                    <div class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
+                                    <div
+                                        class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
                                         <div class="ht-product-inner">
                                             <div class="ht-product-image-wrap">
                                                 <a href="product-details.html" class="ht-product-image">
-                                                    <img src="assets/img/product/product-2.svg" alt="Universal Product Style" />
+                                                    <img src="assets/img/product/product-2.svg"
+                                                         alt="Universal Product Style"/>
                                                 </a>
                                                 <div class="ht-product-action">
                                                     <ul>
                                                         <li>
                                                             <a href="#" data-toggle="modal" data-target="#exampleModal"><i
-                                                                    class="sli sli-magnifier"></i><span class="ht-product-action-tooltip"> مشاهده سریع
+                                                                    class="sli sli-magnifier"></i><span
+                                                                    class="ht-product-action-tooltip"> مشاهده سریع
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-heart"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-heart"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     افزودن به
                                     علاقه مندی ها </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-refresh"></i><span class="ht-product-action-tooltip">
+                                                            <a href="#"><i class="sli sli-refresh"></i><span
+                                                                    class="ht-product-action-tooltip">
                                     مقایسه
                                   </span></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><i class="sli sli-bag"></i><span class="ht-product-action-tooltip"> افزودن
+                                                            <a href="#"><i class="sli sli-bag"></i><span
+                                                                    class="ht-product-action-tooltip"> افزودن
                                     به سبد
                                     خرید </span></a>
                                                         </li>
@@ -855,7 +860,8 @@
                                     <span>3 دیدگاه</span>
                                 </div>
                                 <p class="text-right">
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها
+                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                    گرافیک است. چاپگرها
                                     و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
                                 </p>
                                 <div class="pro-details-list text-right">
@@ -882,7 +888,7 @@
                                 </div>
                                 <div class="pro-details-quality">
                                     <div class="cart-plus-minus">
-                                        <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2" />
+                                        <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2"/>
                                     </div>
                                     <div class="pro-details-cart">
                                         <a href="#">افزودن به سبد خرید</a>
@@ -914,27 +920,31 @@
                         <div class="col-md-5 col-sm-12 col-xs-12">
                             <div class="tab-content quickview-big-img">
                                 <div id="pro-1" class="tab-pane fade show active">
-                                    <img src="assets/img/product/quickview-l1.svg" alt="" />
+                                    <img src="assets/img/product/quickview-l1.svg" alt=""/>
                                 </div>
                                 <div id="pro-2" class="tab-pane fade">
-                                    <img src="assets/img/product/quickview-l2.svg" alt="" />
+                                    <img src="assets/img/product/quickview-l2.svg" alt=""/>
                                 </div>
                                 <div id="pro-3" class="tab-pane fade">
-                                    <img src="assets/img/product/quickview-l3.svg" alt="" />
+                                    <img src="assets/img/product/quickview-l3.svg" alt=""/>
                                 </div>
                                 <div id="pro-4" class="tab-pane fade">
-                                    <img src="assets/img/product/quickview-l2.svg" alt="" />
+                                    <img src="assets/img/product/quickview-l2.svg" alt=""/>
                                 </div>
                             </div>
                             <!-- Thumbnail Large Image End -->
                             <!-- Thumbnail Image End -->
                             <div class="quickview-wrap mt-15">
                                 <div class="quickview-slide-active owl-carousel nav nav-style-2" role="tablist">
-                                    <a class="active" data-toggle="tab" href="#pro-1"><img src="assets/img/product/quickview-s1.svg"
-                                                                                           alt="" /></a>
-                                    <a data-toggle="tab" href="#pro-2"><img src="assets/img/product/quickview-s2.svg" alt="" /></a>
-                                    <a data-toggle="tab" href="#pro-3"><img src="assets/img/product/quickview-s3.svg" alt="" /></a>
-                                    <a data-toggle="tab" href="#pro-4"><img src="assets/img/product/quickview-s2.svg" alt="" /></a>
+                                    <a class="active" data-toggle="tab" href="#pro-1"><img
+                                            src="assets/img/product/quickview-s1.svg"
+                                            alt=""/></a>
+                                    <a data-toggle="tab" href="#pro-2"><img src="assets/img/product/quickview-s2.svg"
+                                                                            alt=""/></a>
+                                    <a data-toggle="tab" href="#pro-3"><img src="assets/img/product/quickview-s3.svg"
+                                                                            alt=""/></a>
+                                    <a data-toggle="tab" href="#pro-4"><img src="assets/img/product/quickview-s2.svg"
+                                                                            alt=""/></a>
                                 </div>
                             </div>
                         </div>
