@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory, sluggable;
+
     protected $table = "products";
     protected $guarded = [];
     protected $appends = ['check_quantity', 'check_sale', 'check_price'];
@@ -56,6 +57,78 @@ class Product extends Model
     public function getIsActiveAttribute($is_active)
     {
         return $is_active ? 'فعال' : 'غیرفعال';
+    }
+
+    public function scopeFilter($query)
+    {
+        if (request()->has('attribute')) {
+            foreach (request()->attribute as $attribute) {
+                $query->whereHas('attributes', function ($query) use ($attribute) {
+                    foreach (explode('-', $attribute) as $index => $item) {
+                        if ($index == 0) {
+                            $query->where('value', $item);
+                        } else {
+                            $query->orWhere('value', $item);
+                        }
+                    }
+                });
+            }
+        }
+
+        if (request()->has('variation')) {
+            $query->whereHas('variations', function ($query) {
+                foreach (explode('-', request()->variation) as $index => $variation) {
+                    if ($index == 0) {
+                        $query->where('value', $variation);
+                    } else {
+                        $query->orWhere('value', $variation);
+                    }
+                }
+            });
+        }
+
+        if (request()->hasAny('sortBy')) {
+            $sortBy = request()->sortBy;
+            switch ($sortBy) {
+                case 'max':
+                    $query->orderByDesc(
+                        ProductVariation::query()
+                            ->select('price')
+                            ->whereColumn('product_variations.product_id', 'products.id')
+                            ->orderBy('sale_price', 'desc')
+                            ->take(1)
+                    );
+                    break;
+                case 'min':
+                    $query->orderBy(
+                        ProductVariation::query()
+                            ->select('price')
+                            ->whereColumn('product_variations.product_id', 'products.id')
+                            ->orderBy('sale_price')
+                            ->take(1)
+                    );
+                    break;
+                case 'latest':
+                    $query->latest();
+                    break;
+                case 'oldest':
+                    $query->oldest();
+                    break;
+                default:
+                    $query;
+                    break;
+            }
+        }
+        return $query;
+    }
+
+    public function scopeSearch($query)
+    {
+        $keyword = request()->search;
+        if(request()->has('search') && trim($keyword) != ''){
+            $query->where('name', 'LIKE', '%'.trim($keyword).'%');
+        }
+        return $query;
     }
 
     public function tags()

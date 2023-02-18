@@ -97,7 +97,7 @@
                 <div id="product-1" class="tab-pane active">
                     <div class="ht-products product-slider-active owl-carousel">
                     @foreach($products as $product)
-                        <!--Product Start-->
+                            <!--Product Start-->
                             <div class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
                                 <div class="ht-product-inner">
                                     <div class="ht-product-image-wrap">
@@ -475,7 +475,6 @@
             }
             $('.quantity-value').attr('data-max', variation.quantity);
             $('.quantity-value').val(1);
-
-        })
+        });
     </script>
 @endsection
