@@ -31,16 +31,30 @@
                             <div id="lg1" class="tab-pane active">
                                 <div class="login-form-container">
                                     <div class="login-register-form">
-                                        <form action="#" method="post">
-                                            <input type="text" name="user-name" placeholder="ایمیل">
-                                            <input type="password" name="user-password" placeholder="رمز عبور">
+                                        <form action="{{route('login')}}" method="post">
+                                            @csrf
+                                            <input name="email" placeholder="ایمیل" class="@error('email') mb-1 @enderror"
+                                                   type="email" value="{{old('email')}}">
+                                            @error('email')
+                                            <div class="input-error-validation">
+                                                <strong>{{$message}}</strong>
+                                            </div>
+                                            @enderror
+                                            <input type="password" name="password" class="@error('password') mb-1 @enderror"
+                                                   placeholder="رمز عبور" value="{{old('password')}}">
+                                            @error('password')
+                                            <div class="input-error-validation">
+                                                <strong>{{$message}}</strong>
+                                            </div>
+                                            @enderror
                                             <div class="button-box">
                                                 <div class="login-toggle-btn d-flex justify-content-between">
                                                     <div>
-                                                        <input type="checkbox">
+                                                        <input name="remember" type="checkbox"
+                                                        {{old('remember') ? 'checked' : ''}}>
                                                         <label> مرا بخاطر بسپار </label>
                                                     </div>
-                                                    <a href="register.html"> فراموشی رمز عبور ! </a>
+                                                    <a href="{{route('password.request')}}"> فراموشی رمز عبور ! </a>
                                                 </div>
                                                 <button type="submit">ورود</button>
                                                 <a href="index.html" class="btn btn-google btn-block mt-4">
