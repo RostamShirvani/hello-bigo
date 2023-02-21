@@ -4,38 +4,43 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Carbon\Carbon;
+use App\Notifications\OTPSmsNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
-    public function redirectToProvider($provider)
+    public function login(Request $request)
     {
-        return Socialite::driver($provider)->redirect();
+        if ($request->method() == 'GET') {
+            return view('auth.login');
+        }
+        $request->validate([
+            'cellphone' => 'required|iran_mobile'
+        ]);
+
+        try {
+            $user = User::query()->where('cellphone', $request->cellphone)->first();
+            $OTPCode = mt_rand(100000, 999999);
+            $loginToken = Hash::make(Str::random());
+            if ($user) {
+                $user->update([
+                    'otp' => $OTPCode,
+                    'login_token' => $loginToken
+                ]);
+            } else {
+                $user = User::create([
+                    'cellphone' => $request->cellphone,
+                    'otp' => $OTPCode,
+                    'login_token' => $loginToken
+                ]);
+            }
+            $user->notify(new OTPSmsNotification($OTPCode));
+            return response(['login_token' => $loginToken], 200);
+        }catch (\Exception $exception){
+            return response(['errors' => $exception->getMessage()], 422);
+        }
     }
 
-    public function handelProviderCallback($provider)
-    {
-        try{
-        $socialite_user = Socialite::driver($provider)->user();
-        }catch (\Exception $exception){
-            return redirect()->route('login');
-        }
-        $user = User::query()->where('email', $socialite_user->getEmail())->first();
-        if(!$user){
-            $user = User::create([
-               'name' => $socialite_user->getName(),
-               'provider_name' => $provider,
-               'avatar' => $socialite_user->getAvatar(),
-               'email' => $socialite_user->getEmail(),
-                'password' => Hash::make($socialite_user->getId()),
-                'email_verified_at' => Carbon::now()
-            ]);
-        }
-        auth()->login($user, $remember = true);
-        alert()->success('تشکر', 'ورود شما موفقیت آمیز بود.')->persistent('حله');
-        return redirect()->route('home.index');
-    }
 }

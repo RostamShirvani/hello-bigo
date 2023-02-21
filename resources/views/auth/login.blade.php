@@ -31,35 +31,22 @@
                             <div id="lg1" class="tab-pane active">
                                 <div class="login-form-container">
                                     <div class="login-register-form">
-                                        <form action="{{route('login')}}" method="post">
-                                            @csrf
-                                            <input name="email" placeholder="ایمیل" class="@error('email') mb-1 @enderror"
-                                                   type="email" value="{{old('email')}}">
-                                            @error('email')
-                                            <div class="input-error-validation">
-                                                <strong>{{$message}}</strong>
+                                        <form id="loginForm">
+                                            <input id="cellphoneInput" placeholder="شماره تلفن خود را وارد کنید" type="text">
+                                            <div id="cellphoneInputError" class="input-error-validation">
+                                                <strong id="cellphoneInputErrorText"></strong>
                                             </div>
-                                            @enderror
-                                            <input type="password" name="password" class="@error('password') mb-1 @enderror"
-                                                   placeholder="رمز عبور" value="{{old('password')}}">
-                                            @error('password')
-                                            <div class="input-error-validation">
-                                                <strong>{{$message}}</strong>
+                                            <div class="button-box d-flex justify-content-between">
+                                                <button type="submit">ارسال</button>
                                             </div>
-                                            @enderror
-                                            <div class="button-box">
-                                                <div class="login-toggle-btn d-flex justify-content-between">
-                                                    <div>
-                                                        <input name="remember" type="checkbox"
-                                                        {{old('remember') ? 'checked' : ''}}>
-                                                        <label> مرا بخاطر بسپار </label>
-                                                    </div>
-                                                    <a href="{{route('password.request')}}"> فراموشی رمز عبور ! </a>
-                                                </div>
+                                        </form>
+                                        <form id="checkOTPForm">
+                                            <input id="checkOTPInput" placeholder="رمز یک بار مصرف" type="text">
+                                            <div id="checkOTPInputError" class="input-error-validation">
+                                                <strong id="checkOTPInputErrorText"></strong>
+                                            </div>
+                                            <div class="button-box d-flex justify-content-between">
                                                 <button type="submit">ورود</button>
-                                                <a href="{{route('login.provider', 'google')}}" class="btn btn-google btn-block mt-4">
-                                                    <i class="sli sli-social-google"></i> ورود با حساب گوگل
-                                                </a>
                                             </div>
                                         </form>
                                     </div>
@@ -71,4 +58,36 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        let loginToken;
+        $('#checkOTPForm').hide();
+        $('#loginForm').submit(function(event){
+            console.log($('#cellphoneInput').val());
+            event.preventDefault();
+            $.post("{{url('/login')}}",
+                {
+                    '_token' : "{{csrf_token()}}",
+                    'cellphone' : $('#cellphoneInput').val()
+                }, function (response, status){
+                    console.log(response, status);
+                    loginToken = response.login_token;
+                    swal({
+                        icon: 'success',
+                        text: 'رمز یک بار مصرف برای شما ارسال شد.',
+                        button: 'حله!',
+                        timer: 2000
+                    });
+                    $('#loginForm').fadeOut();
+                    $('#checkOTPForm').fadeIn();
+
+                }).fail(function (response){
+                    console.log(response.responseJSON);
+                    $('#cellphoneInput').addClass('mb-1');
+                    $('#cellphoneInputError').fadeIn();
+                    $('#cellphoneInputErrorText').html(response.responseJSON.errors.cellphone[0]);
+            });
+        });
+    </script>
 @endsection

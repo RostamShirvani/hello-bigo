@@ -53,8 +53,8 @@ Route::prefix('/admin-panel/management')->name('admin.')->group(function (){
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/categories/{category:slug}', [HomeCategoryController::class, 'show'])->name('home.categories.show');
 Route::get('/products/{product:slug}', [HomeProductController::class, 'show'])->name('home.products.show');
-Route::get('/login/{provider}', [AuthController::class, 'redirectToProvider'])->name('login.provider');
-Route::get('/login/{provider}/callback', [AuthController::class, 'handelProviderCallback']);
+
+Route::any('/login', [AuthController::class, 'login'])->name('login');
 
 Route::get('/test', function (){
     $user = \App\Models\User::query()->find(1);
