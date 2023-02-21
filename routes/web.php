@@ -57,5 +57,12 @@ Route::get('/login/{provider}', [AuthController::class, 'redirectToProvider'])->
 Route::get('/login/{provider}/callback', [AuthController::class, 'handelProviderCallback']);
 
 Route::get('/test', function (){
-   auth()->logout();
+//   auth()->logout();
+    $receptor = "09123456789";
+    $type = Ghasedak\Laravel\GhasedakFacade::VERIFY_MESSAGE_TEXT;
+    $template = "my-template";
+    $param1 = '123456';
+
+    $api = new \Ghasedak\GhasedakApi(env('GHASEDAK_API_KEY'));
+    $api->Verify($receptor, $template, $param1);
 });
