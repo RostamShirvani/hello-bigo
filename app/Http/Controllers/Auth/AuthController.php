@@ -38,9 +38,27 @@ class AuthController extends Controller
             }
             $user->notify(new OTPSmsNotification($OTPCode));
             return response(['login_token' => $loginToken], 200);
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return response(['errors' => $exception->getMessage()], 422);
         }
     }
 
+    public function checkOtp(Request $request)
+    {
+        $request->validate([
+            'otp' => 'required|digits:6',
+            'login_token' => 'required'
+        ]);
+        try {
+            $user = User::query()->where('login_token', $request->login_token)->firstOrFail();
+            if ($user->otp == $request->otp) {
+                auth()->login($user, $remember = true);
+                return response(['ورود با موفقیت انجام شد.'], 200);
+            } else {
+                return response(['errors' => ['otp' => ['کد تأییدیه نادرست است!']]], 422);
+            }
+        } catch (\Exception $exception) {
+            return response(['errors' => $exception->getMessage()], 422);
+        }
+    }
 }

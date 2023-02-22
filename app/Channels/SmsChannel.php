@@ -8,6 +8,7 @@ class SmsChannel
 {
     public function send($notifiable, Notification $notification)
     {
+        return 'Done!';
         $receptor = $notifiable->cellphone;
         $type = 1; // this value is set by default in verify function
         $template = "activeCode";

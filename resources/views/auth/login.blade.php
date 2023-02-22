@@ -64,7 +64,7 @@
         let loginToken;
         $('#checkOTPForm').hide();
         $('#loginForm').submit(function(event){
-            console.log($('#cellphoneInput').val());
+            // console.log($('#cellphoneInput').val());
             event.preventDefault();
             $.post("{{url('/login')}}",
                 {
@@ -87,6 +87,23 @@
                     $('#cellphoneInput').addClass('mb-1');
                     $('#cellphoneInputError').fadeIn();
                     $('#cellphoneInputErrorText').html(response.responseJSON.errors.cellphone[0]);
+            });
+        });
+        $('#checkOTPForm').submit(function(event){
+            event.preventDefault();
+            $.post("{{url('/check-otp')}}",
+                {
+                    '_token' : "{{csrf_token()}}",
+                    'otp' : $('#checkOTPInput').val(),
+                    'login_token': loginToken
+                }, function (response, status){
+                    console.log(response, status);
+                    $(location).attr('href', "{{route('home.index')}}");
+                }).fail(function (response){
+                console.log(response.responseJSON);
+                $('#checkOTPInput').addClass('mb-1');
+                $('#checkOTPInputError').fadeIn();
+                $('#checkOTPInputErrorText').html(response.responseJSON.errors.otp[0]);
             });
         });
     </script>

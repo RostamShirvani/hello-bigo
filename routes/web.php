@@ -55,8 +55,10 @@ Route::get('/categories/{category:slug}', [HomeCategoryController::class, 'show'
 Route::get('/products/{product:slug}', [HomeProductController::class, 'show'])->name('home.products.show');
 
 Route::any('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/check-otp', [AuthController::class, 'checkOtp']);
 
 Route::get('/test', function (){
-    $user = \App\Models\User::query()->find(1);
-    $user->notify(new \App\Notifications\OTPSmsNotification('123456'));
+    auth()->logout();
+//    $user = \App\Models\User::query()->find(1);
+//    $user->notify(new \App\Notifications\OTPSmsNotification('123456'));
 });
