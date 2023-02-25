@@ -61,4 +61,27 @@ class AuthController extends Controller
             return response(['errors' => $exception->getMessage()], 422);
         }
     }
+
+    public function resendOtp(Request $request)
+    {
+
+        $request->validate([
+            'login_token' => 'required'
+        ]);
+
+        try {
+            $user = User::query()->where('login_token', $request->login_token)->firstOrFail();
+            $OTPCode = mt_rand(100000, 999999);
+            $loginToken = Hash::make(Str::random());
+            $user->update([
+                'otp' => $OTPCode,
+                'login_token' => $loginToken
+            ]);
+
+            $user->notify(new OTPSmsNotification($OTPCode));
+            return response(['login_token' => $loginToken], 200);
+        } catch (\Exception $exception) {
+            return response(['errors' => $exception->getMessage()], 422);
+        }
+    }
 }

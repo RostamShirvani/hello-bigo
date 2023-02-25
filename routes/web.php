@@ -56,6 +56,7 @@ Route::get('/products/{product:slug}', [HomeProductController::class, 'show'])->
 
 Route::any('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/check-otp', [AuthController::class, 'checkOtp']);
+Route::post('/resend-otp', [AuthController::class, 'resendOtp']);
 
 Route::get('/test', function (){
     auth()->logout();
