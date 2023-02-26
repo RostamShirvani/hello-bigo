@@ -155,15 +155,15 @@ $selectedProductVariation = $product->check_price;
                 <div class="col-lg-8 col-md-8">
                     <div class="description-review-wrapper">
                         <div class="description-review-topbar nav">
-                            <a class="active" data-toggle="tab" href="#des-details1"> توضیحات </a>
+                            <a class="{{count($errors) > 0 ? '' : 'active'}}" data-toggle="tab" href="#des-details1"> توضیحات </a>
                             <a data-toggle="tab" href="#des-details3"> اطلاعات بیشتر </a>
-                            <a data-toggle="tab" href="#des-details2">
+                            <a class="{{count($errors) > 0 ? 'active' : ''}}" data-toggle="tab" href="#des-details2">
                                 دیدگاه
                                 (3)
                             </a>
                         </div>
                         <div class="tab-content description-review-bottom">
-                            <div id="des-details1" class="tab-pane active">
+                            <div id="des-details1" class="tab-pane {{count($errors) > 0 ? '' : 'active'}}">
                                 <div class="product-description-wrapper text-right">
                                     {{$product->description}}
                                 </div>
@@ -180,7 +180,7 @@ $selectedProductVariation = $product->check_price;
                                     </ul>
                                 </div>
                             </div>
-                            <div id="des-details2" class="tab-pane">
+                            <div id="des-details2" class="tab-pane {{count($errors) > 0 ? 'active' : ''}}">
 
                                 <div class="review-wrapper">
                                     <div class="single-review">
@@ -256,46 +256,27 @@ $selectedProductVariation = $product->check_price;
                                     </div>
                                 </div>
 
-                                <div class="ratting-form-wrapper text-right">
+                                <div id="comments" class="ratting-form-wrapper text-right">
                                     <span> نوشتن دیدگاه </span>
 
-                                    <div class="star-box-wrap">
-                                        <div class="single-ratting-star">
-                                            <i class="sli sli-star"></i>
-                                        </div>
-                                        <div class="single-ratting-star">
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                        </div>
-                                        <div class="single-ratting-star">
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                        </div>
-                                        <div class="single-ratting-star">
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                        </div>
-                                        <div class="single-ratting-star">
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                        </div>
+                                    <div id="dataReadonlyReview" class="my-3"
+                                         data-rating-stars="5"
+                                         data-rating-value="0"
+                                         data-rating-input="#rateInput">
                                     </div>
 
                                     <div class="ratting-form">
-                                        <form action="#">
+                                        <form action="{{route('home.comments.store', $product->id)}}" method="post">
+                                            @method('POST')
+                                            @csrf
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="rating-form-style mb-20">
                                                         <label> متن دیدگاه : </label>
-                                                        <textarea name="Your Review"></textarea>
+                                                        <textarea name=text></textarea>
                                                     </div>
                                                 </div>
+                                                <input id="rateInput" type="hidden" name="rate" value="0">
 
                                                 <div class="col-lg-12">
                                                     <div class="form-submit">
@@ -304,8 +285,10 @@ $selectedProductVariation = $product->check_price;
                                                 </div>
                                             </div>
                                         </form>
+                                        <div class="mt-3">
+                                            @include('home.sections.errors')
+                                        </div>
                                     </div>
-
                                 </div>
 
                             </div>

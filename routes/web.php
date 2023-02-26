@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CommentController;
+use App\Http\Controllers\Home\CommentController as HomeCommentController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
 use App\Http\Controllers\Admin\ProductController;
@@ -35,6 +37,7 @@ Route::prefix('/admin-panel/management')->name('admin.')->group(function (){
     Route::resource('tags', TagController::class);
     Route::resource('products', ProductController::class);
     Route::resource('banners', BannerController::class);
+    Route::resource('comments', CommentController::class);
 
     // Get category attributes
     Route::get('/category-attributes/{category}', [CategoryController::class, 'getCategoryAttributes']);
@@ -53,6 +56,7 @@ Route::prefix('/admin-panel/management')->name('admin.')->group(function (){
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/categories/{category:slug}', [HomeCategoryController::class, 'show'])->name('home.categories.show');
 Route::get('/products/{product:slug}', [HomeProductController::class, 'show'])->name('home.products.show');
+Route::post('/comments/{product}', [HomeCommentController::class, 'store'])->name('home.comments.store');
 
 Route::any('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/check-otp', [AuthController::class, 'checkOtp']);
