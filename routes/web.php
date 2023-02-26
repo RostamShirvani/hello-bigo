@@ -13,6 +13,7 @@ use App\Http\Controllers\Home\ProductController as HomeProductController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Home\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,6 +64,11 @@ Route::any('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/check-otp', [AuthController::class, 'checkOtp']);
 Route::post('/resend-otp', [AuthController::class, 'resendOtp']);
 
+Route::prefix('profile')->name('home.')->group(function (){
+    Route::get('/', [UserProfileController::class, 'index'])->name('users_profile.index');
+    Route::get('/comments', [HomeCommentController::class, 'userProfileComment'])->name('comments.users_profile.index');
+
+});
 Route::get('/test', function (){
     auth()->logout();
 //    $user = \App\Models\User::query()->find(1);

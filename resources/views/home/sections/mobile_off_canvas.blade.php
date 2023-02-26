@@ -58,7 +58,7 @@
                         <li class="my-3"><a href="{{route('login')}}"> ورود </a></li>
                         <li class="my-3"><a href="{{route('register')}}"> ایجاد حساب </a></li>
                     @else
-                        <li class="my-3"><a href="my-account.html"> پروفایل </a></li>
+                        <li class="my-3"><a href="{{route('home.users_profile.index')}}"> پروفایل </a></li>
                     @endauth
                 </ul>
             </div>

@@ -55,4 +55,9 @@ class CommentController extends Controller
             alert()->warning('توجه!', 'برای ثبت نظر، ابتدا وارد سایت شوید!')->persistent('حله');
         }
     }
+
+    public function userProfileComment()
+    {
+        return view('home.users_profile.comments');
+    }
 }
