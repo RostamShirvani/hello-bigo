@@ -165,4 +165,10 @@ class Product extends Model
     {
         return $this->hasMany(ProductRate::class);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 }

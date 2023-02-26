@@ -135,7 +135,7 @@
                                                 <a href="#">{{$product->category->name}}</a>
                                             </div>
                                             <h4 class="ht-product-title text-right">
-                                                <a href="product-details.html">{{$product->name}} </a>
+                                                <a href="{{route('home.products.show', $product->slug)}}">{{$product->name}} </a>
                                             </h4>
                                             <div class="ht-product-price">
                                                 @if($product->check_quantity)
@@ -331,7 +331,7 @@
                                              data-rating-value="{{ceil($product->rates->avg('rate'))}}">
                                         </div>
                                         <span class="mx-3">|</span>
-                                        <span>3 دیدگاه</span>
+                                        <span>{{$product->comments()->count()}} دیدگاه</span>
                                     </div>
                                     <p class="text-right">
                                         {{$product->description}}

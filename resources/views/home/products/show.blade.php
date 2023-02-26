@@ -45,7 +45,7 @@
                                  data-rating-value="{{ceil($product->rates->avg('rate'))}}">
                             </div>
                             <span class="mx-3">|</span>
-                            <span>3 دیدگاه</span>
+                            <span>{{$product->comments()->count()}} دیدگاه</span>
                         </div>
                         <p class="text-right">
                             {{$product->description}}
@@ -126,20 +126,24 @@ $selectedProductVariation = $product->check_price;
                 <div class="col-lg-6 col-md-6 order-1 order-sm-1 order-md-2">
                     <div class="product-details-img">
                         <div class="zoompro-border zoompro-span">
-                            <img class="zoompro" src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$product->primary_image)}}"
-                                 data-zoom-image="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$product->primary_image)}}" alt=""/>
+                            <img class="zoompro"
+                                 src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$product->primary_image)}}"
+                                 data-zoom-image="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$product->primary_image)}}"
+                                 alt=""/>
 
                         </div>
                         <div id="gallery" class="mt-20 product-dec-slider">
                             <a data-image="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$product->primary_image)}}"
                                data-zoom-image="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$product->primary_image)}}">
-                                <img width="90" src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$product->primary_image)}}" alt="">
+                                <img width="90"
+                                     src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$product->primary_image)}}" alt="">
                             </a>
                             @foreach($product->images as $image)
-                            <a data-image="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$image->image)}}"
-                               data-zoom-image="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$image->image)}}">
-                                <img width="90" src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$image->image)}}" alt="">
-                            </a>
+                                <a data-image="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$image->image)}}"
+                                   data-zoom-image="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$image->image)}}">
+                                    <img width="90" src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$image->image)}}"
+                                         alt="">
+                                </a>
                             @endforeach
                         </div>
                     </div>
@@ -155,11 +159,12 @@ $selectedProductVariation = $product->check_price;
                 <div class="col-lg-8 col-md-8">
                     <div class="description-review-wrapper">
                         <div class="description-review-topbar nav">
-                            <a class="{{count($errors) > 0 ? '' : 'active'}}" data-toggle="tab" href="#des-details1"> توضیحات </a>
+                            <a class="{{count($errors) > 0 ? '' : 'active'}}" data-toggle="tab" href="#des-details1">
+                                توضیحات </a>
                             <a data-toggle="tab" href="#des-details3"> اطلاعات بیشتر </a>
                             <a class="{{count($errors) > 0 ? 'active' : ''}}" data-toggle="tab" href="#des-details2">
                                 دیدگاه
-                                (3)
+                                ({{$product->comments()->count()}})
                             </a>
                         </div>
                         <div class="tab-content description-review-bottom">
@@ -183,77 +188,28 @@ $selectedProductVariation = $product->check_price;
                             <div id="des-details2" class="tab-pane {{count($errors) > 0 ? 'active' : ''}}">
 
                                 <div class="review-wrapper">
-                                    <div class="single-review">
-                                        <div class="review-img">
-                                            <img src="assets/img/product-details/client-1.jpg" alt="">
-                                        </div>
-                                        <div class="review-content text-right">
-                                            <p class="text-right">
-                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                                                استفاده از طراحان گرافیک است.
-                                            </p>
-                                            <div class="review-top-wrap">
-                                                <div class="review-name">
-                                                    <h4> علی شیخ </h4>
-                                                </div>
-                                                <div class="review-rating">
-                                                    <i class="sli sli-star"></i>
-                                                    <i class="sli sli-star"></i>
-                                                    <i class="sli sli-star"></i>
-                                                    <i class="sli sli-star"></i>
-                                                    <i class="sli sli-star"></i>
+                                    @foreach($product->comments as $comment)
+                                        <div class="single-review">
+                                            <div class="review-img">
+                                                <img src="{{$comment->user->avatar ?? asset('/images/home/user.png')}}" alt="">
+                                            </div>
+                                            <div class="review-content w-100 text-right">
+                                                <p class="text-right">
+                                                    {{$comment->text}}
+                                                </p>
+                                                <div class="review-top-wrap">
+                                                    <div class="review-name">
+                                                        <h4> {{$comment->user->name ?? 'کاربر سایت'}} </h4>
+                                                    </div>
+                                                    <div id="dataReadonlyReview" class="my-3"
+                                                         data-rating-stars="5"
+                                                         data-rating-value="{{ceil($comment->user->rates->where('product_id', $product->id)->avg('rate'))}}"
+                                                         data-rating-input="#rateInput">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="single-review">
-                                        <div class="review-img">
-                                            <img src="assets/img/product-details/client-2.jpg" alt="">
-                                        </div>
-                                        <div class="review-content">
-                                            <p class="text-right">
-                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                                                استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در
-                                                ستون و سطرآنچنان که لازم است
-                                            </p>
-                                            <div class="review-top-wrap text-right">
-                                                <div class="review-name">
-                                                    <h4> علی شیخ </h4>
-                                                </div>
-                                                <div class="review-rating">
-                                                    <i class="sli sli-star"></i>
-                                                    <i class="sli sli-star"></i>
-                                                    <i class="sli sli-star"></i>
-                                                    <i class="sli sli-star"></i>
-                                                    <i class="sli sli-star"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="single-review">
-                                        <div class="review-img">
-                                            <img src="assets/img/product-details/client-3.jpg" alt="">
-                                        </div>
-                                        <div class="review-content text-right">
-                                            <p class="text-right">
-                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                                                استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در
-                                                ستون و سطرآنچنان که لازم است
-                                            </p>
-                                            <div class="review-top-wrap">
-                                                <div class="review-name">
-                                                    <h4> علی شیخ </h4>
-                                                </div>
-                                                <div class="review-rating">
-                                                    <i class="sli sli-star"></i>
-                                                    <i class="sli sli-star"></i>
-                                                    <i class="sli sli-star"></i>
-                                                    <i class="sli sli-star"></i>
-                                                    <i class="sli sli-star"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
 
                                 <div id="comments" class="ratting-form-wrapper text-right">
