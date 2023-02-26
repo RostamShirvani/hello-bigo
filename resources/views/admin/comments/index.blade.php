@@ -44,10 +44,13 @@
                                 </span>
                             </th>
                             <th>
-                                <a class="btn btn-sm btn-outline-success"
+                                <a class="btn btn-sm btn-outline-success mb-2"
                                    href="{{route('admin.comments.show', $comment->id)}}">نمایش</a>
-{{--                                <a class="btn btn-sm btn-outline-info mr-3"--}}
-{{--                                   href="{{route('admin.comments.edit', $comment->id)}}">ویرایش</a>--}}
+                                <form action="{{route('admin.comments.destroy', $comment->id)}}" method="post">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button class="btn btn-sm btn-outline-danger">حذف</button>
+                                </form>
                             </th>
                         </tr>
                     @endforeach

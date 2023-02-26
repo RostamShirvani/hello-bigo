@@ -16,7 +16,8 @@
             <div class="row">
                 <div class="form-group col-md-3">
                     <label>نام کاربر</label>
-                    <input class="form-control" type="text" value="{{$comment->user->name ?? $comment->user->cellphone}}" disabled>
+                    <input class="form-control" type="text"
+                           value="{{$comment->user->name ?? $comment->user->cellphone}}" disabled>
                 </div>
                 <div class="form-group col-md-3">
                     <label>نام محصول</label>
@@ -36,6 +37,11 @@
                 </div>
             </div>
             <a href="{{route('admin.comments.index')}}" class="btn btn-dark mt-5">بازگشت</a>
+            @if($comment->getRawOriginal('approved'))
+                <a href="{{route('admin.comments.change-approve', $comment->id)}}" class="btn btn-danger mt-5">عدم تأیید</a>
+            @else
+                <a href="{{route('admin.comments.change-approve', $comment->id)}}" class="btn btn-success mt-5">تأیید</a>
+            @endif
         </div>
     </div>
 @endsection

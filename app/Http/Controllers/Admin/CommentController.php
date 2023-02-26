@@ -81,8 +81,25 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+        alert()->success( 'با تشکر', 'نظر با موفقیت حذف شد.');
+        return redirect()->route('admin.comments.index');
+    }
+
+    public function changeApprove(Comment $comment)
+    {
+        if($comment->getRawOriginal('approved')){
+            $comment->update([
+               'approved' => 0
+            ]);
+        }else{
+            $comment->update([
+                'approved' => 1
+            ]);
+        }
+        alert()->success( 'با تشکر', 'وضعیت نظر با موفقیت به روز رسانی شد.');
+        return redirect()->route('admin.comments.index');
     }
 }
