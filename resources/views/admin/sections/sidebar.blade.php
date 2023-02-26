@@ -44,8 +44,15 @@
                 <a class="collapse-item" href="{{route('admin.categories.index')}}">دسته بندی ها</a>
                 <a class="collapse-item" href="{{route('admin.attributes.index')}}">ویژگی ها</a>
                 <a class="collapse-item" href="{{route('admin.tags.index')}}">تگ ها</a>
+                <a class="collapse-item" href="{{route('admin.comments.index')}}">نظرات</a>
             </div>
         </div>
+    </li>
+
+    <li class="nav-item active">
+        <a class="nav-link" href="{{route('admin.comments.index')}}">
+            <i class="fas fa-fw fa-images"></i>
+            <span> بنرها </span></a>
     </li>
 
     <!-- Divider -->

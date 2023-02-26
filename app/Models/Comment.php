@@ -10,4 +10,19 @@ class Comment extends Model
     use HasFactory;
     protected $table = "comments";
     protected $guarded = [];
+
+    public function getApprovedAttribute($approved)
+    {
+        return $approved ? 'تأیید شده' : 'تأیید نشده';
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
