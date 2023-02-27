@@ -136,7 +136,7 @@
                                                     @endif
                                                 </li>
                                                 <li>
-                                                    <a href="#"><i class="sli sli-refresh"></i><span
+                                                    <a href="{{route('home.compare.add', $product->id)}}"><i class="sli sli-refresh"></i><span
                                                             class="ht-product-action-tooltip"> مقایسه
                             </span></a>
                                                 </li>
@@ -402,7 +402,7 @@
                                                 @endif
                                             </div>
                                             <div class="pro-details-compare">
-                                                <a title="Add To Compare" href="#"><i class="sli sli-refresh"></i></a>
+                                                <a title="Add To Compare" href="{{route('home.compare.add', $product->id)}}"><i class="sli sli-refresh"></i></a>
                                             </div>
                                         </div>
                                     @else
