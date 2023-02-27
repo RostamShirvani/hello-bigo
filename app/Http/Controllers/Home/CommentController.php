@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Product;
 use App\Models\ProductRate;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -58,6 +59,7 @@ class CommentController extends Controller
 
     public function userProfileComment()
     {
-        return view('home.users_profile.comments');
+        $comments = auth()->user()->approvedComments;
+        return view('home.users_profile.comments', compact('comments'));
     }
 }
