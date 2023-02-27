@@ -114,7 +114,7 @@ $selectedProductVariation = $product->check_price;
                             <span>دسته بندی :</span>
                             <ul>
                                 <li>
-                                    <a href="#">
+                                    <a href="{{route('home.categories.show', $product->category->id)}}">
                                         {{$product->category->parent->name}}, {{$product->category->name}}
                                     </a>
                                 </li>
