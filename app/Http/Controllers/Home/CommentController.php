@@ -58,7 +58,7 @@ class CommentController extends Controller
         }
     }
 
-    public function userProfileComment()
+    public function usersProfileComment()
     {
         $comments = auth()->user()->approvedComments;
         return view('home.users_profile.comments', compact('comments'));
