@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\UserProfileController;
+use App\Http\Controllers\Home\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,6 +60,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/categories/{category:slug}', [HomeCategoryController::class, 'show'])->name('home.categories.show');
 Route::get('/products/{product:slug}', [HomeProductController::class, 'show'])->name('home.products.show');
 Route::post('/comments/{product}', [HomeCommentController::class, 'store'])->name('home.comments.store');
+
+Route::get('/add-to-wishlist/{product}', [WishlistController::class, 'add'])->name('home.wishlist.add');
+Route::get('/remove-from-wishlist/{product}', [WishlistController::class, 'remove'])->name('home.wishlist.remove');
 
 Route::any('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/check-otp', [AuthController::class, 'checkOtp']);

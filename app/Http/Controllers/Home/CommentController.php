@@ -54,6 +54,7 @@ class CommentController extends Controller
             }
         } else {
             alert()->warning('توجه!', 'برای ثبت نظر، ابتدا وارد سایت شوید!')->persistent('حله');
+            return redirect()->back();
         }
     }
 

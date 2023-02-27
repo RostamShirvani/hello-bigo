@@ -154,9 +154,23 @@
                             </span></a>
                                                             </li>
                                                             <li>
-                                                                <a href="#"><i class="sli sli-heart"></i><span
-                                                                        class="ht-product-action-tooltip"> افزودن به
-                              علاقه مندی ها </span></a>
+                                                                @if(auth()->check() && $product->checkUserWishlist(auth()->id()))
+                                                                    <a href="{{route('home.wishlist.remove', $product->id)}}">
+                                                                        <i class="fas fa-heart" style="color: red;"></i>
+                                                                        <span class="ht-product-action-tooltip">
+                                                                به لیست علاقه مندی ها اضافه شده
+                                                            </span>
+                                                                    </a>
+
+                                                                @else
+                                                                    <a href="{{route('home.wishlist.add', $product->id)}}">
+                                                                        <i class="sli sli-heart"></i>
+                                                                        <span class="ht-product-action-tooltip">
+                                                                افزودن به لیست علاقه مندی ها
+                                                            </span>
+                                                                    </a>
+
+                                                                @endif
                                                             </li>
                                                             <li>
                                                                 <a href="#"><i class="sli sli-refresh"></i><span
@@ -322,7 +336,15 @@
                                                 <a href="#">افزودن به سبد خرید</a>
                                             </div>
                                             <div class="pro-details-wishlist">
-                                                <a title="Add To Wishlist" href="#"><i class="sli sli-heart"></i></a>
+                                                @if(auth()->check() && $product->checkUserWishlist(auth()->id()))
+                                                    <a href="{{route('home.wishlist.remove', $product->id)}}">
+                                                        <i class="fas fa-heart" style="color: red;"></i>
+                                                    </a>
+                                                @else
+                                                    <a href="{{route('home.wishlist.add', $product->id)}}">
+                                                        <i class="sli sli-heart"></i>
+                                                    </a>
+                                                @endif
                                             </div>
                                             <div class="pro-details-compare">
                                                 <a title="Add To Compare" href="#"><i class="sli sli-refresh"></i></a>
@@ -468,9 +490,9 @@
             $('.quantity-value').val(1);
         });
 
-        $('#pagination li a').map(function (){
+        $('#pagination li a').map(function () {
             let decodeUrl = decodeURIComponent($(this).attr('href'));
-            if($(this).attr('href') != decodeUrl){
+            if ($(this).attr('href') != decodeUrl) {
                 $(this).attr('href', decodeUrl);
             }
         })
