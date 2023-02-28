@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
 use App\Http\Controllers\Home\CommentController as HomeCommentController;
 use App\Http\Controllers\Home\CompareController;
@@ -69,6 +70,8 @@ Route::get('/compare', [CompareController::class, 'index'])->name('home.compare.
 Route::get('/add-to-compare/{product}', [CompareController::class, 'add'])->name('home.compare.add');
 Route::get('/remove-from-compare/{product}', [CompareController::class, 'remove'])->name('home.compare.remove');
 
+Route::post('/add-to-cart', [CartController::class, 'add'])->name('home.cart.add');
+
 Route::any('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/check-otp', [AuthController::class, 'checkOtp']);
 Route::post('/resend-otp', [AuthController::class, 'resendOtp']);
@@ -80,9 +83,5 @@ Route::prefix('profile')->name('home.')->group(function (){
 
 });
 Route::get('/test', function (){
-//    session()->forget('compareProducts');
-    dd(session()->get('compareProducts'));
-//    auth()->logout();
-//    $user = \App\Models\User::query()->find(1);
-//    $user->notify(new \App\Notifications\OTPSmsNotification('123456'));
+    dd(\Cart::getContent());
 });
