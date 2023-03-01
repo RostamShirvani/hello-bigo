@@ -117,7 +117,7 @@
                                                         <img alt=""
                                                              src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$item->associatedModel->primary_image)}}"/></a>
                                                     <div class="item-close">
-                                                        <a href="#"><i class="sli sli-close"></i></a>
+                                                        <a href="{{route('home.cart.remove', $item->id)}}"><i class="sli sli-close"></i></a>
                                                     </div>
                                                 </div>
                                             </li>
@@ -201,69 +201,92 @@
                     <div class="header-right-wrap">
                         <div class="cart-wrap">
                             <button class="icon-cart-active">
-                    <span class="icon-cart">
-                      <i class="sli sli-bag"></i>
-                      <span class="count-style">02</span>
-                    </span>
-
-                                <span class="cart-price">
-                      500,000
-                    </span>
+                            <span class="icon-cart">
+                              <i class="sli sli-bag"></i>
+                                @if(! \Cart::isEmpty())
+                                    <span class="count-style">{{\Cart::getContent()->count()}}</span>
+                                @endif
+                            </span>
+                                @if(! \Cart::isEmpty())
+                                    <span class="cart-price">
+                              {{number_format(\Cart::getTotal())}}
+                            </span>
+                                @endif
                                 <span>تومان</span>
                             </button>
-                            <div class="shopping-cart-content">
-                                <div class="shopping-cart-top">
-                                    <a class="cart-close" href="#"><i class="sli sli-close"></i></a>
-                                    <h4>سبد خرید</h4>
-                                </div>
-                                <ul style="height: 400px;">
-                                    <li class="single-shopping-cart">
-                                        <div class="shopping-cart-title">
-                                            <h4><a href="#"> لورم ایپسوم </a></h4>
-                                            <span>1 x 90.00</span>
-                                        </div>
-
-                                        <div class="shopping-cart-img">
-                                            <a href="#"><img alt="" src="#"/></a>
-                                            <div class="item-close">
-                                                <a href="#"><i class="sli sli-close"></i></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="single-shopping-cart">
-                                        <div class="shopping-cart-title">
-                                            <h4><a href="#"> لورم ایپسوم </a></h4>
-                                            <span>1 x 9,000</span>
-                                        </div>
-                                        <div class="shopping-cart-img">
-                                            <a href="#"><img alt="" src="#"/></a>
-                                            <div class="item-close">
-                                                <a href="#"><i class="sli sli-close"></i></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="shopping-cart-bottom">
-                                    <div
-                                        class="shopping-cart-total d-flex justify-content-between align-items-center"
-                                        style="direction: rtl;">
-                                        <h4>
-                                            جمع کل :
-                                        </h4>
-                                        <span class="shop-total">
-                          25,000 تومان
-                        </span>
+                            @if(\Cart::isEmpty())
+                                <div class="shopping-cart-content">
+                                    <div class="shopping-cart-top">
+                                        <a class="cart-close" href="#"><i class="sli sli-close"></i></a>
+                                        <h4>سبد خرید</h4>
                                     </div>
+                                    <p>سبد خرید شما خالی است.</p>
                                     <div class="shopping-cart-btn btn-hover text-center">
-                                        <a class="default-btn" href="checkout.html">
-                                            ثبت سفارش
-                                        </a>
-                                        <a class="default-btn" href="cart-page.html">
-                                            سبد خرید
+                                        <a class="default-btn" href="{{route('home.index')}}">
+                                            فروشگاه
                                         </a>
                                     </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="shopping-cart-content">
+                                    <div class="shopping-cart-top">
+                                        <a class="cart-close" href="#"><i class="sli sli-close"></i></a>
+                                        <h4>سبد خرید</h4>
+                                    </div>
+                                    <ul>
+                                        @foreach(\Cart::getContent() as $item)
+                                            <li class="single-shopping-cart">
+                                                <div class="shopping-cart-title">
+                                                    <h4><a href="#"> {{$item->name}} </a></h4>
+                                                    <span>{{$item->quantity}} x {{number_format($item->price)}}</span>
+                                                    <div class="mb-0" style="direction: rtl;">
+                                                        <p style="font-size: 12px;">
+                                                            {{\App\Models\Attribute::find($item->attributes->attribute_id)->name}}
+                                                            :
+                                                            {{$item->attributes->value}}
+                                                        </p>
+                                                        @if($item->attributes->is_sale)
+                                                            <p style="font-size: 12px;color: red">
+                                                                {{$item->attributes->discount_percent}}%
+                                                                تخفیف
+                                                            </p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="shopping-cart-img">
+                                                    <a href="{{route('home.products.show', $item->associatedModel->slug)}}">
+                                                        <img alt=""
+                                                             src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$item->associatedModel->primary_image)}}"/></a>
+                                                    <div class="item-close">
+                                                        <a href="{{route('home.cart.remove', $item->id)}}"><i class="sli sli-close"></i></a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                    <div class="shopping-cart-bottom">
+                                        <div
+                                            class="shopping-cart-total d-flex justify-content-between align-items-center"
+                                            style="direction: rtl;">
+                                            <h4>
+                                                جمع کل :
+                                            </h4>
+                                            <span class="shop-total">
+                          {{number_format(\Cart::getTotal())}} تومان
+                        </span>
+                                        </div>
+                                        <div class="shopping-cart-btn btn-hover text-center">
+                                            <a class="default-btn" href="checkout.html">
+                                                ثبت سفارش
+                                            </a>
+                                            <a class="default-btn" href="{{route('home.cart.index')}}">
+                                                سبد خرید
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <div class="mobile-off-canvas">
                             <a class="mobile-aside-button" href="#"><i class="sli sli-menu"></i></a>

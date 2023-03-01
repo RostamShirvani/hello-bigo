@@ -72,7 +72,9 @@ Route::get('/remove-from-compare/{product}', [CompareController::class, 'remove'
 
 Route::get('/cart', [CartController::class, 'index'])->name('home.cart.index');
 Route::post('/add-to-cart', [CartController::class, 'add'])->name('home.cart.add');
+Route::get('/remove-from-cart/{rowId}', [CartController::class, 'remove'])->name('home.cart.remove');
 Route::put('/cart', [CartController::class, 'update'])->name('home.cart.update');
+Route::get('/clear-cart', [CartController::class, 'clear'])->name('home.cart.clear');
 
 Route::any('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/check-otp', [AuthController::class, 'checkOtp']);
