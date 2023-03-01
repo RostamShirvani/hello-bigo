@@ -13,20 +13,20 @@ class CartController extends Controller
     public function add(Request $request)
     {
         $request->validate([
-           'product_id' => 'required',
-           'qtybutton' => 'required'
+            'product_id' => 'required',
+            'qtybutton' => 'required'
         ]);
 
         $product = Product::query()->findOrFail($request->product_id);
         $productVariation = ProductVariation::query()->findOrFail(json_decode($request->variation)->id);
-        if($request->qtybutton > $productVariation->quantity){
+        if ($request->qtybutton > $productVariation->quantity) {
             alert()->error('توجه!', 'تعداد محصول خواسته شده، معتبر نمی باشد!');
             return redirect()->back();
         }
 
         // add the product to cart
-        $rowId = $product->id .'-'.$productVariation->id;
-        if (Cart::get($rowId) == null){
+        $rowId = $product->id . '-' . $productVariation->id;
+        if (Cart::get($rowId) == null) {
             Cart::add(array(
                 'id' => $rowId,
                 'name' => $product->name,
@@ -35,11 +35,10 @@ class CartController extends Controller
                 'attributes' => $productVariation->toArray(),
                 'associatedModel' => $product
             ));
-        }else{
+        } else {
             alert()->warning('توجه!', 'این محصول قبلا به سبد خرید شما اضافه شده است!');
             return redirect()->back();
         }
-
 
         alert()->success('با تشکر', 'محصول مورد نظر به سبد خرید شما اضافه شد.');
         return redirect()->back();
@@ -48,5 +47,30 @@ class CartController extends Controller
     public function index()
     {
         return view('home.cart.index');
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'qtybutton' => 'required'
+        ]);
+
+        foreach ($request->qtybutton as $rowId => $quantity) {
+
+            $item = Cart::get($rowId);
+            if ($quantity > $item->attributes->quantity) {
+                alert()->error('توجه!', 'تعداد محصول خواسته شده، معتبر نمی باشد!');
+                return redirect()->back();
+            }
+            Cart::update($rowId, array(
+                'quantity' => array(
+                    'relative' => false,
+                    'value' => $quantity
+                ),
+            ));
+        }
+        alert()->success('با تشکر', 'سبد خرید ویرایش شد.');
+        return redirect()->back();
+
     }
 }

@@ -37,7 +37,9 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
 
-                    <form action="#">
+                    <form action="{{route('home.cart.update')}}" method="POST">
+                        @csrf
+                        @method('PUT')
                         <div class="table-content table-responsive cart-table-content">
                             <table>
                                 <thead>
@@ -80,7 +82,7 @@
                                     </td>
                                     <td class="product-quantity">
                                         <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="text" name="qtybutton"
+                                            <input class="cart-plus-minus-box" type="text" name="qtybutton[{{$item->id}}]"
                                                    value="{{$item->quantity}}" data-max="{{$item->attributes->quantity}}">
                                         </div>
                                     </td>
