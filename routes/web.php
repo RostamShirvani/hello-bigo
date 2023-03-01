@@ -70,6 +70,7 @@ Route::get('/compare', [CompareController::class, 'index'])->name('home.compare.
 Route::get('/add-to-compare/{product}', [CompareController::class, 'add'])->name('home.compare.add');
 Route::get('/remove-from-compare/{product}', [CompareController::class, 'remove'])->name('home.compare.remove');
 
+Route::get('/cart', [CartController::class, 'index'])->name('home.cart.index');
 Route::post('/add-to-cart', [CartController::class, 'add'])->name('home.cart.add');
 
 Route::any('/login', [AuthController::class, 'login'])->name('login');
@@ -83,5 +84,6 @@ Route::prefix('profile')->name('home.')->group(function (){
 
 });
 Route::get('/test', function (){
+//    \Cart::clear();
     dd(\Cart::getContent());
 });

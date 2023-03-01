@@ -44,4 +44,9 @@ class CartController extends Controller
         alert()->success('با تشکر', 'محصول مورد نظر به سبد خرید شما اضافه شد.');
         return redirect()->back();
     }
+
+    public function index()
+    {
+        return view('home.cart.index');
+    }
 }
