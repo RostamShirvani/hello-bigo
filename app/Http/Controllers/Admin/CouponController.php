@@ -15,7 +15,8 @@ class CouponController extends Controller
      */
     public function index()
     {
-        //
+        $coupons = Coupon::query()->latest()->paginate(20);
+        return view('admin.coupons.index', compact('coupons'));
     }
 
     /**
@@ -41,7 +42,7 @@ class CouponController extends Controller
            'code' => 'required|unique:coupons,code',
            'type' => 'required',
            'amount' => 'required_if:type,=,amount',
-           'percentage' => 'required_if:type,=,percentage',
+           'percentage' => 'required_if:type,=,percentage|integer|between:0,100',
            'max_percentage_amount' => 'required_if:type,=,percentage',
            'expired_at' => 'required',
         ]);
@@ -65,9 +66,9 @@ class CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Coupon $coupon)
     {
-        //
+        return view('admin.coupons.show', compact('coupon'));
     }
 
     /**
@@ -76,9 +77,9 @@ class CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Coupon $coupon)
     {
-        //
+        return view('admin.coupons.edit', compact('coupon'));
     }
 
     /**
@@ -88,9 +89,29 @@ class CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Coupon $coupon)
     {
-        //
+        $request->validate([
+           'name' => 'required',
+           'code' => 'required|unique:coupons,code,'.$coupon->id,
+           'type' => 'required',
+           'amount' => 'required_if:type,=,amount',
+           'percentage' => 'required_if:type,=,percentage|integer|between:0,100',
+           'max_percentage_amount' => 'required_if:type,=,percentage',
+           'expired_at' => 'required',
+        ]);
+        $coupon->update([
+            'name' => $request->name ,
+            'code' => $request->code ,
+            'type' => $request->type ,
+            'amount' => $request->amount ,
+            'percentage' => $request->percentage ,
+            'max_percentage_amount' => $request->max_percentage_amount ,
+            'expired_at' => convertShamsiToGregorianDate($request->expired_at) ,
+            'description' => $request->description ,
+        ]);
+        alert()->success( 'با تشکر', 'کوپن مورد نظر ویرایش شد.');
+        return redirect()->route('admin.coupons.index');
     }
 
     /**
