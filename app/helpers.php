@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Models\Coupon;
+use App\Models\Order;
 use Carbon\Carbon;
 
 function generateFileName($name)
@@ -47,3 +49,29 @@ function cartTotalDeliveryAmount()
     return $cartTotalDeliveryAmount;
 }
 
+function checkCoupon($code){
+    $coupon = Coupon::query()->where('code', $code)->where('expired_at', '>', Carbon::now())->first();
+
+    if($coupon == null){
+        return ['error'=> 'کد تخفیف وارد شده معتبر نمی باشد!'];
+    }
+    if(Order::query()->where('user_id', auth()->id())->where('coupon_id', $coupon->id)->where('payment_status', 1)->exists()){
+        return ['error' => 'شما قبلا از این کد تخفیف استفاده نموده اید!'];
+    }
+    if($coupon->getRawOriginal('type') == 'amount'){
+        session()->put('coupon', ['code' => $coupon->code, 'amount' => $coupon->amount]);
+    }else{
+        $total = \Cart::getTotal();
+        $amount = min((($total * $coupon->percentage) / 100), $coupon->max_percentage_amount);
+        session()->put('coupon', ['code' => $coupon->code, 'amount' => $amount]);
+    }
+    return ['success'=> 'کد تخفیف برای شما ثبت شد.'];
+}
+
+function cartTotalAmount(){
+    if(session()->has('coupon')){
+        return max((\Cart::getTotal() + cartTotalDeliveryAmount()) - session()->get('coupon.amount'), 0);
+    }else{
+    \Cart::getTotal() + cartTotalDeliveryAmount();
+    }
+}
