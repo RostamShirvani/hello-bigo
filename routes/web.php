@@ -18,6 +18,7 @@ use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
 use App\Http\Controllers\Home\UserProfileController;
 use App\Http\Controllers\Home\WishlistController;
+use App\Http\Controllers\UserAddressController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -85,10 +86,18 @@ Route::post('/resend-otp', [AuthController::class, 'resendOtp']);
 
 Route::prefix('profile')->name('home.')->group(function (){
     Route::get('/', [UserProfileController::class, 'index'])->name('users_profile.index');
+
     Route::get('/comments', [HomeCommentController::class, 'usersProfileComment'])->name('comments.users_profile.index');
+
     Route::get('/wishlist', [WishlistController::class, 'usersProfileWishlist'])->name('wishlist.users_profile.index');
 
+    Route::get('/addresses', [UserAddressController::class, 'index'])->name('addresses.index');
+    Route::post('/addresses', [UserAddressController::class, 'store'])->name('addresses.store');
+
 });
+
+Route::get('/get-province-cities-list', [UserAddressController::class, 'getProvinceCitiesList']);
+
 Route::get('/test', function (){
 //    \Cart::clear();
     dd(\Cart::getContent());
