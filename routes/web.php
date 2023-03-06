@@ -93,6 +93,7 @@ Route::prefix('profile')->name('home.')->group(function (){
 
     Route::get('/addresses', [UserAddressController::class, 'index'])->name('addresses.index');
     Route::post('/addresses', [UserAddressController::class, 'store'])->name('addresses.store');
+    Route::put('/addresses/{address}', [UserAddressController::class, 'update'])->name('addresses.update');
 
 });
 
