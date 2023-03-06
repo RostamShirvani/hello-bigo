@@ -182,7 +182,7 @@
                                 <h4 class="grand-totall-title">
                                     جمع کل:
                                     <span>
-                                            {{cartTotalAmount()}}
+                                            {{number_format(cartTotalAmount())}}
                                             تومان
                                         </span>
                                 </h4>
