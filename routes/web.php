@@ -79,6 +79,7 @@ Route::get('/remove-from-cart/{rowId}', [CartController::class, 'remove'])->name
 Route::put('/cart', [CartController::class, 'update'])->name('home.cart.update');
 Route::get('/clear-cart', [CartController::class, 'clear'])->name('home.cart.clear');
 Route::post('/check-coupon', [CartController::class, 'checkCoupon'])->name('home.coupons.check');
+Route::get('/checkout', [CartController::class, 'checkout'])->name('home.orders.checkout');
 
 Route::any('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/check-otp', [AuthController::class, 'checkOtp']);

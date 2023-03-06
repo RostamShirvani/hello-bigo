@@ -37,7 +37,7 @@ class UserAddressController extends Controller
             'postal_code' => $request->postal_code,
         ]);
         alert()->success( 'با تشکر', 'آدرس مورد نظر ایجاد شد.');
-        return redirect()->route('home.addresses.index');
+        return redirect()->back();
     }
 
     public function getProvinceCitiesList(Request $request)
