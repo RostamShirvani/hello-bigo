@@ -56,6 +56,7 @@ function checkCoupon($code)
     $coupon = Coupon::query()->where('code', $code)->where('expired_at', '>', Carbon::now())->first();
 
     if ($coupon == null) {
+        session()->forget('coupon');
         return ['error' => 'کد تخفیف وارد شده معتبر نمی باشد!'];
     }
     if (Order::query()->where('user_id', auth()->id())->where('coupon_id', $coupon->id)->where('payment_status', 1)->exists()) {

@@ -25,8 +25,16 @@ class PaymentController extends Controller
             alert()->error('توجه!', $checkCart['error']);
             return redirect()->route('home.index');
         }
+
+        $amounts = $this->getAmounts();
+        if(array_key_exists('error', $amounts)){
+            alert()->error('توجه!', $amounts['error']);
+            return redirect()->route('home.index');
+        }
+        dd($amounts);
+
         $api = 'test';
-        $amount = "10000";
+        $amount = $amounts['paying_amount'];
 //        $mobile = "شماره موبایل";
 //        $factorNumber = "شماره فاکتور";
 //        $description = "توضیحات";
@@ -111,5 +119,22 @@ class PaymentController extends Controller
             }
         }
         return ['success' => 'success!'];
+    }
+
+    public function getAmounts()
+    {
+        if(session()->has('coupon')){
+            $checkCoupon = checkCoupon(session()->get('coupon.code'));
+            if(array_key_exists('error', $checkCoupon)){
+                return $checkCoupon;
+            }
+        }
+
+        return [
+            'total_amount' => (\Cart::getTotal() + cartTotalDiscountAmount()),
+            'delivery_amount' => cartTotalDeliveryAmount(),
+            'coupon_amount' => session()->has('coupon') ? session()->get('coupon.amount') : 0,
+            'paying_amount' => cartTotalAmount(),
+        ];
     }
 }
