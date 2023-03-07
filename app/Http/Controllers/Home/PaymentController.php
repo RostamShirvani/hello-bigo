@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProductVariation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,6 +18,12 @@ class PaymentController extends Controller
         if($validator->fails()){
             alert()->error('توجه!', 'اتصال به درگاه پرداخت انجام نشد! لطفا مجدد تلاش نمایید.');
             return redirect()->back();
+        }
+
+        $checkCart = $this->checkCart();
+        if(array_key_exists('error', $checkCart)){
+            alert()->error('توجه!', $checkCart['error']);
+            return redirect()->route('home.index');
         }
         $api = 'test';
         $amount = "10000";
@@ -84,5 +91,25 @@ class PaymentController extends Controller
             'api' 	=> $api,
             'token' => $token,
         ]);
+    }
+
+    public function checkCart()
+    {
+        if(\Cart::isEmpty()){
+            return ['error' => 'سبد خرید شما خالی است!'];
+        }
+        foreach (\Cart::getContent() as $item){
+            $variation = ProductVariation::query()->findOrFail($item->attributes->id);
+            $price = $variation->is_sale ? $variation->sale_price : $variation->price;
+            if($item->price != $price){
+                \Cart::clear();
+                  return ['error' => 'قیمت محصولات تغییر کرده است'];
+            }
+            if ($item->quantity > $variation->quantity){
+                \Cart::clear();
+                return ['error' => 'موجودی محصولات تغییر کرده است.'];
+            }
+        }
+        return ['success' => 'success!'];
     }
 }
