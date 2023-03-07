@@ -15,6 +15,7 @@ use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
 use App\Http\Controllers\Home\CommentController as HomeCommentController;
 use App\Http\Controllers\Home\CompareController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Home\PaymentController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
 use App\Http\Controllers\Home\UserProfileController;
 use App\Http\Controllers\Home\WishlistController;
@@ -80,6 +81,8 @@ Route::put('/cart', [CartController::class, 'update'])->name('home.cart.update')
 Route::get('/clear-cart', [CartController::class, 'clear'])->name('home.cart.clear');
 Route::post('/check-coupon', [CartController::class, 'checkCoupon'])->name('home.coupons.check');
 Route::get('/checkout', [CartController::class, 'checkout'])->name('home.orders.checkout');
+
+Route::post('/payment', [PaymentController::class, 'payment'])->name('home.payment');
 
 Route::any('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/check-otp', [AuthController::class, 'checkOtp']);
