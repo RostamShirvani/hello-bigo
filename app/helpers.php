@@ -63,11 +63,11 @@ function checkCoupon($code)
         return ['error' => 'شما قبلا از این کد تخفیف استفاده نموده اید!'];
     }
     if ($coupon->getRawOriginal('type') == 'amount') {
-        session()->put('coupon', ['code' => $coupon->code, 'amount' => $coupon->amount]);
+        session()->put('coupon', ['id' => $coupon->id, 'code' => $coupon->code, 'amount' => $coupon->amount]);
     } else {
         $total = \Cart::getTotal();
         $amount = min((($total * $coupon->percentage) / 100), $coupon->max_percentage_amount);
-        session()->put('coupon', ['code' => $coupon->code, 'amount' => $amount]);
+        session()->put('coupon', ['id' => $coupon->id, 'code' => $coupon->code, 'amount' => $amount]);
     }
     return ['success' => 'کد تخفیف برای شما ثبت شد.'];
 }
@@ -77,7 +77,7 @@ function cartTotalAmount()
     if (session()->has('coupon')) {
         return max((\Cart::getTotal() + cartTotalDeliveryAmount()) - session()->get('coupon.amount'), 0);
     } else {
-        \Cart::getTotal() + cartTotalDeliveryAmount();
+        return \Cart::getTotal() + cartTotalDeliveryAmount();
     }
 }
 
