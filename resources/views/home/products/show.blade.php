@@ -279,6 +279,10 @@
 
 @section('script')
     <script>
+        $(document).ready(function (){
+            let variation = JSON.parse($('.variation-select').val());
+            $('.quantity-value').attr('data-max', variation.quantity);
+        });
         $('.variation-select').on('change', function () {
             let variation = JSON.parse(this.value);
             let variationPriceDiv = $('.variation-price');

@@ -95,7 +95,7 @@
                                         @foreach(\Cart::getContent() as $item)
                                             <li class="single-shopping-cart">
                                                 <div class="shopping-cart-title">
-                                                    <h4><a href="#"> {{$item->name}} </a></h4>
+                                                    <h4><a href="{{route('home.products.show', $item->associatedModel->slug)}}"> {{$item->name}} </a></h4>
                                                     <span>{{$item->quantity}} x {{number_format($item->price)}}</span>
                                                     <div class="mb-0" style="direction: rtl;">
                                                         <p style="font-size: 12px;">
@@ -237,7 +237,7 @@
                                         @foreach(\Cart::getContent() as $item)
                                             <li class="single-shopping-cart">
                                                 <div class="shopping-cart-title">
-                                                    <h4><a href="#"> {{$item->name}} </a></h4>
+                                                    <h4><a href="{{route('home.products.show', $item->associatedModel->slug)}}"> {{$item->name}} </a></h4>
                                                     <span>{{$item->quantity}} x {{number_format($item->price)}}</span>
                                                     <div class="mb-0" style="direction: rtl;">
                                                         <p style="font-size: 12px;">
