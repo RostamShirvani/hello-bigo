@@ -15,74 +15,146 @@ class PaymentController extends Controller
 {
     public function payment(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'payment_method' => 'required',
-            'address_id' => 'required',
-        ]);
-        if ($validator->fails()) {
-            alert()->error('توجه!', 'اتصال به درگاه پرداخت انجام نشد! لطفا مجدد تلاش نمایید.');
-            return redirect()->back();
-        }
+        //for (zarrinpal) gateway payment:
+        $data = array(
+            'MerchantID' => 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+            'Amount' => 10000,
+            'CallbackURL' => route('home.payment_verify'),
+            'Description' => 'خرید تست'
+        );
 
-        $checkCart = $this->checkCart();
-        if (array_key_exists('error', $checkCart)) {
-            alert()->error('توجه!', $checkCart['error']);
-            return redirect()->route('home.index');
-        }
 
-        $amounts = $this->getAmounts();
-        if (array_key_exists('error', $amounts)) {
-            alert()->error('توجه!', $amounts['error']);
-            return redirect()->route('home.index');
-        }
+        $jsonData = json_encode($data);
+        $ch = curl_init('https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentRequest.json');
+        curl_setopt($ch, CURLOPT_USERAGENT, 'ZarinPal Rest Api v1');
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($jsonData)
+        ));
 
-        $api = 'test';
-        $amount = $amounts['paying_amount'];
-//        $mobile = "شماره موبایل";
-//        $factorNumber = "شماره فاکتور";
-//        $description = "توضیحات";
-        $redirect = route('home.payment_verify');
-        $result = $this->send($api, $amount, $redirect);
-        $result = json_decode($result);
-        if ($result->status) {
-            $createOrder = $this->createOrder($request->address_id, $amounts, $result->token, 'pay');
-            if (array_key_exists('error', $createOrder)) {
-                alert()->error('توجه!', $createOrder['error'])->persistent('حله');
-                return redirect()->back();
-            }
-            $go = "https://pay.ir/pg/$result->token";
-            return redirect()->to($go);
+
+        $result = curl_exec($ch);
+        $err = curl_error($ch);
+        $result = json_decode($result, true);
+        curl_close($ch);
+
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
         } else {
-            alert()->error('توجه!', $result->errorMessage)->persistent('حله');
-            return redirect()->back();
+            if ($result["Status"] == 100) {
+                return redirect()->to('https://sandbox.zarinpal.com/pg/StartPay/' . $result["Authority"]);
+            } else {
+                echo 'ERR: ' . $result["Status"];
+            }
         }
+
+        // for (pay) payment gateway:
+//        $validator = Validator::make($request->all(), [
+//            'payment_method' => 'required',
+//            'address_id' => 'required',
+//        ]);
+//        if ($validator->fails()) {
+//            alert()->error('توجه!', 'اتصال به درگاه پرداخت انجام نشد! لطفا مجدد تلاش نمایید.');
+//            return redirect()->back();
+//        }
+//
+//        $checkCart = $this->checkCart();
+//        if (array_key_exists('error', $checkCart)) {
+//            alert()->error('توجه!', $checkCart['error']);
+//            return redirect()->route('home.index');
+//        }
+//
+//        $amounts = $this->getAmounts();
+//        if (array_key_exists('error', $amounts)) {
+//            alert()->error('توجه!', $amounts['error']);
+//            return redirect()->route('home.index');
+//        }
+//
+//        $api = 'test';
+//        $amount = $amounts['paying_amount'];
+////        $mobile = "شماره موبایل";
+////        $factorNumber = "شماره فاکتور";
+////        $description = "توضیحات";
+//        $redirect = route('home.payment_verify');
+//        $result = $this->send($api, $amount, $redirect);
+//        $result = json_decode($result);
+//        if ($result->status) {
+//            $createOrder = $this->createOrder($request->address_id, $amounts, $result->token, 'pay');
+//            if (array_key_exists('error', $createOrder)) {
+//                alert()->error('توجه!', $createOrder['error'])->persistent('حله');
+//                return redirect()->back();
+//            }
+//            $go = "https://pay.ir/pg/$result->token";
+//            return redirect()->to($go);
+//        } else {
+//            alert()->error('توجه!', $result->errorMessage)->persistent('حله');
+//            return redirect()->back();
+//        }
     }
 
     public function paymentVerify(Request $request)
     {
-        $api = 'test';
-        $token = $request->token;
-        $result = json_decode($this->verify($api, $token));
-        if (isset($result->status)) {
-            if ($result->status == 1) {
-                $updateOrder = $this->updateOrder($token, $result->transId);
-                if (array_key_exists('error', $updateOrder)) {
-                    alert()->error('توجه!', $updateOrder['error'])->persistent('حله');
-                    return redirect()->back();
-                }
-                \Cart::clear();
-                alert()->success( 'با تشکر', 'پرداخت با موفقیت انجام شد. شماره ی تراکنش: '.$result->transId)->persistent('حله');
-                return redirect()->route('home.index');
-            } else {
-                alert()->error( 'خطا!', 'پرداخت با خطا مواجه شد. شماره ی وضعیت: '.$result->status)->persistent('حله');
-                return redirect()->route('home.index');
-            }
+        //for (zarrinpal) payment gateway:
+        $MerchantID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
+
+
+        $Authority = $request->Authority;
+
+        $data = array('MerchantID' => $MerchantID, 'Authority' => $Authority, 'Amount' => 10000);
+        $jsonData = json_encode($data);
+        $ch = curl_init('https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentVerification.json');
+        curl_setopt($ch, CURLOPT_USERAGENT, 'ZarinPal Rest Api v1');
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($jsonData)
+        ));
+        $result = curl_exec($ch);
+        $err = curl_error($ch);
+        curl_close($ch);
+        $result = json_decode($result, true);
+        if ($err) {
+            echo "cURL Error #:" . $err;
         } else {
-            if ($request->status == 0) {
-                alert()->error( 'خطا!', 'پرداخت با خطا مواجه شد. شماره ی وضعیت: '.$request->status)->persistent('حله');
-                return redirect()->route('home.index');
+            if ($result['Status'] == 100) {
+                echo 'Transation success. RefID:' . $result['RefID'];
+            } else {
+                echo 'Transation failed. Status:' . $result['Status'];
             }
         }
+
+        //for (pay) payment gateway:
+//        $api = 'test';
+//        $token = $request->token;
+//        $result = json_decode($this->verify($api, $token));
+//        if (isset($result->status)) {
+//            if ($result->status == 1) {
+//                $updateOrder = $this->updateOrder($token, $result->transId);
+//                if (array_key_exists('error', $updateOrder)) {
+//                    alert()->error('توجه!', $updateOrder['error'])->persistent('حله');
+//                    return redirect()->back();
+//                }
+//                \Cart::clear();
+//                alert()->success( 'با تشکر', 'پرداخت با موفقیت انجام شد. شماره ی تراکنش: '.$result->transId)->persistent('حله');
+//                return redirect()->route('home.index');
+//            } else {
+//                alert()->error( 'خطا!', 'پرداخت با خطا مواجه شد. شماره ی وضعیت: '.$result->status)->persistent('حله');
+//                return redirect()->route('home.index');
+//            }
+//        } else {
+//            if ($request->status == 0) {
+//                alert()->error( 'خطا!', 'پرداخت با خطا مواجه شد. شماره ی وضعیت: '.$request->status)->persistent('حله');
+//                return redirect()->route('home.index');
+//            }
+//        }
     }
 
     public function send($api, $amount, $redirect, $mobile = null, $factorNumber = null, $description = null)
