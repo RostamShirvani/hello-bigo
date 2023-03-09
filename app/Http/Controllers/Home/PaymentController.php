@@ -3,58 +3,15 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
-use App\Models\OrderItem;
 use App\Models\ProductVariation;
-use App\Models\Transaction;
-use App\PaymentGateway\Pay;
+use App\PaymentGateway\Zarinpal;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PaymentController extends Controller
 {
     public function payment(Request $request)
     {
-        //for (zarrinpal) gateway payment:
-//        $data = array(
-//            'MerchantID' => 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-//            'Amount' => 10000,
-//            'CallbackURL' => route('home.payment_verify'),
-//            'Description' => 'خرید تست'
-//        );
-//
-//
-//        $jsonData = json_encode($data);
-//        $ch = curl_init('https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentRequest.json');
-//        curl_setopt($ch, CURLOPT_USERAGENT, 'ZarinPal Rest Api v1');
-//        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-//        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-//        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-//            'Content-Type: application/json',
-//            'Content-Length: ' . strlen($jsonData)
-//        ));
-//
-//
-//        $result = curl_exec($ch);
-//        $err = curl_error($ch);
-//        $result = json_decode($result, true);
-//        curl_close($ch);
-//
-//
-//        if ($err) {
-//            echo "cURL Error #:" . $err;
-//        } else {
-//            if ($result["Status"] == 100) {
-//                return redirect()->to('https://sandbox.zarinpal.com/pg/StartPay/' . $result["Authority"]);
-//            } else {
-//                echo 'ERR: ' . $result["Status"];
-//            }
-//        }
-
-
         $validator = Validator::make($request->all(), [
             'payment_method' => 'required',
             'address_id' => 'required',
@@ -76,62 +33,56 @@ class PaymentController extends Controller
             return redirect()->route('home.index');
         }
         // for (pay) payment gateway:
-        $payGateway = new Pay();
-        $payGatewayResult = $payGateway->send($amounts, $request->address_id);
-        if (array_key_exists('error', $payGatewayResult)) {
-            alert()->error('توجه!', $payGatewayResult['error'])->persistent('حله');
+//        $payGateway = new Pay();
+//        $payGatewayResult = $payGateway->send($amounts, $request->address_id);
+//        if (array_key_exists('error', $payGatewayResult)) {
+//            alert()->error('توجه!', $payGatewayResult['error'])->persistent('حله');
+//            return redirect()->back();
+//        }else{
+//            return redirect()->to($payGatewayResult['success']);
+//        }
+
+        // for (zarinpal) payment gateway:
+        $zarinpalGateway = new Zarinpal();
+        $zarinpalGatewayResult = $zarinpalGateway->send($amounts, 'خرید تستی', $request->address_id);
+        if (array_key_exists('error', $zarinpalGatewayResult)) {
+            alert()->error('توجه!', $zarinpalGatewayResult['error'])->persistent('حله');
             return redirect()->back();
         }else{
-            return redirect()->to($payGatewayResult['success']);
+            return redirect()->to($zarinpalGatewayResult['success']);
         }
     }
 
     public function paymentVerify(Request $request)
     {
         //for (pay) payment gateway
-        $payGateway = new Pay();
-        $payGatewayResult = $payGateway->verify($request->token, $request->status);
-        if (array_key_exists('error', $payGatewayResult)) {
-            alert()->error('توجه!', $payGatewayResult['error'])->persistent('حله');
-            return redirect()->back();
-        }else{
-            alert()->success('با تشکر', $payGatewayResult['success']);
+//        $payGateway = new Pay();
+//        $payGatewayResult = $payGateway->verify($request->token, $request->status);
+//        if (array_key_exists('error', $payGatewayResult)) {
+//            alert()->error('توجه!', $payGatewayResult['error'])->persistent('حله');
+//            return redirect()->back();
+//        }else{
+//            alert()->success('با تشکر', $payGatewayResult['success']);
+//            return redirect()->route('home.index');
+//        }
+
+        //for (zarrinpal) payment gateway:
+        $amounts = $this->getAmounts();
+        if (array_key_exists('error', $amounts)) {
+            alert()->error('توجه!', $amounts['error']);
             return redirect()->route('home.index');
         }
 
-        //for (zarrinpal) payment gateway:
-//        $MerchantID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
-//
-//
-//        $Authority = $request->Authority;
-//
-//        $data = array('MerchantID' => $MerchantID, 'Authority' => $Authority, 'Amount' => 10000);
-//        $jsonData = json_encode($data);
-//        $ch = curl_init('https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentVerification.json');
-//        curl_setopt($ch, CURLOPT_USERAGENT, 'ZarinPal Rest Api v1');
-//        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-//        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-//        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-//            'Content-Type: application/json',
-//            'Content-Length: ' . strlen($jsonData)
-//        ));
-//        $result = curl_exec($ch);
-//        $err = curl_error($ch);
-//        curl_close($ch);
-//        $result = json_decode($result, true);
-//        if ($err) {
-//            echo "cURL Error #:" . $err;
-//        } else {
-//            if ($result['Status'] == 100) {
-//                echo 'Transation success. RefID:' . $result['RefID'];
-//            } else {
-//                echo 'Transation failed. Status:' . $result['Status'];
-//            }
-//        }
+        $zarinpalGateway = new Zarinpal();
+        $zarinpalGatewayResult = $zarinpalGateway->verify($request->Authority, $amounts['paying_amount']);
+        if (array_key_exists('error', $zarinpalGatewayResult)) {
+            alert()->error('توجه!', $zarinpalGatewayResult['error'])->persistent('حله');
+            return redirect()->back();
+        }else{
+            alert()->success('با تشکر', $zarinpalGatewayResult['success']);
+            return redirect()->route('home.index');
+        }
     }
-
 
     public function checkCart()
     {
