@@ -53,7 +53,8 @@ class PaymentController extends Controller
             $go = "https://pay.ir/pg/$result->token";
             return redirect()->to($go);
         } else {
-            echo $result->errorMessage;
+            alert()->error('توجه!', $result->errorMessage)->persistent('حله');
+            return redirect()->back();
         }
     }
 
@@ -64,13 +65,22 @@ class PaymentController extends Controller
         $result = json_decode($this->verify($api, $token));
         if (isset($result->status)) {
             if ($result->status == 1) {
-                echo "<h1>تراکنش با موفقیت انجام شد</h1>";
+                $updateOrder = $this->updateOrder($token, $result->transId);
+                if (array_key_exists('error', $updateOrder)) {
+                    alert()->error('توجه!', $updateOrder['error'])->persistent('حله');
+                    return redirect()->back();
+                }
+                \Cart::clear();
+                alert()->success( 'با تشکر', 'پرداخت با موفقیت انجام شد. شماره ی تراکنش: '.$result->transId)->persistent('حله');
+                return redirect()->route('home.index');
             } else {
-                echo "<h1>تراکنش با خطا مواجه شد</h1>";
+                alert()->error( 'خطا!', 'پرداخت با خطا مواجه شد. شماره ی وضعیت: '.$result->status)->persistent('حله');
+                return redirect()->route('home.index');
             }
         } else {
-            if ($_GET['status'] == 0) {
-                echo "<h1>تراکنش با خطا مواجه شد</h1>";
+            if ($request->status == 0) {
+                alert()->error( 'خطا!', 'پرداخت با خطا مواجه شد. شماره ی وضعیت: '.$request->status)->persistent('حله');
+                return redirect()->route('home.index');
             }
         }
     }
@@ -155,24 +165,24 @@ class PaymentController extends Controller
             DB::beginTransaction();
 
             $order = Order::create([
-               'user_id' =>  auth()->id(),
-               'address_id' => $addressId,
-               'coupon_id' => session()->has('coupon') ? session()->get('coupon.id') : null,
-               'total_amount' => $amounts['total_amount'],
-               'delivery_amount' => $amounts['delivery_amount'],
-               'coupon_amount' => $amounts['coupon_amount'],
-               'paying_amount' => $amounts['paying_amount'],
-               'payment_type' => 'online',
+                'user_id' => auth()->id(),
+                'address_id' => $addressId,
+                'coupon_id' => session()->has('coupon') ? session()->get('coupon.id') : null,
+                'total_amount' => $amounts['total_amount'],
+                'delivery_amount' => $amounts['delivery_amount'],
+                'coupon_amount' => $amounts['coupon_amount'],
+                'paying_amount' => $amounts['paying_amount'],
+                'payment_type' => 'online',
             ]);
 
             foreach (\Cart::getContent() as $item) {
                 OrderItem::create([
-                   'order_id' => $order->id,
-                   'product_id' => $item->associatedModel->id,
-                   'product_variation_id' => $item->attributes->id,
-                   'price' => $item->price,
-                   'quantity' => $item->quantity,
-                   'subtotal' => ($item->quantity * $item->price),
+                    'order_id' => $order->id,
+                    'product_id' => $item->associatedModel->id,
+                    'product_variation_id' => $item->attributes->id,
+                    'price' => $item->price,
+                    'quantity' => $item->quantity,
+                    'subtotal' => ($item->quantity * $item->price),
                 ]);
             }
 
@@ -183,6 +193,36 @@ class PaymentController extends Controller
                 'token' => $token,
                 'gateway_name' => $gateway_name,
             ]);
+
+            DB::commit();
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return ['error' => $ex->getMessage()];
+        }
+        return ['success' => 'success!'];
+    }
+
+    public function updateOrder($token, $refId)
+    {
+        try {
+            DB::beginTransaction();
+            $transaction = Transaction::query()->where('token', $token)->firstOrFail();
+            $transaction->update([
+                'status' => 1,
+                'ref_id' => $refId
+            ]);
+
+            $order = Order::query()->findOrFail($transaction->order_id);
+            $order->update([
+                'payment_status' => 1,
+                'status' => 1
+            ]);
+            foreach (\Cart::getContent() as $item) {
+                $variation = ProductVariation::query()->findOrFail($item->attributes->id);
+                $variation->update([
+                    'quantity' => $variation->quantity - $item->quantity
+                ]);
+            }
 
             DB::commit();
         } catch (\Exception $ex) {
