@@ -83,7 +83,7 @@ Route::post('/check-coupon', [CartController::class, 'checkCoupon'])->name('home
 Route::get('/checkout', [CartController::class, 'checkout'])->name('home.orders.checkout');
 
 Route::post('/payment', [PaymentController::class, 'payment'])->name('home.payment');
-Route::get('/payment-verify', [PaymentController::class, 'paymentVerify'])->name('home.payment_verify');
+Route::get('/payment-verify/{gatewayName}', [PaymentController::class, 'paymentVerify'])->name('home.payment_verify');
 
 Route::any('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/check-otp', [AuthController::class, 'checkOtp']);

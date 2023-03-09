@@ -11,7 +11,7 @@ class Pay extends Payment
 //        $mobile = "شماره موبایل";
 //        $factorNumber = "شماره فاکتور";
 //        $description = "توضیحات";
-        $redirect = route('home.payment_verify');
+        $redirect = route('home.payment_verify', 'pay');
         $result = $this->sendRequest($api, $amount, $redirect);
         $result = json_decode($result);
         if ($result->status) {

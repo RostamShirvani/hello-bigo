@@ -9,7 +9,7 @@ class Zarinpal extends Payment
         $data = array(
             'MerchantID' => 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
             'Amount' => $amounts['paying_amount'],
-            'CallbackURL' => route('home.payment_verify'),
+            'CallbackURL' => route('home.payment_verify', 'zarinpal'),
             'Description' => $description
         );
 
