@@ -109,6 +109,8 @@ Route::prefix('profile')->name('home.')->group(function (){
 
 Route::get('/get-province-cities-list', [UserAddressController::class, 'getProvinceCitiesList']);
 
+Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('home.about-us');
+
 Route::get('/test', function (){
 //    \Cart::clear();
     dd(\Cart::getContent());

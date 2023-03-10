@@ -18,4 +18,10 @@ class HomeController extends Controller
 
         return view('home.index', compact('sliders', 'indexTopBanners', 'indexBottomBanners', 'products'));
     }
+
+    public function aboutUs()
+    {
+        $bottomBanners = Banner::query()->where('type', 'index-bottom')->where('is_active', 1)->orderBy('priority')->get();
+        return view('home.about-us', compact('bottomBanners'));
+    }
 }
