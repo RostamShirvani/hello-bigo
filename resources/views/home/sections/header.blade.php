@@ -18,7 +18,7 @@
                                     <a href="{{route('home.about-us')}}"> درباره ی ما </a>
                                 </li>
 
-                                <li><a href="contact-us.html"> تماس با ما </a></li>
+                                <li><a href="{{route('home.contact-us')}}"> تماس با ما </a></li>
 
                                 <li class="angle-shape">
                                     <a href="#"> فروشگاه </a>
@@ -192,8 +192,8 @@
             <div class="row align-items-center">
                 <div class="col-6">
                     <div class="mobile-logo">
-                        <a href="index.html">
-                            <h4 class="font-weight-bold">WebProg.ir</h4>
+                        <a href="{{route('home.index')}}">
+                            <h4 class="font-weight-bold">eCommerce</h4>
                         </a>
                     </div>
                 </div>

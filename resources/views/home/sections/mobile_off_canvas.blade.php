@@ -41,7 +41,7 @@
                             </ul>
                         </li>
 
-                        <li><a href="contact-us.html">تماس با ما</a></li>
+                        <li><a href="{{route('home.contact-us')}}">تماس با ما</a></li>
 
                         <li><a href="{{route('home.about-us')}}"> درباره ی ما </a></li>
                     </ul>

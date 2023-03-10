@@ -3,10 +3,10 @@
         <div class="footer-top text-center pt-45 pb-45">
             <nav>
                 <ul>
-                    <li><a href="index.html">صفحه ای اصلی </a></li>
-                    <li><a href="shop.html">فروشگاه </a></li>
-                    <li><a href="contact-us.html">تماس با ما </a></li>
-                    <li><a href="about-us.html">ارتباط با ما </a></li>
+                    <li><a href="{{route('home.index')}}">صفحه ای اصلی </a></li>
+                    <li><a href="#">فروشگاه </a></li>
+                    <li><a href="{{route('home.contact-us')}}">تماس با ما </a></li>
+                    <li><a href="{{route('home.about-us')}}">ارتباط با ما </a></li>
                 </ul>
             </nav>
         </div>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="copyright text-center pb-20">
-                        <p>Copyright © WebProg.ir</p>
+                        <p>Copyright © eCommerce</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-3 col-12">
