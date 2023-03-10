@@ -92,7 +92,7 @@ Route::post('/resend-otp', [AuthController::class, 'resendOtp']);
 Route::prefix('profile')->name('home.')->group(function (){
     Route::get('/', [UserProfileController::class, 'index'])->name('users_profile.index');
 
-    Route::get('/comments', [HomeCommentController::class, 'usersProfileComment'])->name('comments.users_profile.index');
+    Route::get('/comments', [HomeCommentController::class, 'usersProfileIndex'])->name('comments.users_profile.index');
 
     Route::get('/wishlist', [WishlistController::class, 'usersProfileWishlist'])->name('wishlist.users_profile.index');
 
@@ -100,6 +100,7 @@ Route::prefix('profile')->name('home.')->group(function (){
     Route::post('/addresses', [UserAddressController::class, 'store'])->name('addresses.store');
     Route::put('/addresses/{address}', [UserAddressController::class, 'update'])->name('addresses.update');
 
+    Route::get('/orders', [CartController::class, 'usersProfileIndex'])->name('orders.users_profile.index');
 });
 
 Route::get('/get-province-cities-list', [UserAddressController::class, 'getProvinceCitiesList']);

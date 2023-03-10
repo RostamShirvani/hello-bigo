@@ -85,6 +85,7 @@ class PaymentController extends Controller
                 alert()->error('توجه!', $zarinpalGatewayResult['error'])->persistent('حله');
                 return redirect()->back();
             } else {
+                // todo send sms to user
                 alert()->success('با تشکر', $zarinpalGatewayResult['success']);
                 return redirect()->route('home.index');
             }

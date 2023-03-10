@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Home;
 
+use App\Models\Order;
 use App\Models\Province;
 use App\Models\UserAddress;
 use Cart;
@@ -118,5 +119,11 @@ class CartController extends Controller
         $provinces = Province::all();
 
         return view('home.cart.checkout', compact('addresses', 'provinces'));
+    }
+
+    public function usersProfileIndex()
+    {
+        $orders = Order::query()->where('user_id', auth()->id())->get();
+        return view('home.users_profile.orders', compact('orders'));
     }
 }
