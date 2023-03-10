@@ -18,9 +18,28 @@ class Order extends Model
             1 => 'پرداخت شده',
         };
     }
+    public function getPaymentTypeAttribute($payment_type)
+    {
+        return match ($payment_type) {
+            'pos' => 'دستگاه pos',
+            'online' => 'پرداخت اینترنتی',
+        };
+    }
+    public function getPaymentStatusAttribute($payment_status)
+    {
+        return match ($payment_status) {
+            0 => 'ناموفق',
+            1 => 'موفق',
+        };
+    }
 
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
