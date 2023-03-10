@@ -10,4 +10,12 @@ class Transaction extends Model
     use HasFactory;
     protected $table = "transactions";
     protected $guarded = [];
+
+    public function getStatusAttribute($status)
+    {
+        return match ($status) {
+            0 => 'ناموفق',
+            1 => 'موفق',
+        };
+    }
 }
