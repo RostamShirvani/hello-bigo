@@ -14,5 +14,10 @@ class OrderController extends Controller
         return view('admin.orders.index', compact('orders'));
     }
 
+    public function show(Order $order)
+    {
+        return view('admin.orders.show', compact('order'));
+    }
+
     //todo create and edit order
 }

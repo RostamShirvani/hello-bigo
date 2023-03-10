@@ -24,4 +24,9 @@ class ProductVariation extends Model
     {
         return $this->is_sale ? round((($this->price - $this->sale_price)/$this->price)*100): null;
     }
+
+    public function attribute()
+    {
+        return $this->belongsTo(Attribute::class);
+    }
 }
