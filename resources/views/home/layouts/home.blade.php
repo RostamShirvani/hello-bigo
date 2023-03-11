@@ -36,8 +36,9 @@
 <script src="{{ asset('/js/home/jquery-1.12.4.min.js') }}"></script>
 <script src="{{ asset('/js/home/plugins.js') }}"></script>
 <script src="{{ asset('/js/home.js') }}"></script>
-@yield('script')
 @include('sweetalert::alert')
+@yield('script')
+{!!  GoogleReCaptchaV3::init() !!}
 </body>
 
 </html>
