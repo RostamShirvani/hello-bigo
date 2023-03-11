@@ -3,6 +3,12 @@
 @section('title')
     تماس با ما
 @endsection
+
+@section('style')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
+@endsection
 @section('content')
     <div class="breadcrumb-area pt-35 pb-35 bg-gray" style="direction: rtl;">
         <div class="container">
@@ -11,7 +17,7 @@
                     <li>
                         <a href="index.html">صفحه ای اصلی</a>
                     </li>
-                    <li class="active">فروشگاه </li>
+                    <li class="active">فروشگاه</li>
                 </ul>
             </div>
         </div>
@@ -83,7 +89,7 @@
                                 <strong>{{$message}}</strong>
                             </p>
                             @enderror
-                            <button class="submit" type="submit"> ارسال پیام </button>
+                            <button class="submit" type="submit"> ارسال پیام</button>
                         </form>
                         <p class="form-messege"></p>
                     </div>
@@ -94,4 +100,20 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin="">
+    </script>
+    <script>
+        var map = L.map('map').setView([{{$setting->latitude}}, {{$setting->longitude}}], 12);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        var marker = L.marker([{{$setting->latitude}}, {{$setting->longitude}}]).addTo(map);
+        marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+    </script>
 @endsection
