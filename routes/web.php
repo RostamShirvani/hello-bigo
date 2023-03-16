@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
@@ -39,7 +40,7 @@ Route::get('/admin-panel/dashboard', function () {
     return view('admin.dashboard');
 })->name('dashboard');
 
-Route::prefix('/admin-panel/management')->name('admin.')->group(function (){
+Route::prefix('/admin-panel/management')->name('admin.')->group(callback: function (){
     Route::resource('brands', BrandController::class);
     Route::resource('attributes', AttributeController::class);
     Route::resource('categories', CategoryController::class);
@@ -50,6 +51,7 @@ Route::prefix('/admin-panel/management')->name('admin.')->group(function (){
     Route::resource('coupons', CouponController::class);
     Route::resource('orders', OrderController::class);
     Route::resource('transactions', TransactionController::class);
+    Route::resource('users', UserController::class);
 
     Route::get('/comments/{comment}/change-approve', [CommentController::class, 'changeApprove'])->name('comments.change-approve');
     // Get category attributes
