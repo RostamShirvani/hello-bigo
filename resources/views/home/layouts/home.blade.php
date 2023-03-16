@@ -16,6 +16,8 @@
 
     @yield('style')
 
+    {!! SEO::generate() !!}
+
 </head>
 
 <body>
