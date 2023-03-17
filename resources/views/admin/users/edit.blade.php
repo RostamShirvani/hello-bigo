@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
 @section('title')
-edit user
+    edit user
 @endsection
 
 @section('content')
@@ -25,6 +25,15 @@ edit user
                     <div class="form-group col-md-3">
                         <label for="name">شماره تلفن همراه</label>
                         <input class="form-control" name="cellphone" type="text" value="{{$user->cellphone}}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="role">نقش کاربر</label>
+                        <select class="form-control" name="role" id="role">
+                            <option></option>
+                            @foreach($roles as $role)
+                                <option value="{{$role->name}}" {{in_array($role->id, $user->roles->pluck('id')->toArray()) ? 'selected' : ''}}>{{$role->display_name}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <button class="btn btn-outline-primary mt-5" type="submit">ویرایش</button>
