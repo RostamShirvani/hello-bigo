@@ -35,7 +35,7 @@
         <div id="collapseUsers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{route('admin.users.index')}}">کاربران</a>
-                <a class="collapse-item" href="">گروه های کاربری</a>
+                <a class="collapse-item" href="{{route('admin.roles.index')}}">گروه های کاربری</a>
                 <a class="collapse-item" href="{{route('admin.permissions.index')}}">مجوزها</a>
             </div>
         </div>
