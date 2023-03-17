@@ -35,6 +35,30 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="accordion mt-3 col-md-12" id="accordionPermission">
+                        <div class="card">
+                            <div class="card-header p-1" id="headingOne">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-right" type="button" data-toggle="collapse" data-target="#collapsePermission" aria-expanded="true" aria-controls="collapsePermission">
+                                        مجوزهای دسترسی
+                                    </button>
+                                </h2>
+                            </div>
+
+                            <div id="collapsePermission" class="collapse" aria-labelledby="headingOne" data-parent="#accordionPermission">
+                                <div class="card-body row">
+                                    @foreach($permissions as $permission)
+                                        <div class="form-group form-check col-md-3">
+                                            <input type="checkbox" class="form-check-input" id="permission_{{$permission->id}}"
+                                                   name="{{$permission->name}}" value="{{$permission->name}}"
+                                                {{in_array($permission->id , $user->permissions->pluck('id')->toArray()) ? 'checked' : ''}}>
+                                            <label class="form-check-label mr-3" for="permission_{{$permission->id}}">{{$permission->display_name}}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <button class="btn btn-outline-primary mt-5" type="submit">ویرایش</button>
                 <a href="{{route('admin.users.index')}}" class="btn btn-dark mt-5 mr-3">بازگشت</a>

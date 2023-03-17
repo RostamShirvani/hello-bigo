@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,7 +20,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $roles = Role::all();
-        return view('admin.users.edit', compact('user', 'roles'));
+        $permissions = Permission::all();
+        return view('admin.users.edit', compact('user', 'roles', 'permissions'));
     }
 
     public function update(Request $request, User $user)
@@ -32,6 +34,8 @@ class UserController extends Controller
                 "cellphone" => $request->cellphone,
             ]);
             $user->syncRoles($request->role);
+            $permissions = $request->except(['_token', '_method', 'name', 'cellphone', 'role']);
+            $user->syncPermissions($permissions);
 
             DB::commit();
         } catch (\Exception $e) {
