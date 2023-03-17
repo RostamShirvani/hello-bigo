@@ -42,14 +42,14 @@ Route::get('/admin-panel/dashboard', function () {
     return view('admin.dashboard');
 })->name('dashboard');
 
-Route::prefix('/admin-panel/management')->name('admin.')->middleware('role:admin|writer')->group(callback: function (){
+Route::prefix('/admin-panel/management')->name('admin.')->group(callback: function (){
     Route::resource('brands', BrandController::class);
     Route::resource('attributes', AttributeController::class);
-    Route::resource('categories', CategoryController::class)->middleware('role_or_permission:super_admin|edit_categories');
+    Route::resource('categories', CategoryController::class);
     Route::resource('tags', TagController::class);
-    Route::resource('products', ProductController::class)->middleware('role:product_management');
+    Route::resource('products', ProductController::class);
     Route::resource('banners', BannerController::class);
-    Route::resource('comments', CommentController::class)->middleware('permission:approve_comment');
+    Route::resource('comments', CommentController::class);
     Route::resource('coupons', CouponController::class);
     Route::resource('orders', OrderController::class);
     Route::resource('transactions', TransactionController::class);
