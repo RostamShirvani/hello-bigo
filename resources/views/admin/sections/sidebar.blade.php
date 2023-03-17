@@ -55,7 +55,7 @@
     </li>
 
 {{--    @can('create_product')--}}
-    @role('product_management')
+{{--    @role('product_management')--}}
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProducts"
                aria-expanded="true"
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </li>
-    @endrole
+{{--    @endrole--}}
 {{--    @endcan--}}
 
 <!-- Divider -->
