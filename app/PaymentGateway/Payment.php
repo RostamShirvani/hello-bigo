@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ProductVariation;
 use App\Models\Transaction;
+use App\Notifications\PaymentReceiptNotification;
 use Illuminate\Support\Facades\DB;
 
 class Payment
@@ -81,6 +82,7 @@ class Payment
             DB::rollBack();
             return ['error' => $ex->getMessage()];
         }
+        auth()->user()->notify(new PaymentReceiptNotification($order->id, $order->paying_amount, $refId));
         return ['success' => 'success!'];
     }
 }
