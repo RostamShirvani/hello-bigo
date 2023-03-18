@@ -139,7 +139,7 @@
                                             class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
                                             <div class="ht-product-inner">
                                                 <div class="ht-product-image-wrap">
-                                                    <a href="#" class="ht-product-image">
+                                                    <a href="{{route('home.products.show', $product->slug)}}" class="ht-product-image">
                                                         <img
                                                             src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$product->primary_image)}}"
                                                             alt="Universal Product Style"/>
@@ -304,63 +304,71 @@
                                             @endforeach
                                         </ul>
                                     </div>
-                                    @if($product->check_quantity)
-                                        @php
-                                            if($product->check_sale)
-        {
-    $selectedProductVariation = $product->check_sale;
-        }else{
-    $selectedProductVariation = $product->check_price;
-        }
-                                        @endphp
-                                        <div class="pro-details-size-color text-right">
-                                            <div class="pro-details-size w-50">
-                                                <span>{{\App\Models\Attribute::find($product->variations->first()->attribute_id)->name}}</span>
-                                                <select class="form-control variation-select">
-                                                    @foreach($product->variations()->where('quantity', '>', 0)->get() as $variation)
-                                                        <option
-                                                            value="{{json_encode($variation->only(['id', 'quantity', 'is_sale', 'sale_price', 'price']))}}"
-                                                            {{$selectedProductVariation->id == $variation->id ? 'selected' : ''}}>{{$variation->value}}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                    <form action="{{route('home.cart.add')}}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{$product->id}}" />
+                                        @if($product->check_quantity)
+                                            @php
+                                                if($product->check_sale)
+                                                {
+                                                    $selectedProductVariation = $product->check_sale;
+                                                }else{
+                                                    $selectedProductVariation = $product->check_price;
+                                                }
+                                            @endphp
+                                            <div class="pro-details-size-color text-right">
+                                                <div class="pro-details-size w-50">
+                                                    <span>{{\App\Models\Attribute::find($product->variations->first()->attribute_id)->name}}</span>
+                                                    <select name="variation" class="form-control variation-select">
+                                                        @foreach($product->variations()->where('quantity', '>', 0)->get() as $variation)
+                                                            <option
+                                                                value="{{json_encode($variation->only(['id', 'quantity', 'is_sale', 'sale_price', 'price']))}}"
+                                                                {{$selectedProductVariation->id == $variation->id ? 'selected' : ''}}>{{$variation->value}}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="pro-details-quality">
-                                            <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box quantity-value" type="text"
-                                                       name="qtybutton"
-                                                       value="1" max="5"/>
+                                            <div class="pro-details-quality">
+                                                <div class="cart-plus-minus">
+                                                    <input class="cart-plus-minus-box quantity-value" type="text"
+                                                           name="qtybutton"
+                                                           value="1" max="5"/>
+                                                </div>
+                                                <div class="pro-details-cart">
+                                                    <button type="submit">افزودن به سبد خرید</button>
+                                                </div>
+                                                <div class="pro-details-wishlist">
+                                                    @if(auth()->check() && $product->checkUserWishlist(auth()->id()))
+                                                        <a href="{{route('home.wishlist.remove', $product->id)}}">
+                                                            <i class="fas fa-heart" style="color: red;"></i>
+                                                        </a>
+                                                    @else
+                                                        <a href="{{route('home.wishlist.add', $product->id)}}">
+                                                            <i class="sli sli-heart"></i>
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                                <div class="pro-details-compare">
+                                                    <a title="Add To Compare"
+                                                       href="{{route('home.compare.add', $product->id)}}"><i
+                                                            class="sli sli-refresh"></i></a>
+                                                </div>
                                             </div>
-                                            <div class="pro-details-cart">
-                                                <a href="#">افزودن به سبد خرید</a>
+
+                                        @else
+                                            <div class="not-in-stock">
+                                                <p class="text-white">ناموجود</p>
                                             </div>
-                                            <div class="pro-details-wishlist">
-                                                @if(auth()->check() && $product->checkUserWishlist(auth()->id()))
-                                                    <a href="{{route('home.wishlist.remove', $product->id)}}">
-                                                        <i class="fas fa-heart" style="color: red;"></i>
-                                                    </a>
-                                                @else
-                                                    <a href="{{route('home.wishlist.add', $product->id)}}">
-                                                        <i class="sli sli-heart"></i>
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="pro-details-compare">
-                                                <a title="Add To Compare" href="{{route('home.compare.add', $product->id)}}"><i class="sli sli-refresh"></i></a>
-                                            </div>
-                                        </div>
-                                    @else
-                                        <div class="not-in-stock">
-                                            <p class="text-white">ناموجود</p>
-                                        </div>
-                                    @endif
+                                        @endif
+                                    </form>
                                     <div class="pro-details-meta">
                                         <span>دسته بندی :</span>
                                         <ul>
                                             <li>
                                                 <a href="#">
-                                                    {{$product->category->parent->name}}, {{$product->category->name}}
+                                                    {{$product->category->parent->name}}
+                                                    , {{$product->category->name}}
                                                 </a>
                                             </li>
                                         </ul>

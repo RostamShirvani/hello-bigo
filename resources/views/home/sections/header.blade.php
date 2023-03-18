@@ -30,7 +30,7 @@
                                         @foreach($parentCategories as $parentCategory)
                                             <li>
                                                 <a class="menu-title"
-                                                   href="{{route('home.categories.show', $parentCategory->slug)}}">{{$parentCategory->name}}</a>
+                                                   href="#">{{$parentCategory->name}}</a>
 
                                                 <ul>
                                                     @foreach($parentCategory->children as $childCategory)
