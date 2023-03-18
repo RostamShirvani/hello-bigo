@@ -22,7 +22,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"> لورم ایپسوم </div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"> لورم ایپسوم</div>
                             <div class="h6 mb-0 font-weight-bold text-gray-800">
                                 40,000
                                 تومان
@@ -42,7 +42,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1"> لورم ایپسوم </div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1"> لورم ایپسوم</div>
                             <div class="h6 mb-0 font-weight-bold text-gray-800">
                                 215,000
                                 تومان
@@ -62,14 +62,15 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1"> وظایف </div>
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1"> وظایف</div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
                                     <div class="h5 mb-0 ml-3 font-weight-bold text-gray-800">50%</div>
                                 </div>
                                 <div class="col">
                                     <div class="progress progress-sm ml-2">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50"
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%"
+                                             aria-valuenow="50"
                                              aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
@@ -89,7 +90,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"> کامنت ها </div>
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"> کامنت ها</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                         </div>
                         <div class="col-auto">
@@ -110,7 +111,7 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary"> لورم ایپسوم </h6>
+                    <h6 class="m-0 font-weight-bold text-primary"> تراکنش های یک سال گذشته </h6>
                     <div class="dropdown no-arrow">
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
@@ -118,7 +119,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in text-right"
                              aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header"> لورم ایپسوم : </div>
+                            <div class="dropdown-header"> لورم ایپسوم :</div>
                             <a class="dropdown-item" href="#"> لورم </a>
                             <a class="dropdown-item" href="#"> لورم ایپسوم </a>
                             <div class="dropdown-divider"></div>
@@ -140,7 +141,7 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary"> لورم ایپسوم </h6>
+                    <h6 class="m-0 font-weight-bold text-primary"> تعداد تراکنش های یک سال گذشته </h6>
                     <div class="dropdown no-arrow">
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
@@ -148,7 +149,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in text-right"
                              aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header"> لورم ایپسوم : </div>
+                            <div class="dropdown-header"> لورم ایپسوم :</div>
                             <a class="dropdown-item" href="#"> لورم </a>
                             <a class="dropdown-item" href="#"> لورم ایپسوم </a>
                             <div class="dropdown-divider"></div>
@@ -163,13 +164,10 @@
                     </div>
                     <div class="mt-4 text-center small">
                     <span class="mr-2">
-                      <i class="fas fa-circle text-primary"></i> Direct
+                      <i class="fas fa-circle text-success"></i> تراکنش موفق
                     </span>
                         <span class="mr-2">
-                      <i class="fas fa-circle text-success"></i> Social
-                    </span>
-                        <span class="mr-2">
-                      <i class="fas fa-circle text-info"></i> Referral
+                      <i class="fas fa-circle text-primary"></i> تراکنش ناموفق
                     </span>
                     </div>
                 </div>
@@ -202,7 +200,8 @@
                     </div>
                     <h4 class="small font-weight-bold">Bootstrap <span class="float-left">60%</span></h4>
                     <div class="progress mb-4">
-                        <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0"
+                        <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60"
+                             aria-valuemin="0"
                              aria-valuemax="100"></div>
                     </div>
                     <h4 class="small font-weight-bold">PHP <span class="float-left">80%</span></h4>
@@ -302,7 +301,8 @@
                     </div>
                     <p>
                         لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی </p>
+                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
+                        تکنولوژی </p>
 
                 </div>
             </div>
@@ -314,11 +314,13 @@
                 </div>
                 <div class="card-body">
                     <p>
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها
+                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
+                        چاپگرها
                         و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی
                     </p>
                     <p class="mb-0">
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها
+                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
+                        چاپگرها
                         و متون بلکه روزنامه و مجله در ستون
                     </p>
                 </div>
@@ -343,7 +345,7 @@
                 sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
                 dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
                 s = '',
-                toFixedFix = function(n, prec) {
+                toFixedFix = function (n, prec) {
                     var k = Math.pow(10, prec);
                     return '' + Math.round(n * k) / k;
                 };
@@ -364,22 +366,39 @@
         var myLineChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                    label: "Earnings",
-                    lineTension: 0.3,
-                    backgroundColor: "rgba(78, 115, 223, 0.05)",
-                    borderColor: "rgba(78, 115, 223, 1)",
-                    pointRadius: 3,
-                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHoverRadius: 3,
-                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHitRadius: 10,
-                    pointBorderWidth: 2,
-                    data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
-                }],
+                labels: @json($labels),
+                datasets: [
+                    {
+                        label: "تراکنش های موفق",
+                        lineTension: 0.3,
+                        backgroundColor: "rgba(78, 115, 223, 0.05)",
+                        borderColor: "rgba(78, 115, 223, 1)",
+                        pointRadius: 3,
+                        pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                        pointBorderColor: "rgba(78, 115, 223, 1)",
+                        pointHoverRadius: 3,
+                        pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                        pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                        pointHitRadius: 10,
+                        pointBorderWidth: 2,
+                        data: @json($successTransactions),
+                    },
+                    {
+                        label: "تراکنش های ناموفق",
+                        lineTension: 0.3,
+                        backgroundColor: "rgba(255, 99, 132, 0.05)",
+                        borderColor: "rgba(255, 99, 132, 1)",
+                        pointRadius: 3,
+                        pointBackgroundColor: "rgba(255, 99, 132, 1)",
+                        pointBorderColor: "rgba(255, 99, 132, 1)",
+                        pointHoverRadius: 3,
+                        pointHoverBackgroundColor: "rgba(255, 99, 132, 1)",
+                        pointHoverBorderColor: "rgba(255, 99, 132, 1)",
+                        pointHitRadius: 10,
+                        pointBorderWidth: 2,
+                        data: @json($unsuccessTransactions),
+                    }
+                ],
             },
             options: {
                 maintainAspectRatio: false,
@@ -409,8 +428,8 @@
                             maxTicksLimit: 5,
                             padding: 10,
                             // Include a dollar sign in the ticks
-                            callback: function(value, index, values) {
-                                return '$' + number_format(value);
+                            callback: function (value, index, values) {
+                                return number_format(value) + ' تومان';
                             }
                         },
                         gridLines: {
@@ -440,9 +459,9 @@
                     mode: 'index',
                     caretPadding: 10,
                     callbacks: {
-                        label: function(tooltipItem, chart) {
+                        label: function (tooltipItem, chart) {
                             var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                            return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                            return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + ' تومان';
                         }
                     }
                 }
@@ -460,11 +479,11 @@
         var myPieChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ["Direct", "Referral", "Social"],
+                labels: ["تراکنش موفق", "تراکنش ناموفق"],
                 datasets: [{
-                    data: [55, 30, 15],
-                    backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-                    hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+                    data: @json($transactionsCount),
+                    backgroundColor: ['#1cc88a', '#4e73df'],
+                    hoverBackgroundColor: ['#17a673', '#2e59d9'],
                     hoverBorderColor: "rgba(234, 236, 244, 1)",
                 }],
             },
