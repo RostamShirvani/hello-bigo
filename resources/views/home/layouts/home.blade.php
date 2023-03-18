@@ -22,7 +22,12 @@
 
 <body>
 
-<div class="wrapper">
+<div class="wrapper text-center">
+
+    <div id="overlayer"></div>
+    <div class="loader">
+        <span class="loader-inner"></span>
+    </div>
 
     @include('home.sections.header')
 
@@ -40,6 +45,13 @@
 <script src="{{ asset('/js/home.js') }}"></script>
 @include('sweetalert::alert')
 @yield('script')
+
+<script>
+    $(window).load(function(){
+        $(".loader").delay(300).fadeOut("slow");
+        $("#overlayer").delay(300).fadeOut("slow");
+    });
+</script>
 {!!  GoogleReCaptchaV3::init() !!}
 </body>
 
