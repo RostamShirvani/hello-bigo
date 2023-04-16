@@ -1,4 +1,5 @@
 require('bootstrap/dist/js/bootstrap.bundle');
+require('jquery/dist/jquery.js');
 require('sweetalert');
 require('./files/rating.js');
 
