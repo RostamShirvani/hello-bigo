@@ -14,7 +14,7 @@
     <!-- Custom styles for this template-->
     <link href="{{asset('/css/home.css')}}" rel="stylesheet">
 
-    @vite(['resources/css/app.css', 'resources/js/admin/admin.js', 'resources/js/home/home.js'])
+{{--    @vite(['resources/css/app.css', 'resources/js/admin/admin.js', 'resources/js/home/home.js'])--}}
 
     @yield('style')
 
