@@ -67,10 +67,10 @@
                             </span>
                                 @if(! \Cart::isEmpty())
                                     <span class="cart-price">
-                              {{number_format(\Cart::getTotal())}}
-                            </span>
+                                        {{number_format(\Cart::getTotal())}}
+                                    </span>
+                                    <span>تومان</span>
                                 @endif
-                                <span>تومان</span>
                             </button>
                             @if(\Cart::isEmpty())
                                 <div class="shopping-cart-content">
@@ -95,7 +95,9 @@
                                         @foreach(\Cart::getContent() as $item)
                                             <li class="single-shopping-cart">
                                                 <div class="shopping-cart-title">
-                                                    <h4><a href="{{route('home.products.show', $item->associatedModel->slug)}}"> {{$item->name}} </a></h4>
+                                                    <h4>
+                                                        <a href="{{route('home.products.show', $item->associatedModel->slug)}}"> {{$item->name}} </a>
+                                                    </h4>
                                                     <span>{{$item->quantity}} x {{number_format($item->price)}}</span>
                                                     <div class="mb-0" style="direction: rtl;">
                                                         <p style="font-size: 12px;">
@@ -117,7 +119,8 @@
                                                         <img alt=""
                                                              src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$item->associatedModel->primary_image)}}"/></a>
                                                     <div class="item-close">
-                                                        <a href="{{route('home.cart.remove', $item->id)}}"><i class="sli sli-close"></i></a>
+                                                        <a href="{{route('home.cart.remove', $item->id)}}"><i
+                                                                class="sli sli-close"></i></a>
                                                     </div>
                                                 </div>
                                             </li>
@@ -237,7 +240,9 @@
                                         @foreach(\Cart::getContent() as $item)
                                             <li class="single-shopping-cart">
                                                 <div class="shopping-cart-title">
-                                                    <h4><a href="{{route('home.products.show', $item->associatedModel->slug)}}"> {{$item->name}} </a></h4>
+                                                    <h4>
+                                                        <a href="{{route('home.products.show', $item->associatedModel->slug)}}"> {{$item->name}} </a>
+                                                    </h4>
                                                     <span>{{$item->quantity}} x {{number_format($item->price)}}</span>
                                                     <div class="mb-0" style="direction: rtl;">
                                                         <p style="font-size: 12px;">
@@ -259,7 +264,8 @@
                                                         <img alt=""
                                                              src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$item->associatedModel->primary_image)}}"/></a>
                                                     <div class="item-close">
-                                                        <a href="{{route('home.cart.remove', $item->id)}}"><i class="sli sli-close"></i></a>
+                                                        <a href="{{route('home.cart.remove', $item->id)}}"><i
+                                                                class="sli sli-close"></i></a>
                                                     </div>
                                                 </div>
                                             </li>
