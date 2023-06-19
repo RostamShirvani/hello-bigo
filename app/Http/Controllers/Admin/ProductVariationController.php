@@ -32,7 +32,7 @@ class ProductVariationController extends Controller
                 'sku' => $value['sku'],
                 'sale_price' => $value['sale_price'],
                 'date_on_sale_from' => convertShamsiToGregorianDate($value['date_on_sale_from']),
-                'date_on_sale_to' => convertShamsiToGregorianDate($value['date_on_sale_from']),
+                'date_on_sale_to' => convertShamsiToGregorianDate($value['date_on_sale_to']),
             ]);
         }
     }

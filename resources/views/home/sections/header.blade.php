@@ -152,13 +152,28 @@
 
                         <div class="setting-wrap">
                             <button class="setting-active">
-                                <i class="sli sli-settings"></i>
+                                @auth
+                                    <?php
+                                    echo auth()->user()->name;
+                                    ?>
+                                    <i class="sli sli-settings"></i>
+                                @else
+                                    <i class="sli sli-settings"></i>
+                                @endauth
                             </button>
                             <div class="setting-content">
                                 <ul class="text-right">
                                     @auth
+                                        @can('create_product')
+                                            <li><a href="{{route('dashboard')}}">پنل مدیریت</a></li>
+                                        @endcan
                                         <li><a href="{{route('home.users_profile.index')}}">پروفایل</a></li>
-
+                                        <form action="{{route('logout')}}" method="post" id="logout">
+                                            @csrf
+                                            <li><a href=""
+                                                   onclick="event.preventDefault(); document.getElementById('logout').submit();">
+                                                    خروج</a></li>
+                                        </form>
                                     @else
                                         <li><a href="{{route('login')}}">ورود</a></li>
                                         <li><a href="{{route('register')}}">ایجاد حساب</a></li>

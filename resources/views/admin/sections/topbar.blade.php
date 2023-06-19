@@ -60,7 +60,7 @@
                 </h6>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                     <div>
-                        <div class="small text-gray-500"> مهر 12, 1399 </div>
+                        <div class="small text-gray-500"> مهر 12, 1399</div>
                         <span class="font-weight-bold"> متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
                       گرافیک است </span>
                     </div>
@@ -75,7 +75,7 @@
                 <a class="dropdown-item d-flex align-items-center" href="#">
 
                     <div>
-                        <div class="small text-gray-500"> مهر 12, 1399 </div>
+                        <div class="small text-gray-500"> مهر 12, 1399</div>
                         متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
                     </div>
 
@@ -89,7 +89,7 @@
                 <a class="dropdown-item d-flex align-items-center" href="#">
 
                     <div>
-                        <div class="small text-gray-500"> مهر 12, 1399 </div>
+                        <div class="small text-gray-500"> مهر 12, 1399</div>
                         متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
                     </div>
 
@@ -124,7 +124,7 @@
                         <div class="text-truncate">
                             متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
                         </div>
-                        <div class="small text-gray-500"> لورم ایپسوم </div>
+                        <div class="small text-gray-500"> لورم ایپسوم</div>
                     </div>
 
                     <div class="dropdown-list-image mr-3">
@@ -139,7 +139,7 @@
                         <div class="text-truncate">
                             متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
                         </div>
-                        <div class="small text-gray-500"> لورم ایپسوم </div>
+                        <div class="small text-gray-500"> لورم ایپسوم</div>
                     </div>
 
                     <div class="dropdown-list-image mr-3">
@@ -154,7 +154,7 @@
                         <div class="text-truncate">
                             متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
                         </div>
-                        <div class="small text-gray-500"> لورم ایپسوم </div>
+                        <div class="small text-gray-500"> لورم ایپسوم</div>
                     </div>
 
                     <div class="dropdown-list-image mr-3">
@@ -169,7 +169,7 @@
                         <div class="text-truncate">
                             متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
                         </div>
-                        <div class="small text-gray-500"> لورم ایپسوم </div>
+                        <div class="small text-gray-500"> لورم ایپسوم</div>
                     </div>
 
                     <div class="dropdown-list-image mr-3">
@@ -188,7 +188,8 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
-                <span class="ml-2 d-none d-lg-inline text-gray-600 small"> {{auth()->user()->name ?? 'مدیر سایت'}} </span>
+                <span
+                    class="ml-2 d-none d-lg-inline text-gray-600 small"> {{auth()->user()->name ?? 'مدیر سایت'}} </span>
                 <img class="img-profile rounded-circle" src="{{asset('/images/admin/user.jpg')}}">
             </a>
             <!-- Dropdown - User Information -->
@@ -220,15 +221,19 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> لورم ایپسوم متن ساختگی </h5>
+                <h5 class="modal-title" id="exampleModalLabel"> خروج از سایت </h5>
                 <button class="close ml-0" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                است. </div>
+            <div class="modal-body">آیا برای خروج مطئن هستید؟</div>
             <div class="modal-footer">
-                <a class="btn btn-primary" href="login.html"> خروج </a>
+                <form action="{{route('logout')}}" method="post" id="logout">
+                    @csrf
+                    <a class="btn btn-primary" href=""
+                       onclick="event.preventDefault(); document.getElementById('logout').submit();">
+                        بله </a>
+                </form>
                 <button class="btn btn-secondary" type="button" data-dismiss="modal"> لغو </button>
             </div>
         </div>

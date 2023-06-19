@@ -41,7 +41,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/admin-panel/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
-Route::prefix('/admin-panel/management')->name('admin.')->group(callback: function (){
+Route::prefix('/admin-panel/management')->name('admin.')->middleware(['role:admin'])->group(callback: function (){
     Route::resource('brands', BrandController::class);
     Route::resource('attributes', AttributeController::class);
     Route::resource('categories', CategoryController::class);
@@ -94,11 +94,16 @@ Route::get('/checkout', [CartController::class, 'checkout'])->name('home.orders.
 Route::post('/payment', [PaymentController::class, 'payment'])->name('home.payment');
 Route::get('/payment-verify/{gatewayName}', [PaymentController::class, 'paymentVerify'])->name('home.payment_verify');
 
-Route::any('/login', [AuthController::class, 'login'])->name('login');
+// login with google account and ...
+Route::get('/login/{provider}' , [AuthController::class , 'redirectToProvider'])->name('provider.login');
+Route::get('/login/{provider}/callback' , [AuthController::class , 'handleProviderCallback']);
+
+//Route::any('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/check-otp', [AuthController::class, 'checkOtp']);
 Route::post('/resend-otp', [AuthController::class, 'resendOtp']);
 
-Route::prefix('profile')->name('home.')->group(function (){
+Route::prefix('profile')->name('home.')->middleware('auth')->group(function (){
     Route::get('/', [UserProfileController::class, 'index'])->name('users_profile.index');
 
     Route::get('/comments', [HomeCommentController::class, 'usersProfileIndex'])->name('comments.users_profile.index');

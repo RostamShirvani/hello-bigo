@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion pr-0" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('home.index')}}">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" target="_blank" href="{{route('home.index')}}">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
@@ -123,7 +123,7 @@
     </div>
 
     <li class="nav-item active">
-        <a class="nav-link" href="{{route('admin.comments.index')}}">
+        <a class="nav-link" href="{{route('admin.banners.index')}}">
             <i class="fas fa-fw fa-images"></i>
             <span> بنرها </span></a>
     </li>

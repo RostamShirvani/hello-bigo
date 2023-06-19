@@ -18,7 +18,7 @@ class PaymentController extends Controller
             'address_id' => 'required',
         ]);
         if ($validator->fails()) {
-            alert()->error('توجه!', 'اتصال به درگاه پرداخت انجام نشد! لطفا مجدد تلاش نمایید.');
+            alert()->error('توجه!', 'اتصال به درگاه پرداخت انجام نشد! لطفا آدرس پستی و درگاه پرداخت را به درستی انتخاب نموده و مجدد تلاش نمایید.');
             return redirect()->back();
         }
 
@@ -69,7 +69,7 @@ class PaymentController extends Controller
                 return redirect()->back();
             } else {
                 alert()->success('با تشکر', $payGatewayResult['success']);
-                return redirect()->route('home.index');
+                return redirect()->route('home.orders.users_profile.index');
             }
         }
         if ($gatewayName == 'zarinpal') {
@@ -87,7 +87,7 @@ class PaymentController extends Controller
             } else {
                 // todo send sms to user
                 alert()->success('با تشکر', $zarinpalGatewayResult['success']);
-                return redirect()->route('home.index');
+                return redirect()->route('home.orders.users_profile.index');
             }
         }
 

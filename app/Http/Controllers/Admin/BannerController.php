@@ -38,7 +38,7 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'required|mimes:jpg,jpeg,png,svg',
+            'image' => 'required|mimes:jpg,jpeg,png,svg,webp',
             'priority' => 'required|integer',
             'type' => 'required',
         ]);
@@ -93,7 +93,7 @@ class BannerController extends Controller
     public function update(Request $request, Banner $banner)
     {
         $request->validate([
-            'image' => 'nullable|mimes:jpg,jpeg,png,svg',
+            'image' => 'nullable|mimes:jpg,jpeg,png,svg,webp',
             'priority' => 'required|integer',
             'type' => 'required',
         ]);
