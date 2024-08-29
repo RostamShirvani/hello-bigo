@@ -29,13 +29,15 @@
                                 <h4> ورود </h4>
                             </a>
                         </div>
-                        <div class="bg-dark text-white">
-                            اطلاعات ورود با یوزر تستی:
-                            <br>
-                            email: demo@demo.demo
-                            <br>
-                            pass: demo
-                        </div>
+                        @if(config('demo'))
+                            <div class="bg-dark text-white">
+                                اطلاعات ورود با یوزر تستی:
+                                <br>
+                                email: demo@demo.demo
+                                <br>
+                                pass: demo
+                            </div>
+                        @endif
                         <?php
 //                        App\Models\User::where('id', 5)->update(['password' => bcrypt('demo')]);
                         ?>
