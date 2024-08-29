@@ -26,6 +26,10 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        $request->validate([
+            'name' => 'required',
+            'cellphone' => 'required|unique:users,cellphone',
+        ]);
         try {
             DB::beginTransaction();
 
