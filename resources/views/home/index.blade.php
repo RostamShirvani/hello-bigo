@@ -42,32 +42,36 @@
     <div class="banner-area pt-100 pb-65">
         <div class="container">
             <div class="row">
-                @foreach($indexTopBanners->chunk(3)->first() as $banner)
-                    <div class="col-lg-4 col-md-4">
-                        <div class="single-banner mb-30 scroll-zoom">
-                            <a href="#">
-                                <img class="animated" src="{{asset(env('BANNER_IMAGES_UPLOAD_PATH').$banner->image)}}"
-                                     alt="{{$banner->image}}"/></a>
-                            <div class="banner-content-2 banner-position-5">
-                                <h4>{{$banner->title}}</h4>
+                @if(!blank($indexTopBanners))
+                    @foreach($indexTopBanners->chunk(3)->first() as $banner)
+                        <div class="col-lg-4 col-md-4">
+                            <div class="single-banner mb-30 scroll-zoom">
+                                <a href="#">
+                                    <img class="animated"
+                                         src="{{asset(env('BANNER_IMAGES_UPLOAD_PATH').$banner->image)}}"
+                                         alt="{{$banner->image}}"/></a>
+                                <div class="banner-content-2 banner-position-5">
+                                    <h4>{{$banner->title}}</h4>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-                @foreach($indexTopBanners->chunk(3)->last() as $banner)
-                    <div class="col-lg-6 col-md-6">
-                        <div class="single-banner mb-30 scroll-zoom">
-                            <a href="#">
-                                <img class="animated" src="{{asset(env('BANNER_IMAGES_UPLOAD_PATH').$banner->image)}}"
-                                     alt="{{$banner->image}}"/></a>
-                            <div
-                                class="{{$loop->last ? 'banner-content-3 banner-position-7' : 'banner-content banner-position-6 text-right'}}">
-                                <h3>{{$banner->title}}</h3>
-                                <a href="#">فروشگاه</a>
+                    @endforeach
+                    @foreach($indexTopBanners->chunk(3)->last() as $banner)
+                        <div class="col-lg-6 col-md-6">
+                            <div class="single-banner mb-30 scroll-zoom">
+                                <a href="#">
+                                    <img class="animated"
+                                         src="{{asset(env('BANNER_IMAGES_UPLOAD_PATH').$banner->image)}}"
+                                         alt="{{$banner->image}}"/></a>
+                                <div
+                                    class="{{$loop->last ? 'banner-content-3 banner-position-7' : 'banner-content banner-position-6 text-right'}}">
+                                    <h3>{{$banner->title}}</h3>
+                                    <a href="#">فروشگاه</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>
@@ -96,8 +100,8 @@
             <div class="tab-content jump-2">
                 <div id="product-1" class="tab-pane active">
                     <div class="ht-products product-slider-active owl-carousel">
-                    @foreach($products as $product)
-                        <!--Product Start-->
+                        @foreach($products as $product)
+                            <!--Product Start-->
                             <div class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
                                 <div class="ht-product-inner">
                                     <div class="ht-product-image-wrap">
@@ -362,7 +366,7 @@
                                     </div>
                                     <form action="{{route('home.cart.add')}}" method="POST">
                                         @csrf
-                                        <input type="hidden" name="product_id" value="{{$product->id}}" />
+                                        <input type="hidden" name="product_id" value="{{$product->id}}"/>
                                         @if($product->check_quantity)
                                             @php
                                                 if($product->check_sale)
@@ -375,7 +379,8 @@
                                             <div class="pro-details-size-color text-right">
                                                 <div class="pro-details-size w-50">
                                                     <span>{{\App\Models\Attribute::find($product->variations->first()->attribute_id)->name}}</span>
-                                                    <select name="variation" class="form-control variation-select" data-id="{{$product->id}}">
+                                                    <select name="variation" class="form-control variation-select"
+                                                            data-id="{{$product->id}}">
                                                         @foreach($product->variations()->where('quantity', '>', 0)->get() as $variation)
                                                             <option
                                                                 value="{{json_encode($variation->only(['id', 'quantity', 'is_sale', 'sale_price', 'price']))}}"
@@ -483,7 +488,7 @@
 
 @section('script')
     <script>
-        $(document).ready(function (){
+        $(document).ready(function () {
             let variation = JSON.parse($('.variation-select').val());
             $('.quantity-value').attr('data-max', variation.quantity);
         });
