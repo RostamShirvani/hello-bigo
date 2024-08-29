@@ -36,13 +36,15 @@ class AdminController extends Controller
             return $item->amount;
         });
 
+        $result = [];
         foreach ($monthName as $i=>$v) {
             if(!isset($result[$v])){
                 $result[$v] = 0;
             }
             $result[$v] += $amount[$i];
         }
-        if(count($result) != $month){
+
+        if(!empty($result) && (count($result) != $month)){
             for ($i =0; $i < $month; $i++){
                 $name = verta()->subMonths($i)->format('%B %y');
                 $shamsiMounths[$name] = 0;
