@@ -28,7 +28,7 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'cellphone' => 'required|unique:users,cellphone',
+            'cellphone' => 'required|unique:users,cellphone,' . auth()->user()->id,
         ]);
         try {
             DB::beginTransaction();
