@@ -1,0 +1,221 @@
+@media (max-width: 767px) {
+    .page-header-top-middle {
+        display: none;
+    }
+
+    .header-logo-element {
+        position: absolute;
+        left: 1rem;
+    }
+
+    header .btn-booking {
+        position: absolute;
+        text-align: center;
+        font-size: 14px;
+        padding: 6px 1rem;
+        /* display: none; */
+        right: 25%;
+        top: 1rem;
+    }
+
+    header {
+        height: 65px;
+        position: fixed;
+        z-index: 10000000;
+        left: 0;
+        right: 0;
+        top: 0;
+        background-color: white;
+        border-bottom: none;
+        box-shadow: 0px 5px 5px #0000001f;
+    }
+
+    body {
+        padding-top: 65px;
+    }
+
+    .btn-toggle {
+        display: flex;
+        font-size: 30px;
+    }
+
+    .header-logo {
+        height: 40px;
+    }
+
+    .swiper-slide img {
+        height: 250px
+    }
+
+    .form-bg {
+        position: absolute;
+        transform: rotate(0) scale(1);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: none;
+    }
+
+    .main-form {
+        width: 95%;
+    }
+
+    .main-form:before {
+        content: '';
+        background-image: url('../img/form-bg-01.jpg');
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        opacity: 0.25;
+        background-size: cover;
+    }
+
+    .main-form form {
+        position: relative;
+        z-index: 1;
+        margin: 0 !important;
+    }
+
+    .page-header-slogan p {
+        text-align: center !important;
+        margin-top: 1rem;
+    }
+
+    .page-header-shedule {
+        text-align: center;
+        padding: 1rem 10px;
+    }
+
+    .view-top .swiper-scrollbar {
+        bottom: 0 !important;
+    }
+
+    .cart {
+        background-color: white;
+        position: fixed;
+        z-index: 51;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 0;
+        border-radius: 0;
+        min-height: auto;
+    }
+
+    .cart.is-empty {
+        transform: translateY(80px);
+    }
+
+    .cart.expanded {
+        bottom: 0;
+    }
+
+    .cart-mobile-view {
+        display: block;
+        position: absolute;
+        z-index: 51;
+        left: 0;
+        right: 0;
+        height: 50px;
+        background-color: white;
+        box-shadow: 0px -4px 10px #00000040;
+        border-radius: 1rem 1rem 0 0;
+        cursor: pointer;
+        top: -50px;
+    }
+
+    .cart.expanded .cart-items {
+        height: auto;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .cart-items {
+        height: 0;
+        overflow: hidden;
+    }
+
+    .mobile-menu {
+        display: block;
+        right: -70%;
+    }
+
+    .mobile-menu-overlay {
+        display: block;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .menu-expanded .mobile-menu {
+        box-shadow: -5px 0px 10px #00000017;
+        right: 0;
+    }
+
+    .menu-expanded .mobile-menu-overlay {
+        opacity: .5;
+        visibility: visible;
+    }
+
+    .page-header-phone {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .page-header-phone a {
+        background-color: #E3F2FD;
+        width: 100%;
+        height: 100%;
+        display: block;
+        padding: 1rem 1rem;
+    }
+
+    .service-item .featured-image {
+        left: -5px;
+    }
+
+    .service-item .title {
+        font-size: 14px;
+    }
+
+    .cart-mobile-view-submit {
+
+    }
+
+    .hide-on-mobile {
+        display: none
+    }
+
+    .error {
+        font-size: 10px;
+    }
+
+    .cart-buttons {
+        display: none;
+    }
+
+    .shine {
+        right: -16px;
+        width: 70px;
+        height: 70px;
+    }
+
+    .booking-status-buttons {
+        position: relative;
+        text-align: center;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+
+    .btn-status {
+        margin-top: 5px;
+        width: 49%;
+        text-align: center;
+    }
+}

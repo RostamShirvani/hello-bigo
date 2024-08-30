@@ -36,6 +36,10 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
+
+        $this->mapAPIRoutes();
+        $this->mapWebSiteRoutes();
+        $this->mapWebAdminRoutes();
     }
 
     /**
@@ -48,5 +52,53 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
+    }
+
+    /**
+     * Define the "web site" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapWebSiteRoutes()
+    {
+        $routeFiles = glob(base_path('routes/web/site/*.php'));
+        foreach ($routeFiles as $routeFile) {
+            Route::middleware('web')
+                ->group($routeFile);
+        }
+    }
+
+    /**
+     * Define the "web admin" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapWebAdminRoutes()
+    {
+        $routeFiles = glob(base_path('routes/web/admin/*.php'));
+        foreach ($routeFiles as $routeFile) {
+            Route::middleware('web')
+                ->group($routeFile);
+        }
+    }
+
+    /**
+     * Define the "api" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAPIRoutes()
+    {
+        $routeFiles = glob(base_path('routes/api/*.php'));
+        foreach ($routeFiles as $routeFile) {
+            Route::middleware(['api'])
+                ->group($routeFile);
+        }
     }
 }

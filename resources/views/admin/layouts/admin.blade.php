@@ -12,7 +12,7 @@
     <title>ecommerce - @yield('title')</title>
 
     <!-- Custom styles for this template-->
-    <link href="{{asset('/css/admin.css')}}" rel="stylesheet">
+    <link href="{{asset('/../css/admin.css')}}" rel="stylesheet">
 
     @yield('style')
 
@@ -60,7 +60,7 @@
 @include('admin.sections.scroll_top')
 
 <!-- JavaScript-->
-<script src="{{ asset('/js/admin.js') }}"></script>
+<script src="{{ asset('/../js/admin.js') }}"></script>
 @yield('script')
 @include('sweetalert::alert')
 </body>
