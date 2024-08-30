@@ -1,7 +1,7 @@
 <footer class="sticky-footer bg-white">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
-            <span>Copyright &copy; WebProg.ir 1399</span>
+            <span>Copyright &copy; hosseinabdollahzadeh.ir <?= date("Y") ?></span>
         </div>
     </div>
 </footer>
