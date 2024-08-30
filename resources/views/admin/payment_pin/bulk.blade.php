@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
 @section('content')
-    <div class="container pt-4">
+    <div class="p-4">
         <div class="row">
             <div class="col-md-10 mx-auto">
                 <form action="{{ route('admin.payment-pins.store') }}" method="POST">

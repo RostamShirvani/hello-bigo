@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
 @section('content')
-    <div class="container pt-4">
+    <div class="p-4">
         <div class="row">
             <div class="col-md-6 m-auto">
                 <div class="row">
@@ -96,5 +96,4 @@
                 </tbody>
             </table>
         </div>
-         </div>
 @endsection
