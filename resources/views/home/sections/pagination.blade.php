@@ -1,5 +1,5 @@
 @if ($paginator->hasPages())
-    @if(request()->is('admin-panel/*'))
+    @if(request()->is('admin/*'))
     <nav>
         <ul class="pagination">
             {{-- Previous Page Link --}}
