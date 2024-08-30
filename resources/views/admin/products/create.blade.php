@@ -185,7 +185,7 @@
         $('#attributesContainer').hide();
         $('#categorySelect').on('changed.bs.select', function () {
             let categoryId = $(this).val();
-            $.get(`{{url('/admin-panel/management/category-attributes/${categoryId}')}}`, function (response, status) {
+            $.get(`{{url('/admin/category-attributes/${categoryId}')}}`, function (response, status) {
                 if (status == 'success') {
                     // console.log(response.attributes);
                     $('#attributesContainer').fadeIn();
