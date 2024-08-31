@@ -8,27 +8,32 @@
                     @csrf
                     <div class="mb-3">
                         <label for="razer_id">RazerId</label>
-                        <input type="text" name="razer_id" class="form-control" value="{{$razerAccount->razer_id}}">
+                        <input type="text" name="razer_id" id="razer_id" class="form-control" value="{{$razerAccount->razer_id}}">
                     </div>
 
                     <div class="mb-3">
                         <label for="email_address">EmailAddress</label>
-                        <input type="email" name="email_address" class="form-control" value="{{$razerAccount->email_address}}">
+                        <input type="email" name="email_address" id="email_address" class="form-control" value="{{$razerAccount->email_address}}">
                     </div>
 
                     <div class="mb-3">
                         <label for="location">لوکیشن</label>
-                        <input type="text" name="location" class="form-control" value="{{$razerAccount->location}}">
+                        <input type="text" name="location" id="location" class="form-control" value="{{$razerAccount->location}}">
                     </div>
 
                     <div class="mb-3">
                         <label for="charge_balance">شارژ فعلی</label>
-                        <input type="number" name="charge_balance" class="form-control" value="{{$razerAccount->charge_balance}}">
+                        <input type="number" name="charge_balance" id="charge_balance" class="form-control" value="{{$razerAccount->charge_balance}}">
                     </div>
 
                     <div class="mb-3">
                         <label for="charge_ceiling">سقف شارژ</label>
-                        <input type="number" name="charge_ceiling" class="form-control" value="{{$razerAccount->charge_ceiling}}">
+                        <input type="number" name="charge_ceiling" id="charge_ceiling" class="form-control" value="{{$razerAccount->charge_ceiling}}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="priority">اولویت</label>
+                        <input type="number" name="priority" id="priority" class="form-control" value="{{$razerAccount->priority}}">
                     </div>
 
                     <button class="btn btn-info">ویرایش</button>

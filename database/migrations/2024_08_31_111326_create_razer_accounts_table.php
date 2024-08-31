@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('charge_balance', 15, 0);
             $table->string('location')->nullable();
             $table->decimal('charge_ceiling', 15, 0)->default(90000);
-            $table->decimal('charge_ceil_flag', 15, 0)->default(0);
+            $table->decimal('priority', 15, 0)->default(0);
             $table->timestamp('manual_updated_at')->nullable();
             $table->timestamps();
         });

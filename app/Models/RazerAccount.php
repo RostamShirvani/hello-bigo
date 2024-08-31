@@ -15,7 +15,7 @@ class RazerAccount extends Model
         'charge_balance',
         'location',
         'charge_ceiling',
-        'charge_ceil_flag',
+        'priority',
         'manual_updated_at',
     ];
 

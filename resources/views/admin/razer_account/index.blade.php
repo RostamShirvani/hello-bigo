@@ -21,6 +21,7 @@
                     <th>لوکیشن</th>
                     <th>شارژ فعلی</th>
                     <th>سقف شارژ</th>
+                    <th>اولویت</th>
                     <th>ویرایش در</th>
                     <th>تاریخ ویرایش</th>
                 </tr>
@@ -62,6 +63,7 @@
                         <td>{{ $razerAccount->location }}</td>
                         <td>{{ $razerAccount->charge_balance }}</td>
                         <td>{{ $razerAccount->charge_ceiling }}</td>
+                        <td>{{ $razerAccount->priority }}</td>
                         <td>{{ $humanReadableTime ?? '-' }}</td>
                         <td>{{ $razerAccount->manual_updated_at ? dateTimeFormat($razerAccount->manual_updated_at) : '-' }}</td>
                         <td>

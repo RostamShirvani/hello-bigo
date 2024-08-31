@@ -44,11 +44,12 @@ class RazerAccountController extends Controller
             'email_address' => 'required|email',
             'location' => 'nullable|string',
             'charge_balance' => 'required|numeric',
-            'charge_ceiling' => 'nullable|numeric', // Allow charge_ceiling to be optional
+            'charge_ceiling' => 'nullable|numeric',
+            'priority' => 'nullable|numeric',
         ])->validated();
 
         $validate_data['charge_ceiling'] = (int)$validate_data['charge_ceiling'] > 0 ? (int)$validate_data['charge_ceiling'] : 90000;
-        $validate_data['charge_ceil_flag'] = (int)RazerAccount::min('charge_ceil_flag');
+        $validate_data['priority'] = (int)RazerAccount::min('priority');
 
         $validate_data['manual_updated_at'] = now();
 
@@ -65,7 +66,8 @@ class RazerAccountController extends Controller
             'email_address' => 'required|email',
             'location' => 'nullable|string',
             'charge_balance' => 'required|numeric',
-            'charge_ceiling' => 'nullable|numeric', // Allow charge_ceiling to be optional
+            'charge_ceiling' => 'nullable|numeric',
+            'priority' => 'nullable|numeric',
         ])->validated();
 
         $validate_data['charge_ceiling'] = (int)$validate_data['charge_ceiling'] > 0 ? (int)$validate_data['charge_ceiling'] : 90000;
