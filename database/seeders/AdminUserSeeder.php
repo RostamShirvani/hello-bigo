@@ -49,7 +49,7 @@ class AdminUserSeeder extends Seeder
             ['email' => 'admin@example.com'],
             [
                 'name' => 'Admin',
-                'cellphone' => '1234567890',
+                'cellphone' => '09123456789',
                 'avatar' => 'default-avatar.png',
                 'status' => 1,
                 'email_verified_at' => now(),
