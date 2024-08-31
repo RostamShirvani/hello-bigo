@@ -19,4 +19,8 @@ class RazerAccount extends Model
         'manual_updated_at',
     ];
 
+    protected $casts = [
+        'manual_updated_at' => 'datetime',
+    ];
+
 }
