@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts.admin')
 
 @section('content')
     <div class="container mt-4">
@@ -16,7 +16,7 @@
                     <th>موبایل</th>
                     <th>مبلغ</th>
                     <th>توضیحات</th>
-                    <th>Operation</th>
+                    <th>عملیات</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -24,10 +24,10 @@
                     <tr>
 
                         <td>{{ $blacklist->name }}</td>
-                        <td>{{ $blacklist->blackid }}</td>
+                        <td>{{ $blacklist->black_id }}</td>
                         <td>{{ $blacklist->mobile }}</td>
                         <td>{{ $blacklist->amount }} تومان </td>
-                        <td>{{ $blacklist->Description }}</td>
+                        <td>{{ $blacklist->description }}</td>
                         <td>
 
 

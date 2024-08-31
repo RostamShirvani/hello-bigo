@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts.admin')
 
 @section('content')
     <div class="container pt-4">
@@ -9,27 +9,27 @@
 
                     <div class="mb-3">
                         <label for=name>نام و نام خانوادگی</label>
-                        <input type="text" name="name" class="form-control">
+                        <input type="text" name="name" id="name" class="form-control">
                     </div>
 
                     <div class="mb-3">
-                        <label for=blackid>ایدی </label>
-                        <input type="text" name="blackid" class="form-control">
+                        <label for=black_id>ایدی </label>
+                        <input type="text" name="black_id" id="black_id" class="form-control">
                     </div>
 
                     <div class="mb-3">
                         <label for=mobile>موبایل </label>
-                        <input type="number" name="mobile" class="form-control">
+                        <input type="number" name="mobile" id="mobile" class="form-control">
                     </div>
 
                     <div class="mb-3">
                         <label for=amount>مبلغ </label>
-                        <input type="number" name="amount" class="form-control">
+                        <input type="number" name="amount" id="amount" class="form-control">
                     </div>
 
                     <div class="mb-3">
-                        <label for="Description">توصیحات </label>
-                        <textarea name="Description" id="resume" class="form-control"></textarea>
+                        <label for="description">توضیحات </label>
+                        <textarea name="description" id="description" class="form-control"></textarea>
                     </div>
 
                     <button class="btn btn-primary">افزودن</button>

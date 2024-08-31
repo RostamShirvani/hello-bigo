@@ -69,6 +69,14 @@
             </div>
         </div>
     </li>
+
+    <!-- Nav Item - Tables -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('admin.blacklist.index')}}">
+            <i class="fas fa-fw fa-ban"></i>
+            <span> بلک لیست </span></a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 
