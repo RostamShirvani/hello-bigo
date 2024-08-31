@@ -41,7 +41,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
-Route::prefix('/admin')->name('admin.')->middleware(['role:admin'])->group(callback: function (){
+Route::prefix('/admin')->name('admin.')->middleware(['role:super_admin'])->group(callback: function (){
     Route::resource('brands', BrandController::class);
     Route::resource('attributes', AttributeController::class);
     Route::resource('categories', CategoryController::class);
