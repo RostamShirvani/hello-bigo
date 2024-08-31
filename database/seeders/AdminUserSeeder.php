@@ -62,6 +62,6 @@ class AdminUserSeeder extends Seeder
         );
 
         // Assign the 'super_admin' role to the admin user
-        $adminUser->roles()->attach($superAdminRole);
+        $adminUser->roles()->sync($superAdminRole);
     }
 }
