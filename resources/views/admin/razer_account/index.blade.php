@@ -1,7 +1,11 @@
 @extends('admin.layouts.admin')
 
+@section('title')
+    index razer accounts
+@endsection
 @section('content')
     <div class="container mt-4">
+        <h5>مجموع شارژ اکانت ها: {{ number_format($totalChargeBalance) }}</h5>
         <div class="row">
             <div class="col-md-12 text-left py-2">
                 <a href="{{ route('admin.razer_accounts.add')}}" class="btn btn-primary btn-sm">افزودن اکانت</a>

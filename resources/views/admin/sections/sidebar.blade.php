@@ -35,12 +35,12 @@
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true"
-           aria-controls="collapseUsers">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePins" aria-expanded="true"
+           aria-controls="collapsePins">
             <i class="fas fa-fw fa-cart-plus"></i>
             <span> پین ها </span>
         </a>
-        <div id="collapseUsers" class="collapse
+        <div id="collapsePins" class="collapse
 {{request()->is('admin/payment-pins*') ? 'show' : ''}}
 " aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">

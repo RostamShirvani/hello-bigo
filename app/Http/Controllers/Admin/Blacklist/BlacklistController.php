@@ -13,9 +13,8 @@ class BlacklistController extends Controller
 {
     public function index()
     {
-        return view('admin.blacklist.index' , [
-            'blacklist' => Blacklist::all()
-        ]);
+        $blacklist = Blacklist::all();
+        return view('admin.blacklist.index' , compact('blacklist'));
 
     }
 
@@ -40,16 +39,12 @@ class BlacklistController extends Controller
 
 public function store (){
     $validate_data = Validator::make(request()->all() , [
-
         'name' => 'required',
-        'blackid' => 'required',
-        'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+        'black_id' => 'required',
+        'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:blacklists',
         'amount' => 'required',
-        'Description' => 'required',
+        'description' => 'required',
     ])->validated();
-
-
-
 
     Blacklist::create($validate_data);
 
@@ -57,5 +52,4 @@ return Redirect::route('admin.blacklist.index')->with('success' , 'کاربر ب
 
 }
 
-    
 }

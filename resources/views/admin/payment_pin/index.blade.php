@@ -1,4 +1,8 @@
 @extends('admin.layouts.admin')
+
+@section('title')
+    index payment pins
+@endsection
 @section('content')
     <div class="m-4">
         <div class="row">

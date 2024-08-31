@@ -12,10 +12,9 @@ class RazerAccountController extends Controller
 {
     public function index()
     {
-        return view('admin.razer_account.index', [
-            'razerAccounts' => RazerAccount::all()
-        ]);
-
+        $totalChargeBalance = RazerAccount::sum('charge_balance');
+        $razerAccounts = RazerAccount::all();
+        return view('admin.razer_account.index', compact('razerAccounts', 'totalChargeBalance'));
     }
 
 

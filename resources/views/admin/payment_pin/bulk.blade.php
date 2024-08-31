@@ -1,5 +1,9 @@
 @extends('admin.layouts.admin')
 
+@section('title')
+    bulk payment pins
+@endsection
+
 @section('content')
     <div class="p-4">
         <div class="row">

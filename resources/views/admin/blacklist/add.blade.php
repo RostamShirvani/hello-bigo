@@ -1,5 +1,8 @@
 @extends('admin.layouts.admin')
 
+@section('title')
+    Add black list
+@endsection
 @section('content')
     <div class="container pt-4">
         <div class="row">
