@@ -93,7 +93,7 @@
                             بلک لیست
                         </a>
                         <div class="d-inline-block mx-2">
-                            <a href="{{ route('admin.gift_charge.index') }}"
+                            <a href="{{ route('admin.razer_accounts.index') }}"
                                style="text-decoration: none; color: black">
                                 <i class="bi bi-lightning-charge"></i>
                                 اکانت ها

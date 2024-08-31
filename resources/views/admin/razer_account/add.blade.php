@@ -1,10 +1,10 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts.admin')
 
 @section('content')
     <div class="container pt-4">
         <div class="row">
             <div class="col-md-5 mx-auto">
-                <form action="{{ route('admin.gift_charge.store') }}" method="POST">
+                <form action="{{ route('admin.razer_accounts.store') }}" method="POST">
                     @csrf
 
                     <div class="mb-3">
@@ -18,8 +18,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="total_charge_balance">شارژ فعلی</label>
-                        <input type="number" name="total_charge_balance" class="form-control">
+                        <label for="location">لوکیشن</label>
+                        <input type="text" name="location" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="charge_balance">شارژ فعلی</label>
+                        <input type="number" name="charge_balance" class="form-control">
                     </div>
 
                     <div class="mb-3">

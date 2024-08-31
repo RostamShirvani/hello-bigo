@@ -23,8 +23,16 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        پین ها
+        اکانت ها
     </div>
+
+    <!-- Nav Item - Tables -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('admin.razer_accounts.index')}}">
+            <i class="fas fa-fw fa-user"></i>
+            <span> اکانت ها </span></a>
+    </li>
+
     <!-- Nav Item - Tables -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true"
