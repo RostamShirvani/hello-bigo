@@ -36,10 +36,10 @@
 {{request()->is('admin/payment-pins*') ? 'show' : ''}}
 " aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{request()->is('admin/payment-pins') ? 'active' : ''}}" href="{{route('admin.payment-pins.index')}}">لیست پین ها</a>
-                <a class="collapse-item {{request()->is('admin/payment-pins/create') ? 'active' : ''}}" href="{{route('admin.payment-pins.create')}}">افزودن تکی</a>
-                <a class="collapse-item {{request()->is('payment-pins/create?type=bulk') ? 'active' : ''}}" href="{{route('admin.payment-pins.create', ['type' => 'bulk'])}}">افزودن گروهی</a>
-                <a class="collapse-item {{request()->is('payment-pins/create?type=file') ? 'active' : ''}}" href="{{route('admin.payment-pins.create', ['type' => 'file'])}}">افزودن فایل</a>
+                <a class="collapse-item {{ request()->is('admin/payment-pins') ? 'active' : '' }}" href="{{ route('admin.payment-pins.index') }}">لیست پین ها</a>
+                <a class="collapse-item {{ request()->is('admin/payment-pins/create') && !request()->query('type') ? 'active' : '' }}" href="{{ route('admin.payment-pins.create') }}">افزودن تکی</a>
+                <a class="collapse-item {{ request()->is('admin/payment-pins/create*') && request()->query('type') === 'bulk' ? 'active' : '' }}" href="{{ route('admin.payment-pins.create', ['type' => 'bulk']) }}">افزودن گروهی</a>
+                <a class="collapse-item {{ request()->is('admin/payment-pins/create*') && request()->query('type') === 'file' ? 'active' : '' }}" href="{{ route('admin.payment-pins.create', ['type' => 'file']) }}">افزودن فایل</a>
             </div>
         </div>
     </li>
