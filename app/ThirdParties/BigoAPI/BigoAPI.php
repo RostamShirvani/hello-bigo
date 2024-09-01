@@ -248,8 +248,8 @@ class BigoAPI
                 ]);
 
                 if ($selected_account) {
-                    $selected_account->total_charge_balance += (int)$response;
-                    if (($selected_account->total_charge_balance + (int)$response) >= $selected_account->charge_ceiling) {
+                    $selected_account->charge_balance += (int)$response;
+                    if (($selected_account->charge_balance + (int)$response) >= $selected_account->charge_ceiling) {
                         $selected_account->charge_ceil_flag += 1;
                     }
                     $selected_account->save();
