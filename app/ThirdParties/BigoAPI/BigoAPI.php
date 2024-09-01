@@ -7,6 +7,7 @@ use App\Enums\ELoginTokenStatus;
 use App\Enums\EState;
 use App\Models\GiftCharge;
 use App\Models\LoginToken\LoginToken;
+use App\Models\RazerAccount;
 use App\Models\RequestUrl\RequestUrl;
 use App\Models\SilverLink\SilverLink;
 use Illuminate\Support\Facades\Http;
@@ -233,9 +234,7 @@ class BigoAPI
             $explode = explode('</h5>', last(explode('order_id:', $response)));
 
             if (isset($t_value) && $t_value) {
-                $selected_account = GiftCharge::orderBy('charge_ceil_flag', 'asc')
-                    ->orderBy('id', 'asc')
-                    ->first();
+                $selected_account = RazerAccount::getCurrentSelectedRazerAccount();
 
                 $urlt = 'https://global.gold.razer.com/paymentwall/Redemption/ClaimSilver';
                 $response = $this->sendRequest($urlt, 'POST', [

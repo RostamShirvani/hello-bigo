@@ -23,4 +23,10 @@ class RazerAccount extends Model
         'manual_updated_at' => 'datetime',
     ];
 
+    public static function getCurrentSelectedRazerAccount()
+    {
+        return RazerAccount::orderBy('priority', 'asc')
+            ->orderBy('id', 'asc')
+            ->first();
+    }
 }
