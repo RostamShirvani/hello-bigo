@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('wp_order_id', 50)->nullable();
             $table->string('wp_order_item_id', 50)->nullable();
             $table->string('tracking_code', 50)->nullable();
+            $table->string('used_by_mobile', 15)->nullable();
             $table->json('extra')->nullable(); // Use json instead of jsonb for wider DB compatibility
             $table->timestamp('used_at')->nullable();
             $table->timestamps();
