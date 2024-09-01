@@ -178,12 +178,12 @@ class BigoAPI
         $silver = $this->getSilverLinkFromResponse($response);
 
         if (!empty($silver)) {
-            $silverLink = new SilverLink();
-            $silverLink->app_type = EAppType::BIGO_LIVE;
-            $silverLink->silver = $silver;
-            $silverLink->created_at = now();
-            $silverLink->used_at = null;
-            $silverLink->save();
+//            $silverLink = new SilverLink();
+//            $silverLink->app_type = EAppType::BIGO_LIVE;
+//            $silverLink->silver = $silver;
+//            $silverLink->created_at = now();
+//            $silverLink->used_at = null;
+//            $silverLink->save();
 
 
 // تجزیه URL
@@ -220,10 +220,10 @@ class BigoAPI
                 echo "Query string not found in the main URL.";
             }
 
-            $botToken = "6420852445:AAF-LF7kN9GG9D2ruKQD-0ArY-Bvtjrt1jU";
-            $chatId = "-1002154374380";
-            $url = 'https://api.telegram.org/bot' . $botToken . '/sendMessage';
-            Http::post($url, ['chat_id' => $chatId, 'text' => "$redirect_value"]);
+//            $botToken = "6420852445:AAF-LF7kN9GG9D2ruKQD-0ArY-Bvtjrt1jU";
+//            $chatId = "-1002154374380";
+//            $url = 'https://api.telegram.org/bot' . $botToken . '/sendMessage';
+//            Http::post($url, ['chat_id' => $chatId, 'text' => "$redirect_value"]);
 
 
         }
