@@ -16,14 +16,15 @@
                 <tr>
 
                     <th>آیدی</th>
+                    <th>فعال</th>
                     <th>RazerId</th>
                     <th>EmailAddress</th>
                     <th>لوکیشن</th>
                     <th>شارژ فعلی</th>
                     <th>سقف شارژ</th>
                     <th>اولویت</th>
-                    <th>ویرایش در</th>
-                    <th>تاریخ ویرایش</th>
+                    <th>ویرایش شارژ فعلی در</th>
+                    <th>تاریخ ویرایش شارژ فعلی</th>
                 </tr>
                 </thead>
                 <tbody>
