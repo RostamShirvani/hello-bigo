@@ -35,6 +35,20 @@
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
+        <a class="nav-link" href="{{route('admin.payment-pins.using', ['app_type' => 1])}}">
+            <i class="fas fa-fw fa-user"></i>
+            <span> شارژ سریع بیگو </span></a>
+    </li>
+
+    <!-- Nav Item - Tables -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('admin.payment-pins.using', ['app_type' => 2])}}">
+            <i class="fas fa-fw fa-user"></i>
+            <span> شارژ سریع لایکی </span></a>
+    </li>
+
+    <!-- Nav Item - Tables -->
+    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePins" aria-expanded="true"
            aria-controls="collapsePins">
             <i class="fas fa-fw fa-cart-plus"></i>
