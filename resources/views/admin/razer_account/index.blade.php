@@ -58,6 +58,11 @@
                     <tr>
 
                         <td>{{ $razerAccount->id }}</td>
+                        <td style="display: flex; align-items: center; justify-content: center;">
+                            {!! $razerAccount->id == \App\Models\RazerAccount::getCurrentSelectedRazerAccount()->id
+                                ? '<i class="fas fa-check-circle text-success" title="Online"></i>'
+                                : '<i class="fas fa-times-circle text-danger" title="Offline"></i>' !!}
+                        </td>
                         <td>{{ $razerAccount->razer_id }}</td>
                         <td>{{ $razerAccount->email_address }}</td>
                         <td>{{ $razerAccount->location }}</td>
