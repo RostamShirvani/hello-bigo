@@ -236,6 +236,10 @@ class BigoAPI
             if (isset($t_value) && $t_value) {
                 $selected_account = RazerAccount::getCurrentSelectedRazerAccount();
 
+                if(!$selected_account){
+                    alert()->error('عملیات ناموفق', 'اکانت فعالی یافت نشد!');
+                    return redirect()->back();
+                }
                 $urlt = 'https://global.gold.razer.com/paymentwall/Redemption/ClaimSilver';
                 $response = $this->sendRequest($urlt, 'POST', [
 
@@ -353,23 +357,25 @@ class BigoAPI
             }
         }
 
-        $requestUrl->count_of_used++;
-        $requestUrl->used_at = now();
-        $requestUrl->save();
+        if($requestUrl){
+            $requestUrl->count_of_used++;
+            $requestUrl->used_at = now();
+            $requestUrl->save();
 
-        if ($requestUrl->url !== 'localhost') {
-            $response = $this->sendRequest($requestUrl->url . '/send_request.php', 'GET', [
-                'url' => $baseUrl,
-                'method' => $method,
-                'data' => json_encode($data),
-            ], $disableDecode);
+            if ($requestUrl->url !== 'localhost') {
+                $response = $this->sendRequest($requestUrl->url . '/send_request.php', 'GET', [
+                    'url' => $baseUrl,
+                    'method' => $method,
+                    'data' => json_encode($data),
+                ], $disableDecode);
 
-            if (!empty($response['result']) && $response['result'] === 1111) {
-                $requestUrl->count_of_used = 60;
-                $requestUrl->save();
+                if (!empty($response['result']) && $response['result'] === 1111) {
+                    $requestUrl->count_of_used = 60;
+                    $requestUrl->save();
+                }
+
+                return $response;
             }
-
-            return $response;
         }
 
         if ($method === 'GET') {
