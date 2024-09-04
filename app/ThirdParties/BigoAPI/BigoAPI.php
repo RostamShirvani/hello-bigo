@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Http;
 class BigoAPI
 {
     public const BASE_URL = 'https://m.bigopay.tv';
-    public const COOKIE = 'uniqid=Hdicx7MnYzj1lC19HiXBew1e9Wja7NWp8bqBjClR0B6LRvG1Yj7i49DPdjd6X0g5ErZtTso3Jk6YJQCTisKS5iLcTgSPUbwMZgKWaRqNit8cZuD6v86EfrylrYOlYgjY73ktABsDbBsS0VUEiP9E14latMOVVv82fhIlpB7nYi9lVZO1ncJqmdoDSVM0BguYuyp7wZtJfsrNpgAS6alAJDEA83kS89n1q7Xl9a98eVdchxaNCKcyQovCnVnGkWg8A7A3n8ZD0naMlEpTxtL';
+    public const COOKIE = 'uniqid=qXRITBmLt7NVoZyXhsDL6uj7U4ghYv9TTgs1Xdc6qQUCRajdQ7qJ9k3g7UaUPvuniT2fYW8oh1ZiG5h9HuVix8fahzsVTj9DE67BEa8i36XyNony1Y9EgGxM1Sh8Hkpj8CKCr0Ae8brd48UuWPuiQxnWhfiCaYuCUUK2qLcISjR6z9E8M7kc48JGw8K9IiDJAWPXaJHExhGSPItkowRcTOVTmFB1f9ROQezqajRDuQlHdP1n8hgFFp8Mv3nPvrwR1nEYdqZGGb53pF1mQbuB';
 
     public $bigoId;
     protected $fromBigoId;

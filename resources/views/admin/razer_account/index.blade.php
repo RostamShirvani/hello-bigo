@@ -67,8 +67,8 @@
                         <td>{{ $razerAccount->razer_id }}</td>
                         <td>{{ $razerAccount->email_address }}</td>
                         <td>{{ $razerAccount->location }}</td>
-                        <td>{{ $razerAccount->charge_balance }}</td>
-                        <td>{{ $razerAccount->charge_ceiling }}</td>
+                        <td>{{ number_format($razerAccount->charge_balance) }}</td>
+                        <td>{{ number_format($razerAccount->charge_ceiling) }}</td>
                         <td>{{ $razerAccount->priority }}</td>
                         <td>{{ $humanReadableTime ?? '-' }}</td>
                         <td>{{ $razerAccount->manual_updated_at ? dateTimeFormat($razerAccount->manual_updated_at) : '-' }}</td>

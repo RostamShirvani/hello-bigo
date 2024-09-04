@@ -8,7 +8,7 @@
     <div class="container pt-4">
         <div class="row">
             <div class="col-md-5 mx-auto mt-4" style="position: relative">
-                <form action="{{ route('api.payment-pins.using') }}"
+                <form action="{{ route('admin.payment-pins.using') }}"
                       method="POST"
                       class="ajax-form">
                     @csrf
