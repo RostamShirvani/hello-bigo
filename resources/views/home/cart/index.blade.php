@@ -47,7 +47,7 @@
                                     <th> تصویر محصول </th>
                                     <th> نام محصول </th>
 {{--                                    <th> فی </th>--}}
-{{--                                    <th> تعداد </th>--}}
+                                    <th> تعداد </th>
                                     <th> قیمت </th>
                                     <th> عملیات </th>
                                 </tr>
@@ -85,12 +85,12 @@
 {{--                                            </p>--}}
 {{--                                        @endif--}}
 {{--                                    </td>--}}
-{{--                                    <td class="product-quantity">--}}
+                                    <td class="product-quantity">
 {{--                                        <div class="cart-plus-minus">--}}
 {{--                                            <input class="cart-plus-minus-box" type="text" name="qtybutton[{{$item->id}}]"--}}
 {{--                                                   value="{{$item->quantity}}" data-max="{{$item->attributes->quantity}}">--}}
 {{--                                        </div>--}}
-{{--                                    </td>--}}
+                                    </td>
                                     <td class="product-subtotal">
                                         {{number_format($item->quantity * $item->price)}}
                                         تومان

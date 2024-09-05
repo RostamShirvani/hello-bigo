@@ -161,6 +161,12 @@ $(document).ready(function () {
         $('#bigo_id').prop('readonly', false);
         $('#check_account').removeClass('d-none');
         $('#edit_account').addClass('d-none'); // Hide edit button
+
+        // Uncheck the checkbox
+        $('#confirmation-checkbox').prop('checked', false);
+        // Disable the submit button
+        $('#submit-button').prop('disabled', true);
+        hideUserPreview();
     });
 
     $('.ajax-form').each(function () {
