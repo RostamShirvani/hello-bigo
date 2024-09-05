@@ -127,3 +127,34 @@ Route::get('/test', function (){
 //    \Cart::clear();
     dd(\Cart::getContent());
 });
+
+
+//Route::get('login', function () {
+//    return redirect()->route('site.homes.index', ['modal' => 'authModal']);
+//})->name('login');
+
+Route::get('/images/profiles/{url}', function ($url) {
+    $img = file_get_contents("https://bigotop.com/images/profiles/{$url}.jpg");
+    return response($img)->header('Content-type', 'image/png');
+})->name('images.process');
+
+Route::get('/images/load', function () {
+    $data = request()->input('data');
+    $img = file_get_contents($data);
+    return response($img)->header('Content-type', 'image/png');
+})->name('images.load');
+
+//Route::get('/links', function() {
+//    if(request()->ip() === '54.36.151.105' || request()->ip() === '144.91.122.91'){
+//
+//        $silverLinks = SilverLink::query()->orderBy('id', 'desc')->limit(10)->get();
+//        return response()->json($silverLinks->toArray());
+//    }
+//});
+//Route::delete('/delete/{id}' , function($id) {
+//    $blacklist = Blacklist::findOrFail($id);
+//
+//    $blacklist->delete();
+//
+//    return back()->with('success' , 'کاربر   با موفقیت از بلک لیست حذف شد!');
+//});
