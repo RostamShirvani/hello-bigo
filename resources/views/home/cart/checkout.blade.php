@@ -300,6 +300,7 @@
                                 </div>
                             </div>
                             <input type="hidden" id="address-input" name="address_id">
+                            <input type="hidden" name="mobile" value="{{auth()->user()->cellphone}}">
                         </form>
 
                     </div>
