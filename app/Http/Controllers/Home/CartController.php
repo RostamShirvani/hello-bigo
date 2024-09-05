@@ -11,15 +11,36 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductVariation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
     public function add(Request $request)
     {
-        // Validate product_id first
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'product_id' => 'required',
-        ]);
+            'variation' => 'required',
+            'confirmation_checkbox' => ['required', 'in:1'],
+        ],
+//            [
+//                'product_id.required' => 'Product is required.',
+//                'variation.required' => 'Variation is required.',
+//                'confirmation_checkbox.required' => 'You must confirm the checkbox.',
+//                'confirmation_checkbox.in' => 'The confirmation checkbox must be checked.',
+//            ]
+        );
+
+        if ($validator->fails()) {
+            // Get all error messages as a single string
+            $errors = implode("\n", $validator->errors()->all());
+
+            // Display warning alert with validation errors
+            alert()->warning('توجه!', $errors);
+
+            // Redirect back with errors and input
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
 
         // Fetch the product based on the validated product_id
         $product = Product::query()->findOrFail($request->product_id);

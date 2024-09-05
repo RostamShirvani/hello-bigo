@@ -85,7 +85,7 @@ $(document).ready(function () {
             $('.confirmation-section').show();
 
             // Disable bigo_id input and hide check_account button
-            $('#bigo_id').prop('disabled', true);
+            $('#bigo_id').prop('readonly', true);
             $('#check_account').addClass('d-none');
             $('#edit_account').removeClass('d-none'); // Show edit button
         }
@@ -158,7 +158,7 @@ $(document).ready(function () {
     // Event listener for the "edit_account" button
     $('#edit_account').click(() => {
         // Enable bigo_id input and show check_account button
-        $('#bigo_id').prop('disabled', false);
+        $('#bigo_id').prop('readonly', false);
         $('#check_account').removeClass('d-none');
         $('#edit_account').addClass('d-none'); // Hide edit button
     });
@@ -457,4 +457,22 @@ $(document).ready(function () {
         const form = $(this).data('form');
         $(`#${form}`).submit();
     });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const bigoIdInput = document.getElementById("bigo_id");
+    const confirmationCheckbox = document.getElementById("confirmation-checkbox");
+    const submitButton = document.getElementById("submit-button");
+
+    function toggleSubmitButton() {
+        if (bigoIdInput.value.trim() !== '' && confirmationCheckbox.checked) {
+            submitButton.disabled = false;
+        } else {
+            submitButton.disabled = true;
+        }
+    }
+
+    // Listen for changes on the bigo_id input field and checkbox
+    bigoIdInput.addEventListener('input', toggleSubmitButton);
+    confirmationCheckbox.addEventListener('change', toggleSubmitButton);
 });

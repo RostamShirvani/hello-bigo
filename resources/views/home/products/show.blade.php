@@ -106,11 +106,7 @@
                                         </div>
                                         <div class="text-right">
                                             <label for="bigo_id" class="form-label">آی دی اکانت بیگو</label>
-                                            <input type="text"
-                                                   class="form-control user-preview-toggler-front"
-                                                   name="bigo_id"
-                                                   id="bigo_id"
-                                                   value="{{ old('bigo_id') }}">
+                                            <input type="text" class="form-control user-preview-toggler-front" name="bigo_id" id="bigo_id" value="{{ old('bigo_id') }}">
                                             <button type="button" id="check_account" class="btn btn-primary mt-2" style="border-radius: 10px;">بررسی اکانت</button>
                                             <button type="button" id="edit_account" class="btn btn-warning mt-2 d-none">ویرایش اکانت</button>
                                         </div>
@@ -118,16 +114,16 @@
                                         <div class="text-right mt-3 confirmation-section" style="display: none;">
                                             <label class="form-check-label" id="confirmation-label"></label>
                                             <div style="display: flex; align-items: center;">
-                                                <input type="checkbox"
-                                                       class="form-check-input"
-                                                       id="confirmation-checkbox"
-                                                       name="confirmation_checkbox"
-                                                       style="width: 16px; height: 16px; margin: 0 5px; vertical-align: middle;"/>
-                                                <label for="confirmation-checkbox" class="form-check-label mr-4" id="confirmation-label" style="vertical-align: middle;">
-                                                    تأیید می نماییم که نام کاربری اکانت من <span class="user-preview-inline" id="confirmation-username" ></span> می باشد.
+                                                <input type="hidden" name="confirmation_checkbox" value="0">
+                                                <input type="checkbox" class="form-check-input" id="confirmation-checkbox" name="confirmation_checkbox"
+                                                       value="1" style="width: 16px; height: 16px; margin: 0 5px; vertical-align: middle;">
+                                                <label for="confirmation-checkbox" class="form-check-label mr-4" id="confirmation-label"
+                                                       style="vertical-align: middle;">
+                                                    تأیید می نماییم که نام کاربری اکانت من <span class="user-preview-inline" id="confirmation-username"></span> می باشد.
                                                 </label>
                                             </div>
                                         </div>
+
                                     </div>
                                 @endif
 
@@ -138,7 +134,7 @@
                                     {{--                                               value="1" max="5"/>--}}
                                     {{--                                    </div>--}}
                                     <div class="pro-details-cart">
-                                        <button type="submit">افزودن به سبد خرید</button>
+                                        <button type="submit" id="submit-button" disabled>افزودن به سبد خرید</button>
                                     </div>
                                     <div class="pro-details-wishlist">
                                         @if(auth()->check() && $product->checkUserWishlist(auth()->id()))

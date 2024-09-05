@@ -17684,6 +17684,19 @@ textarea:focus {
   border: none;
 }
 
+.pro-details-cart button:disabled {
+    background-color: gray !important;
+    color: black;
+    border: 1px solid gray;
+    cursor: not-allowed; /* Change cursor to indicate the button is disabled */
+    pointer-events: none; /* Prevent pointer events on the button */
+}
+
+.pro-details-cart button:disabled:hover {
+    background-color: gray !important; /* No hover effect */
+    color: black; /* No color change on hover */
+}
+
 .product-details-content .pro-details-quality .pro-details-wishlist a {
   font-size: 18px;
   color: #1f2226;
