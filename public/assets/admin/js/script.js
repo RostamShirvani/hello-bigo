@@ -83,6 +83,11 @@ $(document).ready(function () {
         if (name) {
             $('#confirmation-username').text(name);
             $('.confirmation-section').show();
+
+            // Disable bigo_id input and hide check_account button
+            $('#bigo_id').prop('disabled', true);
+            $('#check_account').addClass('d-none');
+            $('#edit_account').removeClass('d-none'); // Show edit button
         }
     }
 
@@ -118,6 +123,44 @@ $(document).ready(function () {
 
             }
         });
+    });
+
+    // Event listener for the "check_account" button
+    $('#check_account').click(() => {
+        hideUserPreview(); // Hide any previous user preview
+        const value = $('.user-preview-toggler-front').val(); // Get user input
+        const appType = $('[name=app_type]').val() || 1; // Get app type
+
+        // Perform an AJAX request to get user details
+        $.ajax({
+            url: '/api/users/getUserDetail', // Replace with your API endpoint
+            data: {
+                bigo_id: value,
+                app_type: appType,
+            },
+            method: 'post',
+            success: response => {
+                // Show user preview on successful response
+                if (response.status === true) {
+                    showUserPreview(response.avatar, response.nick_name);
+                } else {
+                    // Show default message if user not found
+                    showUserPreview('', 'یافت نشد');
+                }
+            },
+            error: (jqXHR, status, errorThrown) => {
+                // Show error message in user preview
+                showUserPreview('', 'یافت نشد');
+            }
+        });
+    });
+
+    // Event listener for the "edit_account" button
+    $('#edit_account').click(() => {
+        // Enable bigo_id input and show check_account button
+        $('#bigo_id').prop('disabled', false);
+        $('#check_account').removeClass('d-none');
+        $('#edit_account').addClass('d-none'); // Hide edit button
     });
 
     $('.ajax-form').each(function () {

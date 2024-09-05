@@ -107,10 +107,12 @@
                                         <div class="text-right">
                                             <label for="bigo_id" class="form-label">آی دی اکانت بیگو</label>
                                             <input type="text"
-                                                   class="form-control user-preview-toggler"
+                                                   class="form-control user-preview-toggler-front"
                                                    name="bigo_id"
                                                    id="bigo_id"
                                                    value="{{ old('bigo_id') }}">
+                                            <button type="button" id="check_account" class="btn btn-primary mt-2" style="border-radius: 10px;">بررسی اکانت</button>
+                                            <button type="button" id="edit_account" class="btn btn-warning mt-2 d-none">ویرایش اکانت</button>
                                         </div>
                                         <!-- Confirmation Checkbox -->
                                         <div class="text-right mt-3 confirmation-section" style="display: none;">

@@ -21,7 +21,7 @@
                     @else
                         <h3>شارژ اکانت بیگو</h3>
                     @endif
-
+                    <br>
 
                     <div class="mb-3" style="position:relative;">
                         <div class="user-preview">
@@ -52,8 +52,11 @@
                         </select>
                     </div>
 
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-has-loader btn-block w-100">ثبت</button>
+                    <div class="col-12 d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary btn-has-loader w-100">ثبت</button>
+                        <button type="button" id="edit_account" class="btn btn-warning btn-has-loader w-100 d-none">
+                            ویرایش اکانت
+                        </button>
                     </div>
                 </form>
             </div>
