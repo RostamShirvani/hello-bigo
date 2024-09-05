@@ -78,10 +78,18 @@ $(document).ready(function () {
 
         $('.user-preview .name').text(name);
         $('.user-preview').addClass('show');
+
+        // Show confirmation checkbox
+        if (name) {
+            $('#confirmation-username').text(name);
+            $('.confirmation-section').show();
+        }
     }
 
     const hideUserPreview = () => {
         $('.user-preview').removeClass('show');
+        $('.confirmation-section').hide(); // Hide the confirmation section
+
     }
 
     $('.user-preview-toggler').change(e => {

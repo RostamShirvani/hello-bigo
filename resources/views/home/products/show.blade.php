@@ -78,28 +78,63 @@
                                             @foreach($product->variations()->where('quantity', '>', 0)->get() as $variation)
                                                 <option
                                                     value="{{json_encode($variation->only(['id', 'quantity', 'is_sale', 'sale_price', 'price']))}}"
-                                                    {{$selectedProductVariation->id == $variation->id ? 'selected' : ''}}>{{$variation->value}} الماس
+                                                    {{$selectedProductVariation->id == $variation->id ? 'selected' : ''}}>{{$variation->value}}
+                                                    الماس
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                            <br>
-                                <div class="pro-details-size-color text-right">
-                                    <div class="pro-details-size w-50">
-                                        @if(!empty($product->app_type) && $product->app_type == \App\Enums\EAppType::BIGO_LIVE)
-                                            <label for="bigo_id">آی دی ( BIGO iD )</label>
-                                            <input class="form-control" id="bigo_id" name="bigo_id" type="text"
-                                                   value="{{old('bigo_id')}}">
-                                        @endif
+                                <br>
+                                {{--                                <div class="pro-details-size-color text-right">--}}
+                                {{--                                    <div class="pro-details-size w-50">--}}
+                                {{--                                        @if(!empty($product->app_type) && $product->app_type == \App\Enums\EAppType::BIGO_LIVE)--}}
+                                {{--                                            <label for="bigo_id">آی دی ( BIGO iD )</label>--}}
+                                {{--                                            <input class="form-control" id="bigo_id" name="bigo_id" type="text"--}}
+                                {{--                                                   value="{{old('bigo_id')}}">--}}
+                                {{--                                        @endif--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
+
+                                @if(!empty($product->app_type) && $product->app_type == \App\Enums\EAppType::BIGO_LIVE)
+                                    <div>
+                                        <div class="mb-3 text-left" style="position:relative;">
+                                            <div class="user-preview">
+                                                <div class="avatar"></div>
+                                                <div class="name"></div>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <label for="bigo_id" class="form-label">آی دی اکانت بیگو</label>
+                                            <input type="text"
+                                                   class="form-control user-preview-toggler"
+                                                   name="bigo_id"
+                                                   id="bigo_id"
+                                                   value="{{ old('bigo_id') }}">
+                                        </div>
+                                        <!-- Confirmation Checkbox -->
+                                        <div class="text-right mt-3 confirmation-section" style="display: none;">
+                                            <label class="form-check-label" id="confirmation-label"></label>
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="checkbox"
+                                                       class="form-check-input"
+                                                       id="confirmation-checkbox"
+                                                       name="confirmation_checkbox"
+                                                       style="width: 16px; height: 16px; margin: 0 5px; vertical-align: middle;"/>
+                                                <label for="confirmation-checkbox" class="form-check-label mr-4" id="confirmation-label" style="vertical-align: middle;">
+                                                    تأیید می نماییم که نام کاربری اکانت من <span class="user-preview-inline" id="confirmation-username" ></span> می باشد.
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
+
                                 <div class="pro-details-quality">
-{{--                                    <div class="cart-plus-minus">--}}
-{{--                                        <input class="cart-plus-minus-box quantity-value" type="text"--}}
-{{--                                               name="qtybutton"--}}
-{{--                                               value="1" max="5"/>--}}
-{{--                                    </div>--}}
+                                    {{--                                    <div class="cart-plus-minus">--}}
+                                    {{--                                        <input class="cart-plus-minus-box quantity-value" type="text"--}}
+                                    {{--                                               name="qtybutton"--}}
+                                    {{--                                               value="1" max="5"/>--}}
+                                    {{--                                    </div>--}}
                                     <div class="pro-details-cart">
                                         <button type="submit">افزودن به سبد خرید</button>
                                     </div>

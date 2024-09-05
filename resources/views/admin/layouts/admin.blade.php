@@ -12,8 +12,8 @@
     <title>ecommerce - @yield('title')</title>
 
     <!-- Custom styles for this template-->
-    <link href="{{asset('/../css/admin.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('site/css/style.css') }}"/>
+    <link href="{{asset('/css/admin.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('/assets/site/css/style.css') }}"/>
 
     @yield('style')
 
@@ -61,8 +61,8 @@
 @include('admin.sections.scroll_top')
 
 <!-- JavaScript-->
-<script src="{{ asset('/../js/admin.js') }}"></script>
-<script src="{{ asset('admin/js/script.js') }}"></script>
+<script src="{{ asset('/js/admin.js') }}"></script>
+<script src="{{ asset('/assets/admin/js/script.js') }}"></script>
 @yield('script')
 @include('sweetalert::alert')
 </body>

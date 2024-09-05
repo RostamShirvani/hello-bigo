@@ -13,7 +13,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('/css/home.css')}}" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ asset('/assets/site/css/style.css') }}"/>
 {{--    @vite(['resources/css/app.css', 'resources/js/admin/admin.js', 'resources/js/home/home.js'])--}}
 
     @yield('style')
@@ -45,6 +45,7 @@
 <script src="{{ asset('/js/home/jquery-1.12.4.min.js') }}"></script>
 <script src="{{ asset('/js/home/plugins.js') }}"></script>
 <script src="{{ asset('/js/home.js') }}"></script>
+<script src="{{ asset('/assets/admin/js/script.js') }}"></script>
 @include('sweetalert::alert')
 @yield('script')
 

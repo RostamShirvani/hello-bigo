@@ -1716,6 +1716,26 @@ textarea.user-address {
     transform: scale(.8);
 }
 
+.user-preview-inline {
+    background: #f5cee1;
+    background: -moz-linear-gradient(230deg, rgba(245, 206, 225, 1) 2%, rgba(189, 231, 253, 1) 98%);
+    background: -webkit-linear-gradient(230deg, rgba(245, 206, 225, 1) 2%, rgba(189, 231, 253, 1) 98%);
+    background: linear-gradient(230deg, rgba(245, 206, 225, 1) 2%, rgba(189, 231, 253, 1) 98%);
+
+    text-indent: 3rem;
+    direction: ltr;
+    border-radius: 100px;
+    /* position: absolute; */
+    transition: .2s ease;
+    /* Remove left, top, and width constraints */
+    padding: 0 1rem; /* Add padding to size the background */
+    height: 40px; /* Set a visible height */
+    line-height: 40px; /* Center text vertically */
+    opacity: 1; /* Make it visible */
+    transform: scale(1); /* Reset the scale to normal */
+}
+
+
 
 .user-preview.show .avatar {
     transform: scale(1)
