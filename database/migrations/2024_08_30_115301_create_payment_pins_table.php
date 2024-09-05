@@ -24,7 +24,7 @@ return new class extends Migration
             $table->smallInteger('status')->default(0); // Adjust the default as needed
             $table->smallInteger('state')->default(1); // Adjust the default as needed
             $table->smallInteger('order_app_type')->nullable();
-            $table->string('order_id', 50)->nullable();
+            $table->foreignId('order_id')->nullable();
             $table->string('wp_order_id', 50)->nullable();
             $table->string('wp_order_item_id', 50)->nullable();
             $table->string('tracking_code', 50)->nullable();
@@ -53,6 +53,12 @@ return new class extends Migration
             $table->foreign('deleted_by')
                 ->references('id')
                 ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
+
+            $table->foreign('order_id')
+                ->references('id')
+                ->on('orders')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
         });

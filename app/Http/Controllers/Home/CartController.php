@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Home;
 
+use App\Enums\EAppType;
 use App\Models\Order;
 use App\Models\Province;
 use App\Models\UserAddress;
@@ -15,12 +16,20 @@ class CartController extends Controller
 {
     public function add(Request $request)
     {
+        // Validate product_id first
         $request->validate([
             'product_id' => 'required',
-            'qtybutton' => 'required'
         ]);
 
+        // Fetch the product based on the validated product_id
         $product = Product::query()->findOrFail($request->product_id);
+
+        // Perform further validation based on the app_type of the product
+        $request->validate([
+            'bigo_id' => $product->app_type == EAppType::BIGO_LIVE ? 'required' : '',
+//             'qtybutton' => 'required'
+        ]);
+
         $productVariation = ProductVariation::query()->findOrFail(json_decode($request->variation)->id);
         if ($request->qtybutton > $productVariation->quantity) {
             alert()->error('توجه!', 'تعداد محصول خواسته شده، معتبر نمی باشد!');
@@ -34,10 +43,22 @@ class CartController extends Controller
                 'id' => $rowId,
                 'name' => $product->name,
                 'price' => $productVariation->is_sale ? $productVariation->sale_price : $productVariation->price,
-                'quantity' => $request->qtybutton,
+                'quantity' => 1, // In  this shop the quantity of each product is 1
                 'attributes' => $productVariation->toArray(),
-                'associatedModel' => $product
+                'associatedModel' => $product,
             ));
+
+            $account_id = $product->app_type == EAppType::BIGO_LIVE ? $request->get('bigo_id') : null;
+            // Start the session if not already started
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            // Store account_id and account_username in the session associated with this rowId
+            $_SESSION['cart'][$rowId] = array(
+                'account_id' => $account_id,
+//                'account_username' => $account_username
+            );
+//            dd($_SESSION['cart']);
         } else {
             alert()->warning('توجه!', 'این محصول قبلا به سبد خرید شما اضافه شده است!');
             return redirect()->back();
@@ -96,14 +117,14 @@ class CartController extends Controller
         $request->validate([
             'code' => 'required'
         ]);
-        if(!auth()->check()){
+        if (!auth()->check()) {
             alert()->error('توجه!', 'برای استفاده از کد تخفیف، نیاز است ابتدا وارد سایت شوید!');
             return redirect()->back();
         }
         $result = checkCoupon($request->code);
-        if(array_key_exists('error', $result)){
-        alert()->error('توجه!', $result['error']);
-        }else{
+        if (array_key_exists('error', $result)) {
+            alert()->error('توجه!', $result['error']);
+        } else {
             alert()->success('با تشکر', $result['success']);
         }
         return redirect()->back();
@@ -111,7 +132,7 @@ class CartController extends Controller
 
     public function checkout()
     {
-        if(\Cart::isEmpty()){
+        if (\Cart::isEmpty()) {
             alert()->warning('توجه!', 'سبد خرید شما خالی است!');
             return redirect()->route('home.index');
         }

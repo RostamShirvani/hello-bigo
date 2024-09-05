@@ -86,19 +86,74 @@ class PaymentPinController extends BaseAdminController
         return view('admin.payment_pin.using', compact('paymentPins'));
     }
 
-    public function storeUsing(\App\Http\Requests\API\PaymentPin\StoreUsingRequest $request)
+    // Do charge from admin panel
+    public function storeUsing(StoreUsingRequest $request)
     {
-        Log::channel('requests')->info('request', $request->all());
-        $order_item_id = $request->input('wp_order_item_id');
-        $bigoId = $request->input('bigo_id');
-        $amount = $request->input('amount');
-        $value = $request->input('value');
-        $orderId = $request->input('order_id');
-        $wp_order_id = $request->input('wp_order_id');
-        $appType = $request->input('app_type') ?? EAppType::BIGO_LIVE;
-        $mobile = null;
-        $paidDate = $request->input('paid_date');
+        $data = [
+            'bigo_id' => $request->input('bigo_id'),
+            'app_type' => $request->input('app_type') ?? EAppType::BIGO_LIVE,
+            'amount' => $request->input('amount'),
+        ];
 
+        return $this->commonStoreUsing($data);
+    }
+
+    // Do charge from shop
+    public function storeUsingAfterPay($orderItem)
+    {
+//        Log::channel('requests')->info('request', $request->all());
+//        if (!empty($request->input('order_data'))) {
+//            $orderData = json_decode($request->input('order_data'), true);
+//            if (!empty($orderData['billing']['phone'])) {
+//                $mobile = $orderData['billing']['phone'];
+//            }
+//
+//            if (empty($mobile) && !empty($orderData['shipping']['phone'])) {
+//                $mobile = $orderData['shipping']['phone'];
+//            }
+//            file_put_contents('amin.txt', 'mob : ' . $mobile);
+//        }
+//        $data = [
+//            'order_item_id' => $request->input('wp_order_item_id'),
+//            'bigo_id' => $request->input('bigo_id'),
+//            'amount' => $request->input('amount'),
+//            'value' => $request->input('value'),
+//            'orderId' => $request->input('order_id'),
+//            'wp_order_id' => $request->input('wp_order_id'),
+//            'app_type' => $request->input('app_type') ?? EAppType::BIGO_LIVE,
+//            'mobile' => $mobile ?? null,
+//            'paid_date' => $request->input('paid_date'),
+//        ];
+
+//        dd($orderItem->getAttributes());
+        Log::channel('requests')->info('request', $orderItem->getAttributes());
+        if(($orderItem->order->getRawOriginal('status') && $orderItem->order->getRawOriginal('payment_status') == 1) ) {
+            $data = [
+            'order_item_id' => $orderItem->id,
+            'bigo_id' => $orderItem->account_id,
+            'value' => $orderItem->productVariation->value,
+            'order_id' => $orderItem->order_id,
+            'app_type' => $orderItem->product->app_type ?? EAppType::BIGO_LIVE,
+            'mobile' => auth()->user()->cellphone ?? null,
+            'paid_date' => $orderItem->order->transaction->created_at,
+            ];
+            return  $this->commonStoreUsing($data);
+        }
+
+        alert()->error('خطا!', 'عملیات شارژ ناموفق بود!');
+        return false;
+    }
+
+    public function commonStoreUsing($data)
+    {
+        $orderItemId = $data['order_item_id'] ?? null;
+        $bigoId = $data['bigo_id'];
+        $amount = $data['amount'] ?? null;
+        $value = $data['value'] ?? null;
+        $orderId = $data['order_id'] ?? null;
+        $appType = $data['app_type'];
+        $mobile = $data['mobile'] ?? null;
+        $paidDate = $data['paid_date'] ?? null;
         if (empty($bigoId)) {
             alert()->error('عملیات ناموفق', 'missed fields');
             return redirect()->back();
@@ -115,7 +170,7 @@ class PaymentPinController extends BaseAdminController
                 $botToken = "6420852445:AAF-LF7kN9GG9D2ruKQD-0ArY-Bvtjrt1jU";
                 $chatId = "463647617";
                 $url = 'https://api.telegram.org/bot' . $botToken . '/sendMessage';
-                Http::post($url, ['chat_id' => $chatId, 'text' => " ایدی $bigoId در بلک لیست است شماره سفارش $wp_order_id در تاریخ $paidDate"]);
+                Http::post($url, ['chat_id' => $chatId, 'text' => " ایدی $bigoId در بلک لیست است شماره سفارش $orderId در تاریخ $paidDate"]);
 
                 alert()->error('عملیات ناموفق', 'ایدی در بلاک لیست است!');
                 return redirect()->back();
@@ -126,8 +181,8 @@ class PaymentPinController extends BaseAdminController
             }
         }
 
-        if (!empty($order_item_id)) {
-            $order_check = DB::table('payment_pins')->where('wp_order_item_id', $order_item_id)->first();
+        if (!empty($orderItemId)) {
+            $order_check = DB::table('payment_pins')->where('order_item_id', $orderItemId)->first();
             if ($order_check) {
                 return Response::json([
                     'status' => false,
@@ -136,7 +191,7 @@ class PaymentPinController extends BaseAdminController
         }
 
         if (!empty($paidDate)) {
-            $carbon = Carbon::parse($request->input('paid_date'));
+            $carbon = Carbon::parse($paidDate);
             $carbon->setTimezone(config('app.timezone'));
 
             if ($carbon->diffInMinutes(Carbon::now()) > 5) {
@@ -169,18 +224,6 @@ class PaymentPinController extends BaseAdminController
             ]);
         }
 
-        if (!empty($request->input('order_data'))) {
-            $orderData = json_decode($request->input('order_data'), true);
-            if (!empty($orderData['billing']['phone'])) {
-                $mobile = $orderData['billing']['phone'];
-            }
-
-            if (empty($mobile) && !empty($orderData['shipping']['phone'])) {
-                $mobile = $orderData['shipping']['phone'];
-            }
-            file_put_contents('amin.txt', 'mob : ' . $mobile);
-        }
-
         $paymentUrl = $clientAPI->getPaymentUrl();
         $paymentToken = BigoAPI::getPaymentTokenFromPaymentUrl($paymentUrl);
 
@@ -189,7 +232,7 @@ class PaymentPinController extends BaseAdminController
             $botToken = "6420852445:AAF-LF7kN9GG9D2ruKQD-0ArY-Bvtjrt1jU";
             $chatId = "463647617";
             $url = 'https://api.telegram.org/bot' . $botToken . '/sendMessage';
-            Http::post($url, ['chat_id' => $chatId, 'text' => "توکن غیر فعال شده شماره سفارش $wp_order_id در تاریخ $paidDate   "]);
+            Http::post($url, ['chat_id' => $chatId, 'text' => "توکن غیر فعال شده شماره سفارش $orderId در تاریخ $paidDate   "]);
 
             alert()->error('عملیات ناموفق', 'توکن غیر فعال است !');
             return redirect()->back();
@@ -220,15 +263,15 @@ class PaymentPinController extends BaseAdminController
             $trackingCode = $clientAPI->purchase($paymentToken, $paymentPin->serial_number, $paymentPin->pin, $paymentPin->amount);
 
             if (!empty($trackingCode)) {
-                $this->paymentPinRepository->setPaymentPinAsUsed($paymentPin, $bigoId, $orderId, $trackingCode, $appType, $mobile);
+                $this->paymentPinRepository->setPaymentPinAsUsed($paymentPin, $bigoId, $orderId, $trackingCode, $appType, $mobile, orderItemId: $orderItemId);
 
-                if (!empty($wp_order_id)) {
-                    $client = new Client();
-                    $url = "https://bigoplus.ir//wp-json/wc/v3/orders/{$wp_order_id}?status=completed&consumer_key=ck_20a17bf6a7337e34abf29ebba680ac1d23caecf4&consumer_secret=cs_e18170039a767cab833decbcb5461f9c30a49b7d";
-                    $response = $client->request('POST', $url, [
-
-                    ]);
-                }
+//                if (!empty($orderId)) {
+//                    $client = new Client();
+//                    $url = "https://bigoplus.ir//wp-json/wc/v3/orders/{$orderId}?status=completed&consumer_key=ck_20a17bf6a7337e34abf29ebba680ac1d23caecf4&consumer_secret=cs_e18170039a767cab833decbcb5461f9c30a49b7d";
+//                    $response = $client->request('POST', $url, [
+//
+//                    ]);
+//                }
 
                 alert()->success('شارژ موفق', 'شارژ حساب با موفقیت انجام گردید.');
                 return redirect()->back();
@@ -237,24 +280,26 @@ class PaymentPinController extends BaseAdminController
 //
 //                ]);
             } else {
-                $this->paymentPinRepository->setPaymentPinAsRejected($paymentPin, $appType, $orderId, $mobile);
+                $this->paymentPinRepository->setPaymentPinAsRejected($paymentPin, $appType, $orderId, $mobile, orderItemId: $orderItemId);
 
 
-                if (!empty($wp_order_id)) {
-
-
-                    $client = new Client();
-                    $url = "https://bigoplus.ir//wp-json/wc/v3/orders/{$wp_order_id}?status=on-hold&consumer_key=ck_20a17bf6a7337e34abf29ebba680ac1d23caecf4&consumer_secret=cs_e18170039a767cab833decbcb5461f9c30a49b7d";
-                    $response = $client->request('POST', $url, [
-
-                    ]);
-                }
+                // todo change order status to on-hold
+//                if (!empty($orderId)) {
+//
+//
+//                    $client = new Client();
+//                    $url = "https://bigoplus.ir//wp-json/wc/v3/orders/{$orderId}?status=on-hold&consumer_key=ck_20a17bf6a7337e34abf29ebba680ac1d23caecf4&consumer_secret=cs_e18170039a767cab833decbcb5461f9c30a49b7d";
+//                    $response = $client->request('POST', $url, [
+//
+//                    ]);
+//                }
 
 
                 $botToken = "6420852445:AAF-LF7kN9GG9D2ruKQD-0ArY-Bvtjrt1jU";
                 $chatId = "463647617";
                 $url = 'https://api.telegram.org/bot' . $botToken . '/sendMessage';
-                Http::post($url, ['chat_id' => $chatId, 'text' => "پین  $amount دلار نا معتبر است به شماره سفارش $wp_order_id"]);
+                // todo uncomment before commit
+                Http::post($url, ['chat_id' => $chatId, 'text' => "پین  $amount دلار نا معتبر است به شماره سفارش $orderId"]);
 
                 alert()->error('عملیات ناموفق', 'پین نا معتبر است !');
                 return redirect()->back();
@@ -269,22 +314,22 @@ class PaymentPinController extends BaseAdminController
             }
         }
 
-
-        if (!empty($wp_order_id)) {
-
-
-            $client = new Client();
-            $url = "https://bigoplus.ir//wp-json/wc/v3/orders/{$wp_order_id}?status=on-hold&consumer_key=ck_20a17bf6a7337e34abf29ebba680ac1d23caecf4&consumer_secret=cs_e18170039a767cab833decbcb5461f9c30a49b7d";
-            $response = $client->request('POST', $url, [
-
-            ]);
-        }
+        // todo change order status to on-hold if needed
+//        if (!empty($orderId)) {
+//
+//
+//            $client = new Client();
+//            $url = "https://bigoplus.ir//wp-json/wc/v3/orders/{$orderId}?status=on-hold&consumer_key=ck_20a17bf6a7337e34abf29ebba680ac1d23caecf4&consumer_secret=cs_e18170039a767cab833decbcb5461f9c30a49b7d";
+//            $response = $client->request('POST', $url, [
+//
+//            ]);
+//        }
 
 
         $botToken = "6420852445:AAF-LF7kN9GG9D2ruKQD-0ArY-Bvtjrt1jU";
         $chatId = "463647617";
         $url = 'https://api.telegram.org/bot' . $botToken . '/sendMessage';
-        Http::post($url, ['chat_id' => $chatId, 'text' => "پین  $amount دلاری  تمام شده است برای سفارش $wp_order_id"]);
+        Http::post($url, ['chat_id' => $chatId, 'text' => "پین  $amount دلاری  تمام شده است برای سفارش $orderId"]);
 
         alert()->error('عملیات ناموفق', 'موجودی پین تمام شد!');
         return redirect()->back();
@@ -296,37 +341,37 @@ class PaymentPinController extends BaseAdminController
 //        ]);
     }
 
-    public function oldStoreUsing(StoreUsingRequest $request)
-    {
-        $bigoId = $request->input('bigo_id');
-        $paymentPin = $this->paymentPinRepository->find($request->input('payment_pin_id'));
-        $appType = $request->input('app_type') ?? EAppType::BIGO_LIVE;
-
-        $amount = $paymentPin->amount;
-
-        $response = sendRequest(
-            route('api.payment-pins.using'),
-            'POST',
-            [
-                'bigo_id' => $bigoId,
-                'amount' => $amount,
-                'app_type' => $appType,
-            ]
-        );
-
-        if (!empty($response['status'])) {
-            return Redirect::back()->with([
-                'success' => 'کاربر با موفقیت شارژ شد!'
-            ]);
-        }
-
-        if (isset($response['status']) && $response['status'] == false) {
-            if (!empty($response['message'])) {
-                return Redirect::back()->with(['error' => $response['message']]);
-            }
-        }
-
-        return Redirect::back()->with(['error' => 'خطای سیستمی!']);
-    }
+//    public function oldStoreUsing(StoreUsingRequest $request)
+//    {
+//        $bigoId = $request->input('bigo_id');
+//        $paymentPin = $this->paymentPinRepository->find($request->input('payment_pin_id'));
+//        $appType = $request->input('app_type') ?? EAppType::BIGO_LIVE;
+//
+//        $amount = $paymentPin->amount;
+//
+//        $response = sendRequest(
+//            route('api.payment-pins.using'),
+//            'POST',
+//            [
+//                'bigo_id' => $bigoId,
+//                'amount' => $amount,
+//                'app_type' => $appType,
+//            ]
+//        );
+//
+//        if (!empty($response['status'])) {
+//            return Redirect::back()->with([
+//                'success' => 'کاربر با موفقیت شارژ شد!'
+//            ]);
+//        }
+//
+//        if (isset($response['status']) && $response['status'] == false) {
+//            if (!empty($response['message'])) {
+//                return Redirect::back()->with(['error' => $response['message']]);
+//            }
+//        }
+//
+//        return Redirect::back()->with(['error' => 'خطای سیستمی!']);
+//    }
 
 }

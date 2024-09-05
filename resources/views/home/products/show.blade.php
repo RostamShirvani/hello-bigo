@@ -61,7 +61,7 @@
                         </div>
                         <form action="{{route('home.cart.add')}}" method="POST">
                             @csrf
-                            <input type="hidden" name="product_id" value="{{$product->id}}" />
+                            <input type="hidden" name="product_id" value="{{$product->id}}"/>
                             @if($product->check_quantity)
                                 @php
                                     if($product->check_sale)
@@ -78,18 +78,28 @@
                                             @foreach($product->variations()->where('quantity', '>', 0)->get() as $variation)
                                                 <option
                                                     value="{{json_encode($variation->only(['id', 'quantity', 'is_sale', 'sale_price', 'price']))}}"
-                                                    {{$selectedProductVariation->id == $variation->id ? 'selected' : ''}}>{{$variation->value}}
+                                                    {{$selectedProductVariation->id == $variation->id ? 'selected' : ''}}>{{$variation->value}} الماس
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                <div class="pro-details-quality">
-                                    <div class="cart-plus-minus">
-                                        <input class="cart-plus-minus-box quantity-value" type="text"
-                                               name="qtybutton"
-                                               value="1" max="5"/>
+                            <br>
+                                <div class="pro-details-size-color text-right">
+                                    <div class="pro-details-size w-50">
+                                        @if(!empty($product->app_type) && $product->app_type == \App\Enums\EAppType::BIGO_LIVE)
+                                            <label for="bigo_id">آی دی ( BIGO iD )</label>
+                                            <input class="form-control" id="bigo_id" name="bigo_id" type="text"
+                                                   value="{{old('bigo_id')}}">
+                                        @endif
                                     </div>
+                                </div>
+                                <div class="pro-details-quality">
+{{--                                    <div class="cart-plus-minus">--}}
+{{--                                        <input class="cart-plus-minus-box quantity-value" type="text"--}}
+{{--                                               name="qtybutton"--}}
+{{--                                               value="1" max="5"/>--}}
+{{--                                    </div>--}}
                                     <div class="pro-details-cart">
                                         <button type="submit">افزودن به سبد خرید</button>
                                     </div>
@@ -206,7 +216,8 @@
                                     @foreach($product->comments as $comment)
                                         <div class="single-review">
                                             <div class="review-img">
-                                                <img src="{{$comment->user->avatar ?? asset('/images/home/user.png')}}" alt="">
+                                                <img src="{{$comment->user->avatar ?? asset('/images/home/user.png')}}"
+                                                     alt="">
                                             </div>
                                             <div class="review-content w-100 text-right">
                                                 <p class="text-right">
@@ -279,7 +290,7 @@
 
 @section('script')
     <script>
-        $(document).ready(function (){
+        $(document).ready(function () {
             let variation = JSON.parse($('.variation-select').val());
             $('.quantity-value').attr('data-max', variation.quantity);
         });

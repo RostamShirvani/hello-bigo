@@ -18,6 +18,28 @@
                 @csrf
                 @method('put')
 
+                {{-- AppType Section --}}
+                <div class="col-md-12">
+                    <p>نوع محصول:</p>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row justify-content-start">
+                        <div class="form-group col-md-3">
+                            <label for="app_type">نوع</label>
+                            <select id="appTypeSelect" name="app_type" class="form-control" data-live-search="true">
+                                <option value="">انتخاب نوع محصول</option>
+                                @foreach (\App\Enums\EAppType::all() as $key => $type)
+                                    <option value="{{ $key }}" {{ old('app_type', $product->app_type) == $key ? 'selected' : '' }}>
+                                        {{ $type }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="name">نام</label>

@@ -2,11 +2,14 @@
 
 namespace App\PaymentGateway;
 
+use App\Http\Controllers\Admin\PaymentPin\PaymentPinController;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\PaymentPin\PaymentPin;
 use App\Models\ProductVariation;
 use App\Models\Transaction;
 use App\Notifications\PaymentReceiptNotification;
+use App\Repositories\Admin\PaymentPinRepository;
 use Illuminate\Support\Facades\DB;
 
 class Payment
@@ -28,12 +31,15 @@ class Payment
                 'payment_type' => 'online',
             ]);
 
+            session_start();
             foreach (\Cart::getContent() as $item) {
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $item->associatedModel->id,
                     'product_variation_id' => $item->attributes->id,
                     'price' => $item->price,
+                    'account_id' => $_SESSION['cart'][$item->id]['account_id'] ?? null,
+                    'account_username' => $_SESSION['cart'][$item->id]['account_username'] ?? null,
                     'quantity' => $item->quantity,
                     'subtotal' => ($item->quantity * $item->price),
                 ]);
@@ -75,6 +81,14 @@ class Payment
                 $variation->update([
                     'quantity' => $variation->quantity - $item->quantity
                 ]);
+            }
+
+            // Do charge account
+            $model = new PaymentPin();
+            $paymentPinRepository = new PaymentPinRepository($model);
+            $paymentPin = new PaymentPinController($paymentPinRepository);
+            foreach ($order->orderItems as $orderItem) {
+                $paymentPin->storeUsingAfterPay($orderItem);
             }
 
             DB::commit();

@@ -47,6 +47,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'app_type' => 'required',
             'name' => 'required',
             'brand_id' => 'required',
             'is_active' => 'required',
@@ -70,6 +71,7 @@ class ProductController extends Controller
             $productImageController = new ProductImageController();
             $fileNameImages = $productImageController->upload($request->primary_image, $request->images);
             $product = Product::create([
+                'app_type' => $request->app_type,
                 'name' => $request->name,
                 'brand_id' => $request->brand_id,
                 'category_id' => $request->category_id,
@@ -152,6 +154,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
+            'app_type' => 'required',
             'name' => 'required',
             'brand_id' => 'required|exists:brands,id',
             'is_active' => 'required',
@@ -172,6 +175,7 @@ class ProductController extends Controller
             DB::beginTransaction();
 
             $product->update([
+                'app_type' => $request->app_type,
                 'name' => $request->name,
                 'brand_id' => $request->brand_id,
                 'description' => $request->description,

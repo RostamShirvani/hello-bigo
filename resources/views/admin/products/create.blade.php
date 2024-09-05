@@ -16,6 +16,25 @@
             @include('admin.sections.errors')
             <form action="{{route('admin.products.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
+
+                {{-- AppType Section --}}
+                <div class="col-md-12">
+                    <p>نوع محصول: </p>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row justify-content-start">
+                        <div class="form-group col-md-3">
+                            <label for="app_type">نوع</label>
+                            <select id="appTypeSelect" name="app_type" class="form-control" data-live-search="true">
+                                <option value="">انتخاب نوع محصول</option>
+                                <option value="{{ \App\Enums\EAppType::BIGO_LIVE }}">BIGO LIVE</option>
+                                <option value="{{ \App\Enums\EAppType::LIKEE }}">LIKEE</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="name">نام</label>

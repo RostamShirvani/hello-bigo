@@ -46,13 +46,14 @@
                                 <tr>
                                     <th> تصویر محصول </th>
                                     <th> نام محصول </th>
-                                    <th> فی </th>
-                                    <th> تعداد </th>
+{{--                                    <th> فی </th>--}}
+{{--                                    <th> تعداد </th>--}}
                                     <th> قیمت </th>
                                     <th> عملیات </th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                    <?php session_start(); ?>
                                 @foreach(\Cart::getContent() as $item)
                                 <tr>
                                     <td class="product-thumbnail">
@@ -67,25 +68,29 @@
                                             :
                                             {{$item->attributes->value}}
                                         </p>
+                                        <p style="font-size: 12px; color: red">
+                                            آی دی:
+                                            <?= $_SESSION['cart'][$item->id]['account_id'] ?? '-' ?>
+                                        </p>
                                     </td>
-                                    <td class="product-price-cart">
-                                        <span class="amount">
-                                           {{number_format($item->price)}}
-                                            تومان
-                                        </span>
-                                        @if($item->attributes->is_sale)
-                                            <p style="font-size: 12px;color: red">
-                                                {{$item->attributes->discount_percent}}%
-                                                تخفیف
-                                            </p>
-                                        @endif
-                                    </td>
-                                    <td class="product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="text" name="qtybutton[{{$item->id}}]"
-                                                   value="{{$item->quantity}}" data-max="{{$item->attributes->quantity}}">
-                                        </div>
-                                    </td>
+{{--                                    <td class="product-price-cart">--}}
+{{--                                        <span class="amount">--}}
+{{--                                           {{number_format($item->price)}}--}}
+{{--                                            تومان--}}
+{{--                                        </span>--}}
+{{--                                        @if($item->attributes->is_sale)--}}
+{{--                                            <p style="font-size: 12px;color: red">--}}
+{{--                                                {{$item->attributes->discount_percent}}%--}}
+{{--                                                تخفیف--}}
+{{--                                            </p>--}}
+{{--                                        @endif--}}
+{{--                                    </td>--}}
+{{--                                    <td class="product-quantity">--}}
+{{--                                        <div class="cart-plus-minus">--}}
+{{--                                            <input class="cart-plus-minus-box" type="text" name="qtybutton[{{$item->id}}]"--}}
+{{--                                                   value="{{$item->quantity}}" data-max="{{$item->attributes->quantity}}">--}}
+{{--                                        </div>--}}
+{{--                                    </td>--}}
                                     <td class="product-subtotal">
                                         {{number_format($item->quantity * $item->price)}}
                                         تومان

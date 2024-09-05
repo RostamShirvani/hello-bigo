@@ -13,22 +13,22 @@ class StoreUsingRequest extends AdminBaseRequest
      *
      * @return bool
      */
-    public function authorize()
-    {
-        return true;
-    }
+//    public function authorize()
+//    {
+//        return true;
+//    }
 
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
-    public function rules()
-    {
-        return [
-            'bigo_id' => ['required'],
-            'payment_pin_id' => ['required', 'exists:payment_pins,id'],
-            'app_type' => ['nullable', Rule::in(EAppType::toArray())]
-        ];
-    }
+//    public function rules()
+//    {
+//        return [
+//            'bigo_id' => ['required'],
+//            'payment_pin_id' => ['required', 'exists:payment_pins,id'],
+//            'app_type' => ['nullable', Rule::in(EAppType::toArray())]
+//        ];
+//    }
 }

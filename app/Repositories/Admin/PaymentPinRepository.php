@@ -183,14 +183,13 @@ class PaymentPinRepository extends BaseAdminRepository
             ->count();
     }
 
-    public function setPaymentPinAsUsed($paymentPin, $usedBy, $orderId = null, $trackingCode = null, $orderAppType = null, $mobile = null)
+    public function setPaymentPinAsUsed($paymentPin, $usedBy, $orderId = null, $trackingCode = null, $orderAppType = null, $mobile = null, $orderItemId = null)
     {
         PaymentPin::query()
             ->where('id', $paymentPin->id)
             ->update([
                 'order_id' => $orderId,
-                'wp_order_id' => request()->input('wp_order_id') ?: null,
-                'wp_order_item_id' => request()->input('wp_order_item_id') ?: null,
+                'order_item_id' => $orderItemId,
                 'tracking_code' => $trackingCode,
                 'status' => EPaymentPinStatus::USED,
                 'order_app_type' => $orderAppType ?: EAppType::BIGO_LIVE,
@@ -200,7 +199,7 @@ class PaymentPinRepository extends BaseAdminRepository
             ]);
     }
 
-    public function setPaymentPinAsRejected($paymentPin, $orderAppType = EAppType::BIGO_LIVE, $orderId = null, $mobile = null)
+    public function setPaymentPinAsRejected($paymentPin, $orderAppType = EAppType::BIGO_LIVE, $orderId = null, $mobile = null, $orderItemId = null)
     {
         PaymentPin::query()
             ->where('id', $paymentPin->id)
@@ -208,8 +207,7 @@ class PaymentPinRepository extends BaseAdminRepository
                 'status' => EPaymentPinStatus::REJECTED,
                 'order_app_type' => $orderAppType,
                 'order_id' => $orderId,
-                'wp_order_id' => request()->input('wp_order_id') ?: null,
-                'wp_order_item_id' => request()->input('wp_order_item_id') ?: null,
+                'order_item_id' => $orderItemId,
             ]);
     }
 
