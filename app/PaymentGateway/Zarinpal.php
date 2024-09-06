@@ -8,7 +8,7 @@ class Zarinpal extends Payment
     {
         $data = array(
             'merchant_id' => env('ZARINPAL_MERCHANT_ID'),
-            'amount' => $amounts['paying_amount'],
+            'amount' => (int)$amounts['paying_amount'],
             'callback_url' => route('home.payment_verify', 'zarinpal'),
             'description' => $description,
             'metadata' => array(
@@ -63,7 +63,7 @@ class Zarinpal extends Payment
     {
         $data = array(
             'merchant_id' => env('ZARINPAL_MERCHANT_ID'),
-            'amount' => $amount,
+            'amount' => (int)$amount,
             'authority' => $authority
         );
 
@@ -97,7 +97,7 @@ class Zarinpal extends Payment
             return ['error' => "cURL Error #:" . $err];
         } else {
             if (isset($result['data']['code']) && $result['data']['code'] == 100) {
-                $updateOrder = parent::updateOrder($authority, $result['RefID']);
+                $updateOrder = parent::updateOrder($authority, $result['data']['ref_id']);
                 if (array_key_exists('error', $updateOrder)) {
                     return $updateOrder;
                 }

@@ -80,7 +80,7 @@ class PaymentController extends Controller
             }
 
             $zarinpalGateway = new Zarinpal();
-            $zarinpalGatewayResult = $zarinpalGateway->verify($request->Authority, $amounts['paying_amount']);
+            $zarinpalGatewayResult = $zarinpalGateway->verify($amounts['paying_amount'], $request->Authority);
             if (array_key_exists('error', $zarinpalGatewayResult)) {
                 alert()->error('توجه!', $zarinpalGatewayResult['error'])->persistent('حله');
                 return redirect()->back();

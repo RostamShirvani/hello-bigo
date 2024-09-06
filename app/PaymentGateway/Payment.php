@@ -24,10 +24,10 @@ class Payment
                 'user_id' => auth()->id(),
                 'address_id' => $addressId,
                 'coupon_id' => session()->has('coupon') ? session()->get('coupon.id') : null,
-                'total_amount' => $amounts['total_amount'],
-                'delivery_amount' => $amounts['delivery_amount'],
-                'coupon_amount' => $amounts['coupon_amount'],
-                'paying_amount' => $amounts['paying_amount'],
+                'total_amount' => (int)$amounts['total_amount'],
+                'delivery_amount' => (int)$amounts['delivery_amount'],
+                'coupon_amount' => (int)$amounts['coupon_amount'],
+                'paying_amount' => (int)$amounts['paying_amount'],
                 'payment_type' => 'online',
             ]);
 
@@ -37,18 +37,18 @@ class Payment
                     'order_id' => $order->id,
                     'product_id' => $item->associatedModel->id,
                     'product_variation_id' => $item->attributes->id,
-                    'price' => $item->price,
+                    'price' => (int)$item->price,
                     'account_id' => $_SESSION['cart'][$item->id]['account_id'] ?? null,
                     'account_username' => $_SESSION['cart'][$item->id]['account_username'] ?? null,
-                    'quantity' => $item->quantity,
-                    'subtotal' => ($item->quantity * $item->price),
+                    'quantity' => (int)$item->quantity,
+                    'subtotal' => (int)($item->quantity * $item->price),
                 ]);
             }
 
             Transaction::create([
                 'user_id' => auth()->id(),
                 'order_id' => $order->id,
-                'amount' => $amounts['paying_amount'],
+                'amount' => (int)$amounts['paying_amount'],
                 'token' => $token,
                 'gateway_name' => $gateway_name,
             ]);
@@ -88,7 +88,7 @@ class Payment
             foreach (\Cart::getContent() as $item) {
                 $variation = ProductVariation::query()->findOrFail($item->attributes->id);
                 $variation->update([
-                    'quantity' => PaymentPin::getActivePaymentPinsCountByValue($variation->value,$product->app_type)
+                    'quantity' => PaymentPin::getActivePaymentPinsCountByValue($variation->value,$variation->product->app_type)
 //                    'quantity' => $variation->quantity - $item->quantity
                 ]);
             }
