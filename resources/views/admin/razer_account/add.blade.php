@@ -37,6 +37,18 @@
                         <input type="number" name="priority" id="priority" class="form-control">
                     </div>
 
+                    <!-- Checkbox for bigo_updated_at -->
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" name="bigo_updated_at" id="bigo_updated_at" class="form-check-input" value="1">
+                        <label class="form-check-label mr-4" for="bigo_updated_at">به روز رسانی بیگو</label>
+                    </div>
+
+                    <!-- Checkbox for pubg_updated_at -->
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" name="pubg_updated_at" id="pubg_updated_at" class="form-check-input" value="1">
+                        <label class="form-check-label mr-4" for="pubg_updated_at">به روز رسانی پابجی</label>
+                    </div>
+
                     <button class="btn btn-primary">افزودن</button>
                 </form>
 

@@ -4,17 +4,17 @@
     index razer accounts
 @endsection
 @section('content')
-    <div class="container mt-4">
+    <div class="mt-4">
         <h5>مجموع شارژ اکانت ها: {{ number_format($totalChargeBalance) }}</h5>
         <div class="row">
             <div class="col-md-12 text-left py-2">
                 <a href="{{ route('admin.razer_accounts.add')}}" class="btn btn-primary btn-sm">افزودن اکانت</a>
             </div>
 
-            <table id="items" class="table table-striped" style="width: 100%">
+            <div class="table-responsive">
+                <table id="items" class="table table-striped" style="width: 100%">
                 <thead>
                 <tr>
-
                     <th>آیدی</th>
                     <th>فعال</th>
                     <th>RazerId</th>
@@ -23,8 +23,10 @@
                     <th>شارژ فعلی</th>
                     <th>سقف شارژ</th>
                     <th>اولویت</th>
-                    <th>ویرایش شارژ فعلی در</th>
-                    <th>تاریخ ویرایش شارژ فعلی</th>
+                    <th>بیگو</th>
+                    <th>پابجی</th>
+                    <th>ویرایش در</th>
+                    <th>تاریخ آخرین ویرایش</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -35,8 +37,8 @@
                 ?>
                 @foreach($razerAccounts as $razerAccount)
                         <?php
-                        if (!blank($razerAccount->manual_updated_at)) {
-                            $updatedAt = $razerAccount->manual_updated_at;
+                        if (!blank($razerAccount->updated_at)) {
+                            $updatedAt = $razerAccount->updated_at;
                             $now = Carbon::now();
 
                             $days = $updatedAt->diffInDays($now);
@@ -55,6 +57,46 @@
                                 $humanReadableTime = "{$days} روز و {$hours} ساعت و {$minutes} دقیقه پیش";
                             }
                         }
+                        if (!blank($razerAccount->pubg_updated_at)) {
+                            $updatedAt = $razerAccount->pubg_updated_at;
+                            $now = Carbon::now();
+
+                            $days = $updatedAt->diffInDays($now);
+                            $hours = $updatedAt->copy()->addDays($days)->diffInHours($now);
+                            $minutes = $updatedAt->copy()->addDays($days)->addHours($hours)->diffInMinutes($now);
+
+//                        $humanReadableTime = "{$days} روز, {$hours} hours, and {$minutes} minutes ago";
+//                        $humanReadableTime = "{$days} روز و {$hours} ساعت و {$minutes} دقیقه پیش";
+                            if ($minutes == 0 && $hours == 0 && $days == 0) {
+                                $pubgHumanReadableTime = "لحظاتی پیش";
+                            } elseif ($minutes > 0 && $hours == 0 && $days == 0) {
+                                $pubgHumanReadableTime = "{$minutes} دقیقه پیش";
+                            } elseif ($hours > 0 && $days == 0) {
+                                $pubgHumanReadableTime = "{$hours} ساعت و {$minutes} دقیقه پیش";
+                            } else {
+                                $pubgHumanReadableTime = "{$days} روز و {$hours} ساعت و {$minutes} دقیقه پیش";
+                            }
+                        }
+                        if (!blank($razerAccount->bigo_updated_at)) {
+                            $updatedAt = $razerAccount->bigo_updated_at;
+                            $now = Carbon::now();
+
+                            $days = $updatedAt->diffInDays($now);
+                            $hours = $updatedAt->copy()->addDays($days)->diffInHours($now);
+                            $minutes = $updatedAt->copy()->addDays($days)->addHours($hours)->diffInMinutes($now);
+
+//                        $humanReadableTime = "{$days} روز, {$hours} hours, and {$minutes} minutes ago";
+//                        $humanReadableTime = "{$days} روز و {$hours} ساعت و {$minutes} دقیقه پیش";
+                            if ($minutes == 0 && $hours == 0 && $days == 0) {
+                                $bigoHumanReadableTime = "لحظاتی پیش";
+                            } elseif ($minutes > 0 && $hours == 0 && $days == 0) {
+                                $bigoHumanReadableTime = "{$minutes} دقیقه پیش";
+                            } elseif ($hours > 0 && $days == 0) {
+                                $bigoHumanReadableTime = "{$hours} ساعت و {$minutes} دقیقه پیش";
+                            } else {
+                                $bigoHumanReadableTime = "{$days} روز و {$hours} ساعت و {$minutes} دقیقه پیش";
+                            }
+                        }
                         ?>
                     <tr>
 
@@ -70,8 +112,10 @@
                         <td>{{ number_format($razerAccount->charge_balance) }}</td>
                         <td>{{ number_format($razerAccount->charge_ceiling) }}</td>
                         <td>{{ $razerAccount->priority }}</td>
+                        <td>{{ $bigoHumanReadableTime ?? '-' }}</td>
+                        <td>{{ $pubgHumanReadableTime ?? '-' }}</td>
                         <td>{{ $humanReadableTime ?? '-' }}</td>
-                        <td>{{ $razerAccount->manual_updated_at ? dateTimeFormat($razerAccount->manual_updated_at) : '-' }}</td>
+                        <td>{{ $razerAccount->updated_at ? dateTimeFormat($razerAccount->updated_at) : '-' }}</td>
                         <td>
                             <div style="display: flex; gap: 5px;">
                                 <form action="{{ route('admin.razer_accounts.delete', $razerAccount->id)}}"
@@ -89,7 +133,8 @@
                     </tr>
                 @endforeach
                 </tbody>
-            </table>
+                </table>
+            </div>
 
 
         </div>

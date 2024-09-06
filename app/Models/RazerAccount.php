@@ -16,11 +16,13 @@ class RazerAccount extends Model
         'location',
         'charge_ceiling',
         'priority',
-        'manual_updated_at',
+        'bigo_updated_at',
+        'pubg_updated_at',
     ];
 
     protected $casts = [
-        'manual_updated_at' => 'datetime',
+        'bigo_updated_at' => 'datetime',
+        'pubg_updated_at' => 'datetime',
     ];
 
     public static function getCurrentSelectedRazerAccount()

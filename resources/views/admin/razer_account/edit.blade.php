@@ -8,17 +8,17 @@
                     @csrf
                     <div class="mb-3">
                         <label for="razer_id">RazerId</label>
-                        <input type="text" name="razer_id" id="razer_id" class="form-control" value="{{$razerAccount->razer_id}}">
+                        <input type="text" name="razer_id" id="razer_id" class="form-control" value="{{$razerAccount->razer_id}}" readonly>
                     </div>
 
                     <div class="mb-3">
                         <label for="email_address">EmailAddress</label>
-                        <input type="email" name="email_address" id="email_address" class="form-control" value="{{$razerAccount->email_address}}">
+                        <input type="email" name="email_address" id="email_address" class="form-control" value="{{$razerAccount->email_address}}" readonly>
                     </div>
 
                     <div class="mb-3">
                         <label for="location">لوکیشن</label>
-                        <input type="text" name="location" id="location" class="form-control" value="{{$razerAccount->location}}">
+                        <input type="text" name="location" id="location" class="form-control" value="{{$razerAccount->location}}" readonly>
                     </div>
 
                     <div class="mb-3">
@@ -34,6 +34,18 @@
                     <div class="mb-3">
                         <label for="priority">اولویت</label>
                         <input type="number" name="priority" id="priority" class="form-control" value="{{$razerAccount->priority}}">
+                    </div>
+
+                    <!-- Checkbox for bigo_updated_at -->
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" name="bigo_updated_at" id="bigo_updated_at" class="form-check-input" value="1">
+                        <label class="form-check-label mr-4" for="bigo_updated_at">به روز رسانی بیگو</label>
+                    </div>
+
+                    <!-- Checkbox for pubg_updated_at -->
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" name="pubg_updated_at" id="pubg_updated_at" class="form-check-input" value="1">
+                        <label class="form-check-label mr-4" for="pubg_updated_at">به روز رسانی پابجی</label>
                     </div>
 
                     <button class="btn btn-info">ویرایش</button>

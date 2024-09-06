@@ -46,12 +46,15 @@ class RazerAccountController extends Controller
             'charge_balance' => 'required|numeric',
             'charge_ceiling' => 'nullable|numeric',
             'priority' => 'nullable|numeric',
+            'bigo_updated_at' => 'nullable',
+            'pubg_updated_at' => 'nullable',
         ])->validated();
 
         $validate_data['charge_ceiling'] = (int)$validate_data['charge_ceiling'] > 0 ? (int)$validate_data['charge_ceiling'] : 90000;
         $validate_data['priority'] = (int)RazerAccount::min('priority');
 
-        $validate_data['manual_updated_at'] = now();
+        $validate_data['bigo_updated_at'] = request()->has('bigo_updated_at') ? now() : null;
+        $validate_data['pubg_updated_at'] = request()->has('pubg_updated_at') ? now() : null;
 
         RazerAccount::create($validate_data);
 
@@ -68,12 +71,15 @@ class RazerAccountController extends Controller
             'charge_balance' => 'required|numeric',
             'charge_ceiling' => 'nullable|numeric',
             'priority' => 'nullable|numeric',
+            'bigo_updated_at' => 'nullable',
+            'pubg_updated_at' => 'nullable',
         ])->validated();
 
         $validate_data['charge_ceiling'] = (int)$validate_data['charge_ceiling'] > 0 ? (int)$validate_data['charge_ceiling'] : 90000;
 
         $razerAccount = RazerAccount::find($id);
-
+        $validate_data['bigo_updated_at'] = request()->has('bigo_updated_at') ? now() : $razerAccount->bigo_updated_at;
+        $validate_data['pubg_updated_at'] = request()->has('pubg_updated_at') ? now() : $razerAccount->pubg_updated_at;
         if ( (request('type') !== null) && (request('type') == 'manual') && ($razerAccount->charge_balance != $validate_data['charge_balance'])) {
             $razerAccount->manual_updated_at = now();
         }
