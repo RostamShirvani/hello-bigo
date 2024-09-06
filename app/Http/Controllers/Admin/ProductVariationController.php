@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\PaymentPin\PaymentPin;
 use App\Models\ProductVariation;
 
 class ProductVariationController extends Controller
@@ -16,7 +17,8 @@ class ProductVariationController extends Controller
                 'product_id' => $product->id,
                 'value' => $variations['value'][$i],
                 'price' => $variations['price'][$i],
-                'quantity' => $variations['quantity'][$i],
+//                'quantity' => $variations['quantity'][$i],
+                'quantity' => PaymentPin::getActivePaymentPinsCountByValue($variations['value'][$i],$product->app_type),
                 'sku' => $variations['sku'][$i],
             ]);
         }

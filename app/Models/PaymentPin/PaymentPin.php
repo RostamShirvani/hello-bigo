@@ -2,6 +2,7 @@
 
 namespace App\Models\PaymentPin;
 
+use App\Enums\EAppType;
 use App\Models\BaseModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -49,4 +50,16 @@ class PaymentPin extends BaseModel
     protected $casts = [
         'extra' => 'array'
     ];
+
+    public static function getActivePaymentPinsCountByValue($value, $appType = EAppType::BIGO_LIVE)
+    {
+        return PaymentPin::query()
+            ->when($appType == EAppType::LIKEE, function ($query) use ($value) {
+                $query->where('likee_value', $value);
+            }, function ($query) use ($value) {
+                $query->where('value', $value);
+            })
+            ->active()
+            ->count();
+    }
 }

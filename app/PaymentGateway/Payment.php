@@ -76,12 +76,6 @@ class Payment
                 'payment_status' => 1,
                 'status' => 1
             ]);
-            foreach (\Cart::getContent() as $item) {
-                $variation = ProductVariation::query()->findOrFail($item->attributes->id);
-                $variation->update([
-                    'quantity' => $variation->quantity - $item->quantity
-                ]);
-            }
 
             // Do charge account
             $model = new PaymentPin();
@@ -89,6 +83,14 @@ class Payment
             $paymentPin = new PaymentPinController($paymentPinRepository);
             foreach ($order->orderItems as $orderItem) {
                 $paymentPin->storeUsingAfterPay($orderItem);
+            }
+
+            foreach (\Cart::getContent() as $item) {
+                $variation = ProductVariation::query()->findOrFail($item->attributes->id);
+                $variation->update([
+                    'quantity' => PaymentPin::getActivePaymentPinsCountByValue($variation->value,$product->app_type)
+//                    'quantity' => $variation->quantity - $item->quantity
+                ]);
             }
 
             DB::commit();
