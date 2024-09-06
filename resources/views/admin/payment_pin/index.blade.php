@@ -81,7 +81,7 @@
                     <tr>
                         <td>${{ $paymentPin->amount }}</td>
                         <td>
-                            {{ $paymentPin->wp_order_id }}
+                            {{ $paymentPin->order_id }}
                         </td>
                         <td>{{ $paymentPin->used_by }}</td>
                         <td>
