@@ -66,6 +66,7 @@
                 <tr>
                     <th>مبلغ</th>
                     <th>شماره سفارش</th>
+                    <th>شماره آیتم سفارش</th>
                     <th>ایدی کاربر</th>
                     <th>تاریخ استفاده</th>
                     <th>وضعیت</th>
@@ -80,8 +81,11 @@
                 @foreach($paymentPins as $paymentPin)
                     <tr>
                         <td>${{ $paymentPin->amount }}</td>
-                        <td>
+                        <td style="width: 50px;">
                             {{ $paymentPin->order_id }}
+                        </td>
+                        <td style="width: 50px;">
+                            {{ $paymentPin->order_item_id }}
                         </td>
                         <td>{{ $paymentPin->used_by }}</td>
                         <td>
