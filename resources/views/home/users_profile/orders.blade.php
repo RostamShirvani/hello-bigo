@@ -47,10 +47,10 @@
                                             @foreach($orders as $order)
                                                 <tr>
                                                     <td>{{$order->id}}</td>
-                                                    <td> {{verta($order->created_at)->format('%d %B %Y')}} </td>
+                                                    <td> {{ verta($order->created_at)->format('H:i:s - d F Y') }}</td>
                                                     <td>{{$order->status}}</td>
                                                     <td>
-                                                        {{number_format($order->paying_amount)}}
+                                                        {{number_format($order->paying_amount/10)}}
                                                         تومان
                                                     </td>
                                                     <td><a href="#" data-toggle="modal"
