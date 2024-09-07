@@ -217,4 +217,10 @@ class PaymentPinRepository extends BaseAdminRepository
             ->where('order_id', $orderId)
             ->first();
     }
+    public function getPaymentPinByOrderItemId($orderItemId)
+    {
+        return PaymentPin::query()
+            ->where('order_item_id', $orderItemId)
+            ->first();
+    }
 }

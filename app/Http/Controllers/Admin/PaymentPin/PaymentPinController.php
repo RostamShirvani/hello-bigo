@@ -202,8 +202,8 @@ class PaymentPinController extends BaseAdminController
             }
         }
 
-        if (!empty($orderId)) {
-            if ($this->paymentPinRepository->getPaymentPinByOrderId($orderId)) {
+        if (!empty($orderItemId)) {
+            if ($this->paymentPinRepository->getPaymentPinByOrderItemId($orderItemId)) {
                 return Response::json([
                     'status' => false,
                     'message' => 'duplicate order!',
