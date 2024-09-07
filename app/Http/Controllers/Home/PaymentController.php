@@ -126,10 +126,10 @@ class PaymentController extends Controller
         }
 
         return [
-            'total_amount' => (\Cart::getTotal() + cartTotalDiscountAmount()),
-            'delivery_amount' => cartTotalDeliveryAmount(),
-            'coupon_amount' => session()->has('coupon') ? session()->get('coupon.amount') : 0,
-            'paying_amount' => cartTotalAmount(),
+            'total_amount' => (\Cart::getTotal() + cartTotalDiscountAmount()) * 10, // Converted to rial
+            'delivery_amount' => cartTotalDeliveryAmount() * 10, // Converted to rial
+            'coupon_amount' => session()->has('coupon') ? session()->get('coupon.amount') * 10 : 0, // Converted to rial
+            'paying_amount' => cartTotalAmount() * 10, // Converted to rial
         ];
     }
 }
