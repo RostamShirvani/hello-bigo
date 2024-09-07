@@ -102,6 +102,8 @@
                                             <div class="user-preview">
                                                 <div class="avatar"></div>
                                                 <div class="name"></div>
+                                                <input type="hidden" name="account_name" value="">
+                                                <input type="hidden" name="account_avatar_url" value="">
                                             </div>
                                         </div>
                                         <div class="text-right">
@@ -119,7 +121,7 @@
                                                        value="1" style="width: 16px; height: 16px; margin: 0 5px; vertical-align: middle;">
                                                 <label for="confirmation-checkbox" class="form-check-label mr-4" id="confirmation-label"
                                                        style="vertical-align: middle;">
-                                                    تأیید می نماییم که نام کاربری اکانت من <span class="user-preview-inline" id="confirmation-username"></span> می باشد.
+                                                    تأیید می نماییم که نام اکانت من <span class="user-preview-inline" id="confirmation-account-name"></span> می باشد.
                                                 </label>
                                             </div>
                                         </div>

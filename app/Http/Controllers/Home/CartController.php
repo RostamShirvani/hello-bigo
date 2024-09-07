@@ -48,6 +48,8 @@ class CartController extends Controller
         // Perform further validation based on the app_type of the product
         $request->validate([
             'bigo_id' => $product->app_type == EAppType::BIGO_LIVE ? 'required' : '',
+            'account_name' => $product->app_type == EAppType::BIGO_LIVE ? 'required' : '',
+//            'account_avatar_url' => $product->app_type == EAppType::BIGO_LIVE ? 'required' : '',
 //             'qtybutton' => 'required'
         ]);
 
@@ -57,8 +59,12 @@ class CartController extends Controller
             return redirect()->back();
         }
 
+        $account_id = $product->app_type == EAppType::BIGO_LIVE ? $request->get('bigo_id') : null;
+        $account_name = $product->app_type == EAppType::BIGO_LIVE ? $request->get('account_name') : null;
+        $account_avatar_url = $product->app_type == EAppType::BIGO_LIVE ? $request->get('account_avatar_url') : null;
+
         // add the product to cart
-        $rowId = $product->id . '-' . $productVariation->id;
+        $rowId = $product->id . '-' . $productVariation->id . '-' . $account_id;
         if (Cart::get($rowId) == null) {
             Cart::add(array(
                 'id' => $rowId,
@@ -69,17 +75,18 @@ class CartController extends Controller
                 'associatedModel' => $product,
             ));
 
-            $account_id = $product->app_type == EAppType::BIGO_LIVE ? $request->get('bigo_id') : null;
             // Start the session if not already started
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
-            // Store account_id and account_username in the session associated with this rowId
+            // Store account_id and account_name and account_username in the session associated with this rowId
             $_SESSION['cart'][$rowId] = array(
                 'account_id' => $account_id,
+                'account_name' => $account_name,
+                'account_avatar_url' => $account_avatar_url,
 //                'account_username' => $account_username
             );
-//            dd($_SESSION['cart']);
+
         } else {
             alert()->warning('توجه!', 'این محصول قبلا به سبد خرید شما اضافه شده است!');
             return redirect()->back();
@@ -165,7 +172,10 @@ class CartController extends Controller
 
     public function usersProfileIndex()
     {
-        $orders = Order::query()->where('user_id', auth()->id())->get();
+        $orders = Order::query()
+            ->where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc') // Sort by created_at in descending order
+            ->get();
         return view('home.users_profile.orders', compact('orders'));
     }
 }

@@ -47,7 +47,7 @@
                                     <th> تصویر محصول </th>
                                     <th> نام محصول </th>
 {{--                                    <th> فی </th>--}}
-                                    <th> تعداد </th>
+                                    <th> آواتار </th>
                                     <th> قیمت </th>
                                     <th> عملیات </th>
                                 </tr>
@@ -64,13 +64,16 @@
                                     <td class="product-name">
                                         <a href="{{route('home.products.show', $item->associatedModel->slug)}}"> {{$item->name}} </a>
                                         <p style="font-size: 12px; color: red">
+
                                             {{\App\Models\Attribute::find($item->attributes->attribute_id)->name}}
                                             :
-                                            {{$item->attributes->value}}
+                                            {{$item->attributes->value}} الماس
                                         </p>
                                         <p style="font-size: 12px; color: red">
                                             آی دی:
-                                            <?= $_SESSION['cart'][$item->id]['account_id'] ?? '-' ?>
+                                            <?= $_SESSION['cart'][$item->id]['account_id'] ?? '-' ?><br>
+                                            نام اکانت:
+                                            <?= $_SESSION['cart'][$item->id]['account_name'] ?? '-' ?>
                                         </p>
                                     </td>
 {{--                                    <td class="product-price-cart">--}}
@@ -85,11 +88,14 @@
 {{--                                            </p>--}}
 {{--                                        @endif--}}
 {{--                                    </td>--}}
-                                    <td class="product-quantity">
+{{--                                    <td class="product-quantity">--}}
 {{--                                        <div class="cart-plus-minus">--}}
 {{--                                            <input class="cart-plus-minus-box" type="text" name="qtybutton[{{$item->id}}]"--}}
 {{--                                                   value="{{$item->quantity}}" data-max="{{$item->attributes->quantity}}">--}}
 {{--                                        </div>--}}
+{{--                                    </td>--}}
+                                    <td class="product-quantity">
+                                        <img class="avatar rounded-circle" style="width: 40px; height: 40px;" src="<?=$_SESSION['cart'][$item->id]['account_avatar_url'] ?? '' ?>">
                                     </td>
                                     <td class="product-subtotal">
                                         {{number_format($item->quantity * $item->price)}}

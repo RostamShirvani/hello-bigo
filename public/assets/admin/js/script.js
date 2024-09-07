@@ -75,13 +75,17 @@ $(document).ready(function () {
         $('.user-preview .avatar').css({
             'background-image': `url('${avatar}')`,
         });
+        // Update the hidden input field with the account name
+        $('input[name="account_avatar_url"]').val(avatar);
 
         $('.user-preview .name').text(name);
         $('.user-preview').addClass('show');
 
         // Show confirmation checkbox
         if (name) {
-            $('#confirmation-username').text(name);
+            // Update the hidden input field with the account name
+            $('input[name="account_name"]').val(name);
+            $('#confirmation-account-name').text(name);
             $('.confirmation-section').show();
 
             // Disable bigo_id input and hide check_account button

@@ -26,8 +26,8 @@
                     <div class="myaccount-page-wrapper">
                         <!-- My Account Tab Menu Start -->
                         <div class="row text-right" style="direction: rtl;">
-                        @include('home.sections.profile_sidebar')
-                        <!-- My Account Tab Menu End -->
+                            @include('home.sections.profile_sidebar')
+                            <!-- My Account Tab Menu End -->
                             <!-- My Account Tab Content Start -->
                             <div class="col-lg-9 col-md-8">
                                 <div class="myaccount-content">
@@ -91,8 +91,9 @@
                                             <tr>
                                                 <th> تصویر محصول</th>
                                                 <th> نام محصول</th>
-                                                <th> فی</th>
-                                                <th> تعداد</th>
+                                                <th>آواتار</th>
+{{--                                                <th> فی</th>--}}
+{{--                                                <th> تعداد</th>--}}
                                                 <th> قیمت کل</th>
                                             </tr>
                                             </thead>
@@ -106,15 +107,32 @@
                                                                  alt="{{$item->product->name}}">
                                                         </a>
                                                     </td>
-                                                    <td class="product-name"><a
-                                                            href="{{route('home.products.show', $item->product->slug)}}">{{$item->product->name}}</a>
+                                                    {{--                                                    <td class="product-name"><a--}}
+                                                    {{--                                                            href="{{route('home.products.show', $item->product->slug)}}">{{$item->product->name}}</a>--}}
+                                                    {{--                                                    </td>--}}
+                                                    <td class="product-name">
+                                                        <a href="{{route('home.products.show', $item->product->slug)}}"> {{$item->product->name}} </a>
+                                                        <p style="font-size: 12px; color: red">
+                                                            {{$item->productVariation->attribute->name}}
+                                                            :
+                                                            {{$item->productVariation->value}} الماس
+                                                        </p>
+                                                        <p style="font-size: 12px; color: red">
+                                                            آی دی:
+                                                            {{ $item->account_id ?? '-' }}<br>
+                                                            نام اکانت:
+                                                            {{ $item->account_name ?? '-' }}
+                                                        </p>
                                                     </td>
-                                                    <td class="product-price-cart">
-                                                        <span
-                                                            class="amount">{{number_format($item->price)}} تومان</span>
-                                                    </td>
-                                                    <td class="product-quantity">
-                                                        {{$item->quantity}}
+{{--                                                    <td class="product-price-cart">--}}
+{{--                                                        <span--}}
+{{--                                                            class="amount">{{number_format($item->price)}} تومان</span>--}}
+{{--                                                    </td>--}}
+{{--                                                    <td class="product-quantity">--}}
+{{--                                                        {{$item->quantity}}--}}
+{{--                                                    </td>--}}
+                                                    <td>
+                                                        <img class="avatar rounded-circle" style="width: 40px; height: 40px;" src="{{$item->account_avatar_url}}">
                                                     </td>
                                                     <td class="product-subtotal">
                                                         {{number_format($item->subtotal)}}

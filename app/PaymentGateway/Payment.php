@@ -40,6 +40,8 @@ class Payment
                     'price' => (int)$item->price,
                     'account_id' => $_SESSION['cart'][$item->id]['account_id'] ?? null,
                     'account_username' => $_SESSION['cart'][$item->id]['account_username'] ?? null,
+                    'account_name' => $_SESSION['cart'][$item->id]['account_name'] ?? null,
+                    'account_avatar_url' => $_SESSION['cart'][$item->id]['account_avatar_url'] ?? null,
                     'quantity' => (int)$item->quantity,
                     'subtotal' => (int)($item->quantity * $item->price),
                 ]);
