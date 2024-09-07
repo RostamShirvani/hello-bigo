@@ -10,7 +10,7 @@
             <div class="col-md-5 mx-auto mt-4" style="position: relative">
                 <form action="{{ route('admin.payment-pins.using') }}"
                       method="POST"
-                      class="ajax-form">
+                      class="">
                     @csrf
 
                     <input type="hidden" name="app_type" id="app_type"

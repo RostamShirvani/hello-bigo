@@ -173,81 +173,81 @@ $(document).ready(function () {
         hideUserPreview();
     });
 
-    $('.ajax-form').each(function () {
-        const form = $(this);
-        const submitButton = form.find('[type=submit]');
-        const inputElementHints = 'input,textarea';
-
-        if (form.hasClass('.ajax-form-no-enter')) {
-            form.keydown(function (e) {
-                if (e.keyCode == 13) {
-                    e.preventDefault();
-                    return false;
-                }
-            });
-        }
-
-        form.submit(function (e) {
-            e.preventDefault();
-            form.addClass('loading');
-            formIsLoading = true;
-
-            $.ajax({
-                url: form.attr('action'),
-                method: form.attr('method'),
-                data: form.serialize(),
-                success: response => {
-                    if (response.status == true) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: response.message && response.message.title ? response.message.title : 'شارژ موفق',
-                            html: response.message && response.message.body ? response.message.body : `شارژ حساب با موفقیت انجام گردید!`,
-                        }).then(e => {
-                            if (!form.hasClass('not-reload')) {
-                                window.location.reload();
-                            }
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'عملیات ناموفق',
-                            html: `${response.message}`,
-                        });
-                    }
-                },
-                error: (jqXHR, status, errorThrown) => {
-                    const json = jqXHR.responseJSON;
-                    const statusCode = jqXHR.status;
-
-                    if (statusCode === 422) {
-                        form.find(inputElementHints).removeClass('is-invalid');
-
-                        Object.keys(json.errors).forEach(key => {
-                            const message = json.errors[key][0]
-                            let inputElement = form.find(`[name=${key}]`);
-
-                            inputElement.addClass('is-invalid');
-                            inputElement.parent().find('.invalid-feedback').text(message);
-                        });
-
-                        form.find(`${inputElementHints}:not(.is-invalid)`).addClass('is-valid');
-
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'اطلاعات ناقص',
-                            html: `لطفا اطلاعات فرم را کامل وارد نمایید!`,
-                        });
-                    }
-                },
-                complete: response => {
-                    formIsLoading = false;
-                    form.removeClass('loading');
-                }
-            });
-
-            return false;
-        });
-    });
+    // $('.ajax-form').each(function () {
+    //     const form = $(this);
+    //     const submitButton = form.find('[type=submit]');
+    //     const inputElementHints = 'input,textarea';
+    //
+    //     if (form.hasClass('.ajax-form-no-enter')) {
+    //         form.keydown(function (e) {
+    //             if (e.keyCode == 13) {
+    //                 e.preventDefault();
+    //                 return false;
+    //             }
+    //         });
+    //     }
+    //
+    //     form.submit(function (e) {
+    //         e.preventDefault();
+    //         form.addClass('loading');
+    //         formIsLoading = true;
+    //
+    //         $.ajax({
+    //             url: form.attr('action'),
+    //             method: form.attr('method'),
+    //             data: form.serialize(),
+    //             success: response => {
+    //                 if (response.status == true) {
+    //                     Swal.fire({
+    //                         icon: 'success',
+    //                         title: response.message && response.message.title ? response.message.title : 'شارژ موفق',
+    //                         html: response.message && response.message.body ? response.message.body : `شارژ حساب با موفقیت انجام گردید!`,
+    //                     }).then(e => {
+    //                         if (!form.hasClass('not-reload')) {
+    //                             window.location.reload();
+    //                         }
+    //                     });
+    //                 } else {
+    //                     Swal.fire({
+    //                         icon: 'error',
+    //                         title: 'عملیات ناموفق',
+    //                         html: `${response.message}`,
+    //                     });
+    //                 }
+    //             },
+    //             error: (jqXHR, status, errorThrown) => {
+    //                 const json = jqXHR.responseJSON;
+    //                 const statusCode = jqXHR.status;
+    //
+    //                 if (statusCode === 422) {
+    //                     form.find(inputElementHints).removeClass('is-invalid');
+    //
+    //                     Object.keys(json.errors).forEach(key => {
+    //                         const message = json.errors[key][0]
+    //                         let inputElement = form.find(`[name=${key}]`);
+    //
+    //                         inputElement.addClass('is-invalid');
+    //                         inputElement.parent().find('.invalid-feedback').text(message);
+    //                     });
+    //
+    //                     form.find(`${inputElementHints}:not(.is-invalid)`).addClass('is-valid');
+    //
+    //                     Swal.fire({
+    //                         icon: 'error',
+    //                         title: 'اطلاعات ناقص',
+    //                         html: `لطفا اطلاعات فرم را کامل وارد نمایید!`,
+    //                     });
+    //                 }
+    //             },
+    //             complete: response => {
+    //                 formIsLoading = false;
+    //                 form.removeClass('loading');
+    //             }
+    //         });
+    //
+    //         return false;
+    //     });
+    // });
 
     const syncToken = (ids, showAlert = false) => {
         if (!Array.isArray(ids)) {
