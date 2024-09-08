@@ -29,7 +29,7 @@
                                 <h4> ورود </h4>
                             </a>
                         </div>
-                        @if(config('demo'))
+                        @if(config('app.demo'))
                             <div class="bg-dark text-white">
                                 اطلاعات ورود با یوزر تستی:
                                 <br>
