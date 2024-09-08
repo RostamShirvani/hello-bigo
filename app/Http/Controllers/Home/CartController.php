@@ -170,12 +170,4 @@ class CartController extends Controller
         return view('home.cart.checkout', compact('addresses', 'provinces'));
     }
 
-    public function usersProfileIndex()
-    {
-        $orders = Order::query()
-            ->where('user_id', auth()->id())
-            ->orderBy('created_at', 'desc') // Sort by created_at in descending order
-            ->get();
-        return view('home.users_profile.orders', compact('orders'));
-    }
 }

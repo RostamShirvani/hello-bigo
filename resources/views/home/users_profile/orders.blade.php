@@ -63,6 +63,7 @@
                                         </table>
                                     </div>
                                 </div>
+                                <div class="d-flex justify-content-center mt-4">{!! $orders->links('pagination::bootstrap-4') !!}</div>
                             </div> <!-- My Account Tab Content End -->
                         </div>
                     </div> <!-- My Account Page End -->
@@ -92,6 +93,7 @@
                                                 <th> تصویر محصول</th>
                                                 <th> نام محصول</th>
                                                 <th>آواتار</th>
+                                                <th>وضعیت</th>
 {{--                                                <th> فی</th>--}}
 {{--                                                <th> تعداد</th>--}}
                                                 <th> قیمت کل</th>
@@ -132,7 +134,22 @@
 {{--                                                        {{$item->quantity}}--}}
 {{--                                                    </td>--}}
                                                     <td>
-                                                        <img class="avatar rounded-circle" style="width: 40px; height: 40px;" src="{{$item->account_avatar_url}}">
+                                                        <img class="avatar rounded-circle" loading="lazy" style="width: 40px; height: 40px;" src="{{$item->account_avatar_url}}">
+                                                    </td>
+                                                    <td>
+                                                        @switch($item->status)
+                                                            @case(\App\Models\OrderItem::STATUS_CHARGED)
+                                                                <span class="badge bg-success">شارژ شده</span>
+                                                                @break
+
+                                                            @case(\App\Models\OrderItem::STATUS_NEW)
+                                                                <span class="badge bg-info">در حال انجام ...</span>
+                                                                @break
+
+                                                            @default
+                                                                <span class="badge bg-warning">در حال بررسی</span>
+                                                        @endswitch
+
                                                     </td>
                                                     <td class="product-subtotal">
                                                         {{number_format($item->subtotal)}}
