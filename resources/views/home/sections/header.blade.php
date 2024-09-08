@@ -164,9 +164,9 @@
                             <div class="setting-content">
                                 <ul class="text-right">
                                     @auth
-                                        @can('create_product')
+                                        @if(auth()->user()->hasRole('super_admin'))
                                             <li><a href="{{route('dashboard')}}">پنل مدیریت</a></li>
-                                        @endcan
+                                        @endif
                                         <li><a href="{{route('home.users_profile.index')}}">پروفایل</a></li>
                                         <form action="{{route('logout')}}" method="post" id="logout">
                                             @csrf
