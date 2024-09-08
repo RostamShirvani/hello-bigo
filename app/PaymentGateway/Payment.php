@@ -3,6 +3,7 @@
 namespace App\PaymentGateway;
 
 use App\Http\Controllers\Admin\PaymentPin\PaymentPinController;
+use App\Jobs\ChargeAccountJob;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\PaymentPin\PaymentPin;
@@ -79,13 +80,16 @@ class Payment
                 'status' => 1
             ]);
 
-            // Do charge account
-            $model = new PaymentPin();
-            $paymentPinRepository = new PaymentPinRepository($model);
-            $paymentPin = new PaymentPinController($paymentPinRepository);
-            foreach ($order->orderItems as $orderItem) {
-                $paymentPin->storeUsingAfterPay($orderItem);
-            }
+//            // Do charge account
+//            $model = new PaymentPin();
+//            $paymentPinRepository = new PaymentPinRepository($model);
+//            $paymentPin = new PaymentPinController($paymentPinRepository);
+//            foreach ($order->orderItems as $orderItem) {
+//                $paymentPin->storeUsingAfterPay($orderItem);
+//            }
+
+            // Dispatch job to queue
+            ChargeAccountJob::dispatch($order->orderItems);
 
             foreach (\Cart::getContent() as $item) {
                 $variation = ProductVariation::query()->findOrFail($item->attributes->id);
