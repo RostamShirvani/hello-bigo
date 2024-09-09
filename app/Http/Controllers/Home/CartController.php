@@ -17,13 +17,15 @@ class CartController extends Controller
 {
     public function add(Request $request)
     {
+        // Fetch the product based on the validated product_id
+        $product = Product::query()->findOrFail($request->product_id);
+
+        // Create a custom validator with all rules
         $validator = Validator::make($request->all(), [
             'product_id' => 'required',
             'confirmation_checkbox' => ['required', 'in:1'],
-            // Custom rule to check freeCount
             'variation' => ['required', function ($attribute, $value, $fail) {
-                // Assuming $value contains the ProductVariation data as an array
-                $variationData = json_decode($value, true); // Convert to array if it's a JSON string
+                $variationData = json_decode($value, true);
 
                 if (!isset($variationData['id'])) {
                     return $fail('لطفا تعداد الماس را انتخاب نمایید.');
@@ -36,17 +38,20 @@ class CartController extends Controller
                 }
 
                 if ($productVariation->freeCount() <= 0) {
-                    return $fail('تعداد المالس انتخاب شده، ناموجود می باشد، لطفا بررسی نمایید.');
+                    return $fail('تعداد الماس انتخاب شده، ناموجود می باشد، لطفا بررسی نمایید.');
                 }
             }],
-        ],
-//            [
-//                'product_id.required' => 'Product is required.',
-//                'variation.required' => 'Variation is required.',
-//                'confirmation_checkbox.required' => 'You must confirm the checkbox.',
-//                'confirmation_checkbox.in' => 'The confirmation checkbox must be checked.',
-//            ]
-        );
+            'bigo_id2' => $request->product_type == EAppType::BIGO_LIVE ? 'required' : '',
+            'account_name' => [
+                $request->product_type == EAppType::BIGO_LIVE ? 'required' : '',
+                function ($attribute, $value, $fail) {
+                    if ($value === 'یافت نشد') {
+                        $fail('نام اکانت ("یافت نشد") نامعتبر است، لطفا مجدد بررسی نمایید.');
+                    }
+                },
+            ],
+            // Add other validation rules as needed
+        ]);
 
         if ($validator->fails()) {
             // Get all error messages as a single string
@@ -58,18 +63,6 @@ class CartController extends Controller
             // Redirect back with errors and input
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
-
-        // Fetch the product based on the validated product_id
-        $product = Product::query()->findOrFail($request->product_id);
-
-        // Perform further validation based on the app_type of the product
-        $request->validate([
-            'bigo_id' => $product->app_type == EAppType::BIGO_LIVE ? 'required' : '',
-            'account_name' => $product->app_type == EAppType::BIGO_LIVE ? 'required' : '',
-//            'account_avatar_url' => $product->app_type == EAppType::BIGO_LIVE ? 'required' : '',
-//             'qtybutton' => 'required'
-        ]);
 
         $productVariation = ProductVariation::query()->findOrFail(json_decode($request->variation)->id);
         if ($request->qtybutton > $productVariation->quantity) {
