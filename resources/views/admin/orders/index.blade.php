@@ -21,9 +21,10 @@
                         <th>نام کاربر</th>
                         <th>وضعیت</th>
                         <th>مبلغ</th>
-                        <th>نوع پرداخت</th>
-                        <th>وضعیت پرداخت</th>
+                        <th>تعداد آیتم</th>
                         <th>توضیحات وضعیت</th>
+                        <th>تاریخ ایجاد</th>
+                        <th>تاریخ ویرایش</th>
                         <th>عملیات</th>
                     </tr>
 
@@ -32,9 +33,9 @@
                     @foreach($orders as $key=>$order)
                         <tr>
 {{--                            <th>{{$orders->firstItem() + $key}}</th>--}}
-                            <th>{{$order->id}}</th>
-                            <th>{{$order->user->name ?? 'کاربر'}}</th>
-                            <th>
+                            <td>{{$order->id}}</td>
+                            <td>{{$order->user->name ?? 'کاربر'}}</td>
+                            <td>
                                 @switch($order->getRawOriginal('status'))
                                     @case(\App\Models\Order::STATUS_PAID_AND_COMPLETED)
                                         <span class="badge bg-success">{{ $order->status }}</span>
@@ -47,17 +48,24 @@
                                     @default
                                         <span class="badge bg-danger">{{ $order->status }}</span>
                                 @endswitch
-                            </th>
-                            <th>{{number_format($order->total_amount)}}</th>
-                            <th>{{$order->payment_type}}</th>
-                            <th>{{$order->payment_status}}</th>
-                            <th>{!! $order->status_description !!}</th>
-                            <th>
+                            </td>
+                            <td>{{number_format($order->total_amount)}}</td>
+                            <td>{{number_format($order->orderItems->count())}}</td>
+                            <td>{!! $order->status_description !!}</td>
+                            <td>
+                                {{ $order->created_at ? dateTimeFormat($order->created_at, 'Y-m-d') : '-' }}<br>
+                                {{ $order->created_at ? dateTimeFormat($order->created_at, 'H:i:s') : '-' }}
+                            </td>
+                            <td>
+                                {{ $order->updated_at ? dateTimeFormat($order->updated_at, 'Y-m-d') : '-' }}<br>
+                                {{ $order->updated_at ? dateTimeFormat($order->updated_at, 'H:i:s') : '-' }}
+                            </td>
+                            <td>
                                 <a class="btn btn-sm btn-outline-success"
                                    href="{{route('admin.orders.show', $order->id)}}">نمایش</a>
                                 <a class="btn btn-sm btn-outline-info mr-3"
                                    href="{{route('admin.orders.edit', $order->id)}}">ویرایش</a>
-                            </th>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
