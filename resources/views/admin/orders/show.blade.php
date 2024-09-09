@@ -108,12 +108,11 @@
                                     {{--                                                    </td>--}}
                                     <td class="product-name">
                                         <a href="{{route('home.products.show', $item->product->slug)}}"> {{$item->product->name}} </a>
-                                        <p style="font-size: 12px; color: red">
+                                        <p style="font-size: 12px;">
                                             {{$item->productVariation->attribute->name}}
                                             :
                                             {{$item->productVariation->value}} الماس
-                                        </p>
-                                        <p style="font-size: 12px; color: red">
+                                        <br>
                                             آی دی:
                                             {{ $item->account_id ?? '-' }}<br>
                                             نام اکانت:
@@ -134,17 +133,16 @@
                                     <td>
                                         @switch($item->getRawOriginal('status'))
                                             @case(\App\Models\OrderItem::STATUS_CHARGED)
-                                                <span class="badge bg-success">{{$item->status}}</span>
+                                                <span class="text-success">شارژ شده</span>
                                                 @break
 
                                             @case(\App\Models\OrderItem::STATUS_NEW)
-                                                <span class="badge bg-info">{{$item->status}}</span>
+                                                <span class="text-gray-500">در حال انجام ...</span>
                                                 @break
 
                                             @default
-                                                <span class="badge bg-warning">{{$item->status}}</span>
+                                                <span class="text-warning">در حال بررسی</span>
                                         @endswitch
-
                                     </td>
                                     <td class="product-subtotal">
                                         {{number_format($item->subtotal)}}

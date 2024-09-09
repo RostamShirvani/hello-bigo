@@ -38,15 +38,19 @@
                             <td>
                                 @switch($order->getRawOriginal('status'))
                                     @case(\App\Models\Order::STATUS_PAID_AND_COMPLETED)
-                                        <span class="badge bg-success">{{ $order->status }}</span>
+                                        <span class="text-success">{{ $order->status }}</span>
                                         @break
 
                                     @case(\App\Models\Order::STATUS_NEW)
-                                        <span class="badge bg-warning">{{ $order->status }}</span>
+                                        <span class="text-warning">{{ $order->status }}</span>
+                                        @break
+
+                                    @case(\App\Models\Order::STATUS_PAID_AND_IN_PROGRESS)
+                                        <span class="text-gray-500">{{ $order->status }}</span>
                                         @break
 
                                     @default
-                                        <span class="badge bg-danger">{{ $order->status }}</span>
+                                        <span class="text-danger">{{ $order->status }}</span>
                                 @endswitch
                             </td>
                             <td>{{number_format($order->total_amount)}}</td>

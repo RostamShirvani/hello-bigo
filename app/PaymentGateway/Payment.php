@@ -77,7 +77,7 @@ class Payment
             $order = Order::query()->findOrFail($transaction->order_id);
             $order->update([
                 'payment_status' => 1,
-//                'status' => 1
+                'status' => Order::STATUS_PAID_AND_IN_PROGRESS
             ]);
 
 //            // Do charge account

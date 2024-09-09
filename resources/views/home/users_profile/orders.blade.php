@@ -51,15 +51,19 @@
                                                     <th>
                                                         @switch($order->getRawOriginal('status'))
                                                             @case(\App\Models\Order::STATUS_PAID_AND_COMPLETED)
-                                                                <span class="badge bg-success">{{ $order->status }}</span>
+                                                                <span class="text-success">{{ $order->status }}</span>
                                                                 @break
 
                                                             @case(\App\Models\Order::STATUS_NEW)
-                                                                <span class="badge bg-warning">{{ $order->status }}</span>
+                                                                <span class="text-warning">{{ $order->status }}</span>
+                                                                @break
+
+                                                            @case(\App\Models\Order::STATUS_PAID_AND_IN_PROGRESS)
+                                                                <span class="text-gray-500">{{ $order->status }}</span>
                                                                 @break
 
                                                             @default
-                                                                <span class="badge bg-danger">{{ $order->status }}</span>
+                                                                <span class="text-danger">{{ $order->status }}</span>
                                                         @endswitch
                                                     </th>
                                                     <td>
@@ -131,12 +135,11 @@
                                                     {{--                                                    </td>--}}
                                                     <td class="product-name">
                                                         <a href="{{route('home.products.show', $item->product->slug)}}"> {{$item->product->name}} </a>
-                                                        <p style="font-size: 12px; color: red">
+                                                        <p style="font-size: 12px;">
                                                             {{$item->productVariation->attribute->name}}
                                                             :
                                                             {{$item->productVariation->value}} الماس
-                                                        </p>
-                                                        <p style="font-size: 12px; color: red">
+                                                        <br>
                                                             آی دی:
                                                             {{ $item->account_id ?? '-' }}<br>
                                                             نام اکانت:
@@ -156,17 +159,16 @@
                                                     <td>
                                                         @switch($item->getRawOriginal('status'))
                                                             @case(\App\Models\OrderItem::STATUS_CHARGED)
-                                                                <span class="badge bg-success">شارژ شده</span>
+                                                                <span class="text-success">شارژ شده</span>
                                                                 @break
 
                                                             @case(\App\Models\OrderItem::STATUS_NEW)
-                                                                <span class="badge bg-info">در حال انجام ...</span>
+                                                                <span class="text-gray-500">در حال انجام ...</span>
                                                                 @break
 
                                                             @default
-                                                                <span class="badge bg-warning">در حال بررسی</span>
+                                                                <span class="text-warning">در حال بررسی</span>
                                                         @endswitch
-
                                                     </td>
                                                     <td class="product-subtotal">
                                                         {{number_format($item->subtotal)}}

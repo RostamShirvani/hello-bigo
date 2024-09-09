@@ -14,11 +14,13 @@ class Order extends Model
     const STATUS_NEW = 0;
     const STATUS_PAID_AND_COMPLETED = 1;
     const STATUS_PAID_AND_NOT_COMPLETED = 2;
+    const STATUS_PAID_AND_IN_PROGRESS = 3;
 
     public function getStatusAttribute($status)
     {
         return match ($status) {
             self::STATUS_NEW => 'در انتظار پرداخت',
+            self::STATUS_PAID_AND_IN_PROGRESS => 'پرداخت شده - در حال انجام',
             self::STATUS_PAID_AND_COMPLETED => 'پرداخت شده - تکمیل شده',
             self::STATUS_PAID_AND_NOT_COMPLETED => 'پرداخت شده - تکمیل نشده',
         };
