@@ -2,7 +2,8 @@
 
 namespace App\Notifications;
 
-use App\Channels\SmsChannel;
+//use App\Channels\SmsChannel;
+use App\Channels\ippanel\SmsChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
