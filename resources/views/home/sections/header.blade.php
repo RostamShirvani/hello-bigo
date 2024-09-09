@@ -5,7 +5,7 @@
                 <div class="col-xl-2 col-lg-2">
                     <div class="logo pt-40">
                         <a href="{{route('home.index')}}">
-                            <h3 class="font-weight-bold">eCommerce</h3>
+                            <h3 class="font-weight-bold">{{env('APP_NAME')}}</h3>
                         </a>
                     </div>
                 </div>
@@ -14,9 +14,9 @@
                     <div class="main-menu text-center">
                         <nav>
                             <ul>
-                                <li class="angle-shape">
-                                    <a href="{{route('home.about-us')}}"> درباره ی ما </a>
-                                </li>
+{{--                                <li class="angle-shape">--}}
+{{--                                    <a href="{{route('home.about-us')}}"> درباره ی ما </a>--}}
+{{--                                </li>--}}
 
                                 <li><a href="{{route('home.contact-us')}}"> تماس با ما </a></li>
 
@@ -44,9 +44,9 @@
                                     </ul>
                                 </li>
 
-                                <li class="angle-shape">
-                                    <a href="{{route('home.index')}}"> صفحه اصلی </a>
-                                </li>
+{{--                                <li class="angle-shape">--}}
+{{--                                    <a href="{{route('home.index')}}"> صفحه اصلی </a>--}}
+{{--                                </li>--}}
                             </ul>
                         </nav>
                     </div>

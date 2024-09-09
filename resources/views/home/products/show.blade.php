@@ -25,20 +25,6 @@
                 <div class="col-lg-6 col-md-6 order-2 order-sm-2 order-md-1" style="direction: rtl;">
                     <div class="product-details-content ml-30">
                         <h2 class="text-right">{{$product->name}}</h2>
-                        <div class="product-details-price variation-price">
-                            @if($product->check_quantity)
-                                @if($product->check_sale)
-                                    <span class="new">{{number_format($product->check_sale->sale_price)}} تومان</span>
-                                    <span class="old">{{number_format($product->check_sale->price)}} تومان</span>
-                                @else
-                                    <span class="new">{{number_format($product->check_price->price)}} تومان</span>
-                                @endif
-                            @else
-                                <div class="not-in-stock">
-                                    <p class="text-white">ناموجود</p>
-                                </div>
-                            @endif
-                        </div>
                         <div class="pro-details-rating-wrap">
                             <div data-rating-stars="5"
                                  data-rating-readonly="true"
@@ -85,7 +71,20 @@
                                         </select>
                                     </div>
                                 </div>
-                                <br>
+                                <div class="product-details-price variation-price">
+                                    @if($product->check_quantity)
+                                        @if($product->check_sale)
+                                            <span class="new">{{number_format($product->check_sale->sale_price)}} تومان</span>
+                                            <span class="old">{{number_format($product->check_sale->price)}} تومان</span>
+                                        @else
+                                            <span class="new">{{number_format($product->check_price->price)}} تومان</span>
+                                        @endif
+                                    @else
+                                        <div class="not-in-stock">
+                                            <p class="text-white">ناموجود</p>
+                                        </div>
+                                    @endif
+                                </div>
                                 {{--                                <div class="pro-details-size-color text-right">--}}
                                 {{--                                    <div class="pro-details-size w-50">--}}
                                 {{--                                        @if(!empty($product->app_type) && $product->app_type == \App\Enums\EAppType::BIGO_LIVE)--}}
@@ -224,7 +223,7 @@
                             <a data-toggle="tab" href="#des-details3"> اطلاعات بیشتر </a>
                             <a class="{{count($errors) > 0 ? 'active' : ''}}" data-toggle="tab" href="#des-details2">
                                 دیدگاه
-                                ({{$product->comments()->count()}})
+                                ({{$product->approvedComments()->count()}})
                             </a>
                         </div>
                         <div class="tab-content description-review-bottom">
@@ -248,7 +247,7 @@
                             <div id="des-details2" class="tab-pane {{count($errors) > 0 ? 'active' : ''}}">
 
                                 <div class="review-wrapper">
-                                    @foreach($product->comments as $comment)
+                                    @foreach($product->approvedComments as $comment)
                                         <div class="single-review">
                                             <div class="review-img">
                                                 <img src="{{$comment->user->avatar ?? asset('/images/home/user.png')}}"
@@ -313,9 +312,9 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4">
-                    <div class="pro-dec-banner">
-                        <a href="#"><img src="{{asset('images/home/banner-7.png')}}" alt=""></a>
-                    </div>
+{{--                    <div class="pro-dec-banner">--}}
+{{--                        <a href="#"><img src="{{asset('images/home/banner-7.png')}}" alt=""></a>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>

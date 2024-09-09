@@ -170,6 +170,10 @@ class Product extends Model
     {
         return $this->hasMany(Comment::class);
     }
+    public function approvedComments()
+    {
+        return $this->hasMany(Comment::class)->where('approved', 1);
+    }
 
     public function checkUserWishlist($userId)
     {

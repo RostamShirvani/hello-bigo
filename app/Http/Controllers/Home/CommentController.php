@@ -45,7 +45,7 @@ class CommentController extends Controller
                 }
                 DB::commit();
 
-                alert()->success( 'با تشکر', 'نظر شما با موفقیت ثبت شد.');
+                alert()->success( 'با تشکر', 'نظر شما با موفقیت ثبت شد و پس از تأیید نمایش داده خواهد شد.');
                 return redirect()->back();
             } catch (\Exception $e) {
                 DB::rollBack();
