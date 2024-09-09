@@ -98,7 +98,7 @@ Route::get('/payment-verify/{gatewayName}', [PaymentController::class, 'paymentV
 Route::get('/login/{provider}' , [AuthController::class , 'redirectToProvider'])->name('provider.login');
 Route::get('/login/{provider}/callback' , [AuthController::class , 'handleProviderCallback']);
 
-//Route::any('/login', [AuthController::class, 'login'])->name('login');
+Route::any('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/check-otp', [AuthController::class, 'checkOtp']);
 Route::post('/resend-otp', [AuthController::class, 'resendOtp']);

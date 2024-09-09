@@ -49,7 +49,7 @@
                                             <div class="button-box d-flex justify-content-between">
                                                 <button type="submit">ورود</button>
                                                 <div>
-                                                    <button id="resendOTPButton" type="submit">اسال مجدد</button>
+                                                    <button id="resendOTPButton" type="submit">ارسال مجدد</button>
                                                     <span id="resendOTPTime"></span>
                                                 </div>
                                             </div>

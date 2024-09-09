@@ -15,37 +15,42 @@ class AuthController extends Controller
 {
 
 //    login with otp
-//    public function login(Request $request)
-//    {
-//        if ($request->method() == 'GET') {
-//            return view('auth.login');
-//        }
-//        $request->validate([
-//            'cellphone' => 'required|iran_mobile'
-//        ]);
-//
-//        try {
-//            $user = User::query()->where('cellphone', $request->cellphone)->first();
-//            $OTPCode = mt_rand(100000, 999999);
-//            $loginToken = Hash::make(Str::random());
-//            if ($user) {
-//                $user->update([
-//                    'otp' => $OTPCode,
-//                    'login_token' => $loginToken
-//                ]);
-//            } else {
-//                $user = User::create([
-//                    'cellphone' => $request->cellphone,
-//                    'otp' => $OTPCode,
-//                    'login_token' => $loginToken
-//                ]);
-//            }
-//            $user->notify(new OTPSmsNotification($OTPCode));
-//            return response(['login_token' => $loginToken], 200);
-//        } catch (\Exception $exception) {
-//            return response(['errors' => $exception->getMessage()], 422);
-//        }
-//    }
+    public function login(Request $request)
+    {
+        if ($request->method() == 'GET') {
+            return view('auth.login');
+        }
+        $request->validate([
+            'cellphone' => 'required|iran_mobile'
+        ]);
+
+        try {
+            $user = User::query()->where('cellphone', $request->cellphone)->first();
+            $OTPCode = mt_rand(100000, 999999);
+            $loginToken = Hash::make(Str::random());
+            if ($user) {
+                $user->update([
+                    'otp' => $OTPCode,
+                    'login_token' => $loginToken
+                ]);
+            } else {
+                $user = User::create([
+                    'name' => $request->cellphone,
+                    'avatar' => '',
+                    'email' => '',
+                    'password' => '',
+                    'provider_name' => '',
+                    'cellphone' => $request->cellphone,
+                    'otp' => $OTPCode,
+                    'login_token' => $loginToken
+                ]);
+            }
+            $user->notify(new OTPSmsNotification($OTPCode));
+            return response(['login_token' => $loginToken], 200);
+        } catch (\Exception $exception) {
+            return response(['errors' => $exception->getMessage()], 422);
+        }
+    }
 
     public function redirectToProvider($provider)
     {
