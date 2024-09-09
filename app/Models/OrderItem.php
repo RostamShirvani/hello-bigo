@@ -19,6 +19,25 @@ class OrderItem extends Model
     const STATUS_TOKEN_INACTIVE = 5;
     const STATUS_DUPLICATE = 6;
     const STATUS_EMPTY_CLIENT_API = 7;
+    const STATUS_MISSED_FIELDS = 8;
+    const STATUS_UNKNOWN = 99;
+
+    public function getStatusAttribute($status)
+    {
+        return match ($status) {
+            self::STATUS_NEW => 'در حال انجام ...',
+            self::STATUS_CHARGED => 'شارژ شده',
+            self::STATUS_BLACKLIST => 'بلک لیست',
+            self::STATUS_PIN_FINISHED => 'موجودی پین تمام شد',
+            self::STATUS_PIN_INVALID => 'پین نامعتبر',
+            self::STATUS_TOKEN_INACTIVE => 'توکن غیر فعال',
+            self::STATUS_DUPLICATE => 'آیتم تکراری',
+            self::STATUS_EMPTY_CLIENT_API => 'Empty client api',
+            self::STATUS_MISSED_FIELDS => 'Missed fields',
+            self::STATUS_UNKNOWN => 'نامشخص',
+        };
+    }
+
     public function product()
     {
         return $this->belongsTo(Product::class);
@@ -34,9 +53,8 @@ class OrderItem extends Model
         return $this->belongsTo(Order::class);
     }
 
-    public static function setStatus($orderItemId, $status = self::STATUS_NEW)
+    public static function setStatus($orderItem, $status = self::STATUS_NEW)
     {
-        $orderItem = OrderItem::query()->findOrFail($orderItemId);
         return $orderItem->update([
             'status' => $status
         ]);

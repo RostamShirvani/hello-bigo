@@ -3,6 +3,8 @@
 namespace App\Jobs;
 
 use App\Http\Controllers\Admin\PaymentPin\PaymentPinController;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\PaymentPin\PaymentPin;
 use App\Repositories\Admin\PaymentPinRepository;
 use Illuminate\Bus\Queueable;
@@ -16,6 +18,7 @@ class ChargeAccountJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $order;
     protected $orderItems;
 
     /**
@@ -23,9 +26,10 @@ class ChargeAccountJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($orderItems)
+    public function __construct($order)
     {
-        $this->orderItems = $orderItems;
+        $this->order = $order;
+        $this->orderItems = $order->orderItems;
     }
 
     /**
@@ -39,8 +43,17 @@ class ChargeAccountJob implements ShouldQueue
         $paymentPinRepository = new PaymentPinRepository($model);
         $paymentPin = new PaymentPinController($paymentPinRepository);
 
+        $orderStatus = Order::STATUS_PAID_AND_COMPLETED;
         foreach ($this->orderItems as $orderItem) {
-            $paymentPin->storeUsingAfterPay($orderItem);
+            $result = $paymentPin->storeUsingAfterPay($orderItem);
+            if (!blank($result) && !blank($result['status'])) {
+                OrderItem::setStatus($orderItem, $result['status']);
+                if ($result['status'] !== OrderItem::STATUS_CHARGED) {
+                    $orderStatus = Order::STATUS_PAID_AND_NOT_COMPLETED;
+                    Order::setStatus($this->order, Order::STATUS_PAID_AND_NOT_COMPLETED, $result['message'] ? $orderItem->id . ': ' . $result['message'] : null);
+                }
+            }
         }
+        Order::setStatus($this->order, $orderStatus);
     }
 }

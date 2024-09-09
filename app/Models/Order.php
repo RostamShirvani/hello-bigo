@@ -11,11 +11,16 @@ class Order extends Model
     protected $table = "orders";
     protected $guarded = [];
 
+    const STATUS_NEW = 0;
+    const STATUS_PAID_AND_COMPLETED = 1;
+    const STATUS_PAID_AND_NOT_COMPLETED = 2;
+
     public function getStatusAttribute($status)
     {
         return match ($status) {
-            0 => 'در انتظار پرداخت',
-            1 => 'پرداخت شده',
+            self::STATUS_NEW => 'در انتظار پرداخت',
+            self::STATUS_PAID_AND_COMPLETED => 'پرداخت شده - تکمیل شده',
+            self::STATUS_PAID_AND_NOT_COMPLETED => 'پرداخت شده - تکمیل نشده',
         };
     }
     public function getPaymentTypeAttribute($payment_type)
@@ -54,5 +59,13 @@ class Order extends Model
     public function address()
     {
         return $this->belongsTo(UserAddress::class);
+    }
+
+    public static function setStatus($order, $status = self::STATUS_NEW, $message = null)
+    {
+        return $order->update([
+            'status' => $status,
+            'status_description' => $order->status_description . isset($message) ? ' - ' . $message : '',
+        ]);
     }
 }

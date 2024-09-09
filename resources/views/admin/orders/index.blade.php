@@ -16,12 +16,14 @@
                 <table class="table table-bordered table-striped text-center">
                     <thead>
                     <tr>
-                        <th>#</th>
+{{--                        <th>#</th>--}}
+                        <th>ID</th>
                         <th>نام کاربر</th>
                         <th>وضعیت</th>
                         <th>مبلغ</th>
                         <th>نوع پرداخت</th>
                         <th>وضعیت پرداخت</th>
+                        <th>توضیحات وضعیت</th>
                         <th>عملیات</th>
                     </tr>
 
@@ -29,12 +31,27 @@
                     <tbody>
                     @foreach($orders as $key=>$order)
                         <tr>
-                            <th>{{$orders->firstItem() + $key}}</th>
+{{--                            <th>{{$orders->firstItem() + $key}}</th>--}}
+                            <th>{{$order->id}}</th>
                             <th>{{$order->user->name ?? 'کاربر'}}</th>
-                            <th>{{$order->status}}</th>
-                            <th>{{$order->total_amount}}</th>
+                            <th>
+                                @switch($order->getRawOriginal('status'))
+                                    @case(\App\Models\Order::STATUS_PAID_AND_COMPLETED)
+                                        <span class="badge bg-success">{{ $order->status }}</span>
+                                        @break
+
+                                    @case(\App\Models\Order::STATUS_NEW)
+                                        <span class="badge bg-warning">{{ $order->status }}</span>
+                                        @break
+
+                                    @default
+                                        <span class="badge bg-danger">{{ $order->status }}</span>
+                                @endswitch
+                            </th>
+                            <th>{{number_format($order->total_amount)}}</th>
                             <th>{{$order->payment_type}}</th>
                             <th>{{$order->payment_status}}</th>
+                            <th>{!! $order->status_description !!}</th>
                             <th>
                                 <a class="btn btn-sm btn-outline-success"
                                    href="{{route('admin.orders.show', $order->id)}}">نمایش</a>

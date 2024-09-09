@@ -20,7 +20,8 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label>نام کوپن</label>
-                    <input class="form-control" type="text" value="{{$order->coupon_id ? $order->coupon->name : 'استفاده نشده'}}" disabled>
+                    <input class="form-control" type="text"
+                           value="{{$order->coupon_id ? $order->coupon->name : 'استفاده نشده'}}" disabled>
                 </div>
                 <div class="form-group col-md-3">
                     <label>وضعیت</label>
@@ -65,38 +66,71 @@
                         <table class="table table-bordered table-striped text-center">
                             <thead>
                             <tr>
-                                <th> تصویر محصول</th>
-                                <th> نام محصول</th>
-                                <th> فی</th>
-                                <th> تعداد</th>
-                                <th> قیمت کل</th>
+                                <th>شماره آیتم</th>
+                                <th>تصویر محصول</th>
+                                <th>نام محصول</th>
+                                <th>آواتار</th>
+                                <th>وضعیت</th>
+                                {{--                                                <th> فی</th>--}}
+                                {{--                                                <th> تعداد</th>--}}
+                                <th>قیمت کل</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($order->orderItems as $item)
                                 <tr>
+                                    <td style="width: 100px;">
+                                        {{$item->id}}
+                                    </td>
                                     <td class="product-thumbnail">
-                                        <a href="{{route('admin.products.show', $item->product->id)}}">
+                                        <a href="{{route('home.products.show', $item->product->slug)}}">
                                             <img width="70"
                                                  src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$item->product->primary_image)}}"
                                                  alt="{{$item->product->name}}">
                                         </a>
                                     </td>
+                                    {{--                                                    <td class="product-name"><a--}}
+                                    {{--                                                            href="{{route('home.products.show', $item->product->slug)}}">{{$item->product->name}}</a>--}}
+                                    {{--                                                    </td>--}}
                                     <td class="product-name">
-                                        <a href="{{route('admin.products.show', $item->product->id)}}">{{$item->product->name}}
-                                            <p style="font-size: 12px; color: red">
-                                                {{$item->productVariation->attribute->name}}
-                                                :
-                                                {{$item->productVariation->value}}
-                                            </p>
-                                        </a>
+                                        <a href="{{route('home.products.show', $item->product->slug)}}"> {{$item->product->name}} </a>
+                                        <p style="font-size: 12px; color: red">
+                                            {{$item->productVariation->attribute->name}}
+                                            :
+                                            {{$item->productVariation->value}} الماس
+                                        </p>
+                                        <p style="font-size: 12px; color: red">
+                                            آی دی:
+                                            {{ $item->account_id ?? '-' }}<br>
+                                            نام اکانت:
+                                            {{ $item->account_name ?? '-' }}
+                                        </p>
                                     </td>
-                                    <td class="product-price-cart">
-                                                        <span
-                                                            class="amount">{{number_format($item->price)}} تومان</span>
+                                    {{--                                                    <td class="product-price-cart">--}}
+                                    {{--                                                        <span--}}
+                                    {{--                                                            class="amount">{{number_format($item->price)}} تومان</span>--}}
+                                    {{--                                                    </td>--}}
+                                    {{--                                                    <td class="product-quantity">--}}
+                                    {{--                                                        {{$item->quantity}}--}}
+                                    {{--                                                    </td>--}}
+                                    <td>
+                                        <img class="avatar rounded-circle" loading="lazy"
+                                             style="width: 40px; height: 40px;" src="{{$item->account_avatar_url}}">
                                     </td>
-                                    <td class="product-quantity">
-                                        {{$item->quantity}}
+                                    <td>
+                                        @switch($item->getRawOriginal('status'))
+                                            @case(\App\Models\OrderItem::STATUS_CHARGED)
+                                                <span class="badge bg-success">{{$item->status}}</span>
+                                                @break
+
+                                            @case(\App\Models\OrderItem::STATUS_NEW)
+                                                <span class="badge bg-info">{{$item->status}}</span>
+                                                @break
+
+                                            @default
+                                                <span class="badge bg-warning">{{$item->status}}</span>
+                                        @endswitch
+
                                     </td>
                                     <td class="product-subtotal">
                                         {{number_format($item->subtotal)}}

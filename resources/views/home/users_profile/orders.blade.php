@@ -36,11 +36,11 @@
                                         <table class="table table-bordered">
                                             <thead class="thead-light">
                                             <tr>
-                                                <th> سفارش</th>
-                                                <th> تاریخ</th>
-                                                <th> وضعیت</th>
-                                                <th> جمع کل</th>
-                                                <th> عملیات</th>
+                                                <th>سفارش</th>
+                                                <th>تاریخ</th>
+                                                <th>وضعیت</th>
+                                                <th>جمع کل</th>
+                                                <th>عملیات</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -48,7 +48,20 @@
                                                 <tr>
                                                     <td>{{$order->id}}</td>
                                                     <td> {{ verta($order->created_at)->format('H:i:s - d F Y') }}</td>
-                                                    <td>{{$order->status}}</td>
+                                                    <th>
+                                                        @switch($order->getRawOriginal('status'))
+                                                            @case(\App\Models\Order::STATUS_PAID_AND_COMPLETED)
+                                                                <span class="badge bg-success">{{ $order->status }}</span>
+                                                                @break
+
+                                                            @case(\App\Models\Order::STATUS_NEW)
+                                                                <span class="badge bg-warning">{{ $order->status }}</span>
+                                                                @break
+
+                                                            @default
+                                                                <span class="badge bg-danger">{{ $order->status }}</span>
+                                                        @endswitch
+                                                    </th>
                                                     <td>
                                                         {{number_format($order->paying_amount/10)}}
                                                         تومان
@@ -90,8 +103,9 @@
                                         <table>
                                             <thead>
                                             <tr>
-                                                <th> تصویر محصول</th>
-                                                <th> نام محصول</th>
+                                                <th>شماره آیتم</th>
+                                                <th>تصویر محصول</th>
+                                                <th>نام محصول</th>
                                                 <th>آواتار</th>
                                                 <th>وضعیت</th>
 {{--                                                <th> فی</th>--}}
@@ -102,6 +116,9 @@
                                             <tbody>
                                             @foreach($order->orderItems as $item)
                                                 <tr>
+                                                    <td>
+                                                        {{$item->id}}
+                                                    </td>
                                                     <td class="product-thumbnail">
                                                         <a href="{{route('home.products.show', $item->product->slug)}}">
                                                             <img width="70"
@@ -137,7 +154,7 @@
                                                         <img class="avatar rounded-circle" loading="lazy" style="width: 40px; height: 40px;" src="{{$item->account_avatar_url}}">
                                                     </td>
                                                     <td>
-                                                        @switch($item->status)
+                                                        @switch($item->getRawOriginal('status'))
                                                             @case(\App\Models\OrderItem::STATUS_CHARGED)
                                                                 <span class="badge bg-success">شارژ شده</span>
                                                                 @break

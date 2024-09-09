@@ -77,7 +77,7 @@ class Payment
             $order = Order::query()->findOrFail($transaction->order_id);
             $order->update([
                 'payment_status' => 1,
-                'status' => 1
+//                'status' => 1
             ]);
 
 //            // Do charge account
@@ -89,7 +89,7 @@ class Payment
 //            }
 
             // Dispatch job to queue
-            ChargeAccountJob::dispatch($order->orderItems);
+            ChargeAccountJob::dispatch($order);
 
             foreach (\Cart::getContent() as $item) {
                 $variation = ProductVariation::query()->findOrFail($item->attributes->id);
