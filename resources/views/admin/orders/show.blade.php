@@ -57,7 +57,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label>آدرس</label>
-                    <textarea class="form-control" disabled>{{$order->address->address}}</textarea>
+                    <textarea class="form-control" disabled>{{$order->address?->address}}</textarea>
                 </div>
                 <div class="form-group col-md-6">
                     <label>توضیحات</label>

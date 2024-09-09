@@ -15,7 +15,7 @@ class PaymentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'payment_method' => 'required',
-            'address_id' => 'required',
+//            'address_id' => 'required',
         ]);
         if ($validator->fails()) {
             alert()->error('توجه!', 'اتصال به درگاه پرداخت انجام نشد! لطفا آدرس پستی و درگاه پرداخت را به درستی انتخاب نموده و مجدد تلاش نمایید.');

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('address_id');
+            $table->foreignId('address_id')->nullable(); // nullable for online products, exp: charge an account
             $table->foreign('address_id')->references('id')->on('user_addresses')->onDelete('cascade');
             $table->foreignId('coupon_id')->nullable();
             $table->foreign('coupon_id')->references('id')->on('coupons')->onDelete('cascade');
