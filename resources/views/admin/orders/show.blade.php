@@ -55,9 +55,23 @@
                     <label>تاریخ ایجاد</label>
                     <input class="form-control" type="text" value="{{verta($order->created_at)}}" disabled>
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-6">
                     <label>آدرس</label>
                     <textarea class="form-control" disabled>{{$order->address->address}}</textarea>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>توضیحات</label>
+                    <textarea class="form-control" name="description" disabled>{{ $order->description }}</textarea>
+                    @error('description')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group col-md-6">
+                    <label>توضیحات وضعیت</label>
+                    <textarea class="form-control" name="status_description" disabled>{{ $order->status_description }}</textarea>
+                    @error('status_description')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="col-md-12">
                     <hr>
