@@ -66,6 +66,7 @@
                                                     value="{{json_encode($variation->only(['id', 'quantity', 'is_sale', 'sale_price', 'price']))}}"
                                                     {{$selectedProductVariation->id == $variation->id ? 'selected' : ''}}>{{$variation->value}}
                                                     الماس
+                                                    {{ ($variation->freeCount() < 1) ? ' - ناموجود' : ''}}
                                                 </option>
                                             @endforeach
                                         </select>

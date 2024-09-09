@@ -19,8 +19,26 @@ class CartController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'product_id' => 'required',
-            'variation' => 'required',
             'confirmation_checkbox' => ['required', 'in:1'],
+            // Custom rule to check freeCount
+            'variation' => ['required', function ($attribute, $value, $fail) {
+                // Assuming $value contains the ProductVariation data as an array
+                $variationData = json_decode($value, true); // Convert to array if it's a JSON string
+
+                if (!isset($variationData['id'])) {
+                    return $fail('لطفا تعداد الماس را انتخاب نمایید.');
+                }
+
+                $productVariation = ProductVariation::find($variationData['id']);
+
+                if (!$productVariation) {
+                    return $fail('تعداد الماس انتخاب شده، یافت نشد.');
+                }
+
+                if ($productVariation->freeCount() <= 0) {
+                    return $fail('تعداد المالس انتخاب شده، ناموجود می باشد، لطفا بررسی نمایید.');
+                }
+            }],
         ],
 //            [
 //                'product_id.required' => 'Product is required.',

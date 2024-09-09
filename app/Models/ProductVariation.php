@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\EAppType;
+use App\Models\PaymentPin\PaymentPin;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -33,5 +35,16 @@ class ProductVariation extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function freeCount()
+    {
+        if($this->product->app_type == EAppType::BIGO_LIVE){
+            $valueColumn =  'value';
+        }
+        if($this->product->app_type == EAppType::LIKEE){
+            $valueColumn =  'likee_value';
+        }
+        return PaymentPin::query()->where(['state' => 1, 'status' => 1, 'value' => $this->value])->count();
     }
 }
