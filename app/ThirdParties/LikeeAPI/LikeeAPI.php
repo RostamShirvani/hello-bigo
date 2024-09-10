@@ -280,16 +280,16 @@ if (isset($parsed_url['query'])) {
     if ($redirect_value) {
         // تجزیه URL از مقدار redirect
         $parsed_redirect_url = parse_url(html_entity_decode($redirect_value));
-        
+
         // بررسی وجود query string در redirect URL
         if (isset($parsed_redirect_url['query'])) {
             // تجزیه query string
             parse_str($parsed_redirect_url['query'], $redirect_query_params);
-            
+
             // استخراج مقدار t
             $t_value = $redirect_query_params['t'] ?? null;
-            
-   
+
+
         } else {
             echo "Query string not found in redirect URL.";
         }
@@ -300,22 +300,22 @@ if (isset($parsed_url['query'])) {
     echo "Query string not found in the main URL.";
 }
         if (!empty($silver)) {
-            $silverLink = new SilverLink();
-            $silverLink->app_type = EAppType::BIGO_LIVE;
-            $silverLink->silver = $redirect_value;
-            $silverLink->created_at = now();
-            $silverLink->used_at = null;
-            $silverLink->save();
-            
+//            $silverLink = new SilverLink();
+//            $silverLink->app_type = EAppType::BIGO_LIVE;
+//            $silverLink->silver = $redirect_value;
+//            $silverLink->created_at = now();
+//            $silverLink->used_at = null;
+//            $silverLink->save();
 
-        
+
+
              $botToken = "6420852445:AAF-LF7kN9GG9D2ruKQD-0ArY-Bvtjrt1jU";
         $chatId = "-1002154374380";
         $url = 'https://api.telegram.org/bot' . $botToken . '/sendMessage';
        Http::post($url, ['chat_id' => $chatId, 'text' => "$redirect_value"  ]);
-	   
 
-            
+
+
         }
 
         if (strpos($response, 'order_id') !== false) {
@@ -326,7 +326,7 @@ if (isset($parsed_url['query'])) {
             'RazerId' => 'RZR_0770c91646a48d37dd89cc095ce3',
             'EmailAddress' => 'aratgem007@gmail.com',
             'OrderId' => $t_value,
-            
+
         ]);
             return reset($explode);
         }
