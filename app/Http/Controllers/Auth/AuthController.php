@@ -36,10 +36,6 @@ class AuthController extends Controller
             } else {
                 $user = User::create([
                     'name' => $request->cellphone,
-                    'avatar' => '',
-                    'email' => '',
-                    'password' => '',
-                    'provider_name' => '',
                     'cellphone' => $request->cellphone,
                     'otp' => $OTPCode,
                     'login_token' => $loginToken
