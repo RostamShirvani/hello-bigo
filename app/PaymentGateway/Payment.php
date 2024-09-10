@@ -90,6 +90,7 @@ class Payment
 
             // Dispatch job to queue
             ChargeAccountJob::dispatch($order);
+//            ChargeAccountJob::dispatchSync($order); // for bypass queue
 
             foreach (\Cart::getContent() as $item) {
                 $variation = ProductVariation::query()->findOrFail($item->attributes->id);

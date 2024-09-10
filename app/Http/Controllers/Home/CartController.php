@@ -41,7 +41,7 @@ class CartController extends Controller
                     return $fail('تعداد الماس انتخاب شده، ناموجود می باشد، لطفا بررسی نمایید.');
                 }
             }],
-            'bigo_id2' => $request->product_type == EAppType::BIGO_LIVE ? 'required' : '',
+            'bigo_id' => (in_array($request->product_type, [EAppType::BIGO_LIVE, EAppType::LIKEE]) ? 'required' : ''),
             'account_name' => [
                 $request->product_type == EAppType::BIGO_LIVE ? 'required' : '',
                 function ($attribute, $value, $fail) {
@@ -70,9 +70,11 @@ class CartController extends Controller
             return redirect()->back();
         }
 
-        $account_id = $product->app_type == EAppType::BIGO_LIVE ? $request->get('bigo_id') : null;
-        $account_name = $product->app_type == EAppType::BIGO_LIVE ? $request->get('account_name') : null;
-        $account_avatar_url = $product->app_type == EAppType::BIGO_LIVE ? $request->get('account_avatar_url') : null;
+        if (($product->app_type == EAppType::BIGO_LIVE || $product->app_type == EAppType::LIKEE)) {
+            $account_id = $request->get('bigo_id') ?? null;
+            $account_name = $request->get('account_name') ?? null;
+            $account_avatar_url = $request->get('account_avatar_url') ?? null;
+        }
 
         // add the product to cart
         $rowId = $product->id . '-' . $productVariation->id . '-' . $account_id;

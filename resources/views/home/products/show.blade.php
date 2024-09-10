@@ -96,18 +96,20 @@
                                 {{--                                    </div>--}}
                                 {{--                                </div>--}}
 
-                                @if(!empty($product->app_type) && $product->app_type == \App\Enums\EAppType::BIGO_LIVE)
+{{--                                @if(!empty($product->app_type) && $product->app_type == \App\Enums\EAppType::BIGO_LIVE)--}}
+                                @if(!empty($product->app_type))
                                     <div>
                                         <div class="mb-3 text-left" style="position:relative;">
                                             <div class="user-preview">
                                                 <div class="avatar"></div>
                                                 <div class="name"></div>
+                                                <input type="hidden" name="app_type" value="{{ $product->app_type }}">
                                                 <input type="hidden" name="account_name" value="">
                                                 <input type="hidden" name="account_avatar_url" value="">
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <label for="bigo_id" class="form-label">آی دی اکانت بیگو</label>
+                                            <label for="bigo_id" class="form-label">آی دی اکانت</label>
                                             <input type="text" class="form-control user-preview-toggler-front" name="bigo_id" id="bigo_id" value="{{ old('bigo_id') }}">
                                             <button type="button" id="check_account" class="btn btn-primary mt-2" style="border-radius: 10px;">بررسی اکانت</button>
                                             <button type="button" id="edit_account" class="btn btn-warning mt-2 d-none">ویرایش اکانت</button>

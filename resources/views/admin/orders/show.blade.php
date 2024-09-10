@@ -141,7 +141,7 @@
                                                 @break
 
                                             @default
-                                                <span class="text-warning">در حال بررسی</span>
+                                                <span class="text-warning">{{ $item->status }}</span>
                                         @endswitch
                                     </td>
                                     <td class="product-subtotal">

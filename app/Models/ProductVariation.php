@@ -45,6 +45,6 @@ class ProductVariation extends Model
         if($this->product->app_type == EAppType::LIKEE){
             $valueColumn =  'likee_value';
         }
-        return PaymentPin::query()->where(['state' => 1, 'status' => 1, 'value' => $this->value])->count();
+        return PaymentPin::query()->where(['state' => 1, 'status' => 1, $valueColumn => $this->value])->count();
     }
 }

@@ -6,6 +6,7 @@ use App\Enums\EAppType;
 use App\Enums\ELoginTokenStatus;
 use App\Enums\EState;
 use App\Models\LoginToken\LoginToken;
+use App\Models\RazerAccount;
 use App\Models\RequestUrl\RequestUrl;
 use App\Models\SilverLink\SilverLink;
 use Illuminate\Support\Facades\Http;
@@ -264,41 +265,41 @@ class LikeeAPI
             'Confirmation.CurrencyCode' => 'USD',
         ], true);
 
-      $silver = $this->getSilverLinkFromResponse($response);
+        $silver = $this->getSilverLinkFromResponse($response);
 
 // تجزیه URL
-$parsed_url = parse_url(html_entity_decode($silver));
+        $parsed_url = parse_url(html_entity_decode($silver));
 
 // بررسی وجود query string
-if (isset($parsed_url['query'])) {
-    // تجزیه query string
-    parse_str($parsed_url['query'], $query_params);
-
-    // ذخیره مقدار redirect
-    $redirect_value = $query_params['redirect'] ?? null;
-
-    if ($redirect_value) {
-        // تجزیه URL از مقدار redirect
-        $parsed_redirect_url = parse_url(html_entity_decode($redirect_value));
-
-        // بررسی وجود query string در redirect URL
-        if (isset($parsed_redirect_url['query'])) {
+        if (isset($parsed_url['query'])) {
             // تجزیه query string
-            parse_str($parsed_redirect_url['query'], $redirect_query_params);
+            parse_str($parsed_url['query'], $query_params);
 
-            // استخراج مقدار t
-            $t_value = $redirect_query_params['t'] ?? null;
+            // ذخیره مقدار redirect
+            $redirect_value = $query_params['redirect'] ?? null;
+
+            if ($redirect_value) {
+                // تجزیه URL از مقدار redirect
+                $parsed_redirect_url = parse_url(html_entity_decode($redirect_value));
+
+                // بررسی وجود query string در redirect URL
+                if (isset($parsed_redirect_url['query'])) {
+                    // تجزیه query string
+                    parse_str($parsed_redirect_url['query'], $redirect_query_params);
+
+                    // استخراج مقدار t
+                    $t_value = $redirect_query_params['t'] ?? null;
 
 
+                } else {
+                    echo "Query string not found in redirect URL.";
+                }
+            } else {
+                echo "Redirect parameter not found in the main URL.";
+            }
         } else {
-            echo "Query string not found in redirect URL.";
+            echo "Query string not found in the main URL.";
         }
-    } else {
-        echo "Redirect parameter not found in the main URL.";
-    }
-} else {
-    echo "Query string not found in the main URL.";
-}
         if (!empty($silver)) {
 //            $silverLink = new SilverLink();
 //            $silverLink->app_type = EAppType::BIGO_LIVE;
@@ -308,26 +309,41 @@ if (isset($parsed_url['query'])) {
 //            $silverLink->save();
 
 
-
-             $botToken = "6420852445:AAF-LF7kN9GG9D2ruKQD-0ArY-Bvtjrt1jU";
-        $chatId = "-1002154374380";
-        $url = 'https://api.telegram.org/bot' . $botToken . '/sendMessage';
-       Http::post($url, ['chat_id' => $chatId, 'text' => "$redirect_value"  ]);
-
+            $botToken = "6420852445:AAF-LF7kN9GG9D2ruKQD-0ArY-Bvtjrt1jU";
+            $chatId = "-1002154374380";
+            $url = 'https://api.telegram.org/bot' . $botToken . '/sendMessage';
+            Http::post($url, ['chat_id' => $chatId, 'text' => "$redirect_value"]);
 
 
         }
 
         if (strpos($response, 'order_id') !== false) {
             $explode = explode('</h5>', last(explode('order_id:', $response)));
-            $urlt = 'https://global.gold.razer.com/paymentwall/Redemption/ClaimSilver';
-  $response = $this->sendRequest($urlt, 'POST', [
-            'AccessToken' => 'baa9cc5751c93a8c97a0134aa13f0f109fb502c9',
-            'RazerId' => 'RZR_0770c91646a48d37dd89cc095ce3',
-            'EmailAddress' => 'aratgem007@gmail.com',
-            'OrderId' => $t_value,
+            if (isset($t_value) && $t_value) {
+                $selected_account = RazerAccount::getCurrentSelectedRazerAccount();
+                if (!$selected_account) {
+                    alert()->error('عملیات ناموفق', 'اکانت فعالی یافت نشد!');
+                    return redirect()->back();
+                }
+                $urlt = 'https://global.gold.razer.com/paymentwall/Redemption/ClaimSilver';
+                $response = $this->sendRequest($urlt, 'POST', [
+//                    'AccessToken' => 'baa9cc5751c93a8c97a0134aa13f0f109fb502c9',
+//                    'RazerId' => 'RZR_0770c91646a48d37dd89cc095ce3',
+//                    'EmailAddress' => 'aratgem007@gmail.com',
+//                    'OrderId' => $t_value,
+                    'RazerId' => $selected_account->razer_id,
+                    'EmailAddress' => $selected_account->email_address,
+                    'OrderId' => $t_value,
+                ]);
 
-        ]);
+                if ($selected_account) {
+                    $selected_account->charge_balance += (int)$response;
+                    if (($selected_account->charge_balance + (int)$response) >= $selected_account->charge_ceiling) {
+                        $selected_account->charge_ceil_flag += 1;
+                    }
+                    $selected_account->save();
+                }
+            }
             return reset($explode);
         }
 
