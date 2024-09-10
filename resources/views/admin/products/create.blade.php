@@ -28,8 +28,8 @@
                             <label for="app_type">نوع</label>
                             <select id="appTypeSelect" name="app_type" class="form-control" data-live-search="true">
                                 <option value="">انتخاب نوع محصول</option>
-                                <option value="{{ \App\Enums\EAppType::BIGO_LIVE }}">BIGO LIVE</option>
-                                <option value="{{ \App\Enums\EAppType::LIKEE }}">LIKEE</option>
+                                <option value="{{ \App\Enums\EAppType::BIGO_LIVE }}" {{ old('app_type') == \App\Enums\EAppType::BIGO_LIVE ? 'selected' : '' }}>BIGO LIVE</option>
+                                <option value="{{ \App\Enums\EAppType::LIKEE }}" {{ old('app_type') == \App\Enums\EAppType::LIKEE ? 'selected' : '' }}>LIKEE</option>
                             </select>
                         </div>
                     </div>
@@ -38,14 +38,14 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="name">نام</label>
-                        <input class="form-control" id="name" name="name" type="text" value="{{old('name')}}">
+                        <input class="form-control" id="name" name="name" type="text" value="{{ old('name') }}">
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="brand_id">برند</label>
                         <select id="brandSelect" name="brand_id" class="form-control" data-live-search="true">
                             @foreach($brands as $brand)
-                                <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -53,25 +53,23 @@
                     <div class="form-group col-md-3">
                         <label for="is_active">وضعیت</label>
                         <select class="form-control" id="is_active" name="is_active">
-                            <option value="1" selected>فعال</option>
-                            <option value="0">غیرفعال</option>
+                            <option value="1" {{ old('is_active') == '1' ? 'selected' : '' }}>فعال</option>
+                            <option value="0" {{ old('is_active') == '0' ? 'selected' : '' }}>غیرفعال</option>
                         </select>
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="tag_ids">تگ</label>
-                        <select id="tagSelect" name="tag_ids[]" class="form-control" multiple
-                                data-live-search="true">
+                        <select id="tagSelect" name="tag_ids[]" class="form-control" multiple data-live-search="true">
                             @foreach($tags as $tag)
-                                <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                <option value="{{ $tag->id }}" {{ is_array(old('tag_ids')) && in_array($tag->id, old('tag_ids')) ? 'selected' : '' }}>{{ $tag->name }}</option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="form-group col-md-12">
                         <label for="description">توضیحات</label>
-                        <textarea class="form-control" id="description" name="description"
-                                  type="text">{{old('description')}}</textarea>
+                        <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
                     </div>
 
                     {{-- Product Image Section --}}
@@ -95,7 +93,6 @@
                             <input type="file" name="images[]" id="images" class="custom-file-input" multiple/>
                             <label class="custom-file-label" for="images"> انتخاب فایل ها </label>
                         </div>
-
                     </div>
 
                     {{-- Category&Attributes Section --}}
@@ -109,16 +106,17 @@
                         <div class="row justify-content-center">
                             <div class="form-group col-md-3">
                                 <label for="category_id">دسته بندی</label>
-                                <select id="categorySelect" name="category_id" class="form-control"
-                                        data-live-search="true">
+                                <select id="categorySelect" name="category_id" class="form-control" data-live-search="true">
                                     @foreach($categories as $category)
-                                        <option value="{{$category->id}}">{{$category->name}}
-                                            - {{$category->parent->name}}</option>
+                                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }} - {{ $category->parent->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
+
                     <div id="attributesContainer" class="col-md-12">
                         <div id="attributes" class="row"></div>
                         <div class="col-md-12">
@@ -132,19 +130,19 @@
                                     <div class="row">
                                         <div class="form-group col-md-3">
                                             <label>نام</label>
-                                            <input class="form-control" name="variation_values[value][]" type="text">
+                                            <input class="form-control" name="variation_values[value][]" type="text" value="{{ old('variation_values.value.0') }}">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label>قیمت</label>
-                                            <input class="form-control" name="variation_values[price][]" type="text">
+                                            <input class="form-control" name="variation_values[price][]" type="text" value="{{ old('variation_values.price.0') }}">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label>تعداد</label>
-                                            <input class="form-control" name="variation_values[quantity][]" type="text">
+                                            <input class="form-control" name="variation_values[quantity][]" type="text" value="{{ old('variation_values.quantity.0') }}">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label>شناسه ی انبار</label>
-                                            <input class="form-control" name="variation_values[sku][]" type="text">
+                                            <input class="form-control" name="variation_values[sku][]" type="text" value="{{ old('variation_values.sku.0') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -160,12 +158,11 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="delivery_amount">هزینه ی ارسال</label>
-                        <input class="form-control" id="delivery_amount" name="delivery_amount" type="text" value="{{old('delivery_amount')}}">
+                        <input class="form-control" id="delivery_amount" name="delivery_amount" type="text" value="{{ old('delivery_amount') }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="delivery_amount_per_product">هزینه ی ارسال به ازای محصول اضافی</label>
-                        <input class="form-control" id="delivery_amount_per_product" name="delivery_amount_per_product"
-                               type="text" value="{{old('delivery_amount_per_product')}}">
+                        <input class="form-control" id="delivery_amount_per_product" name="delivery_amount_per_product" type="text" value="{{ old('delivery_amount_per_product') }}">
                     </div>
                 </div>
                 <button class="btn btn-outline-primary mt-5" type="submit">ثبت</button>
