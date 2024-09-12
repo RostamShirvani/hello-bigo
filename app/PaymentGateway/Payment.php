@@ -61,14 +61,16 @@ class Payment
             DB::rollBack();
             return ['error' => $ex->getMessage()];
         }
-        return ['success' => 'success!'];
+        return ['success' => 'success!', 'order' => $order];
     }
 
-    public function updateOrder($token, $refId)
+    public function updateOrder($token, $refId, $transactionId = null)
     {
         try {
             DB::beginTransaction();
-            $transaction = Transaction::query()->where('token', $token)->firstOrFail();
+            $transaction = $transactionId
+                ? Transaction::query()->where('id', $transactionId)->firstOrFail()
+                : Transaction::query()->where('token', $token)->firstOrFail();
             $transaction->update([
                 'status' => 1,
                 'ref_id' => $refId

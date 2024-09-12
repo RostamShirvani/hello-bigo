@@ -67,7 +67,7 @@ class Order extends Model
     {
         return $order->update([
             'status' => $status,
-            'status_description' => $order->status_description . isset($message) ? ' - ' . $message : '',
+            'status_description' => $order->status_description . $message,
         ]);
     }
 }

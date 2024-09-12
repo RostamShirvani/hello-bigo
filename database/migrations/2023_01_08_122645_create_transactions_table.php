@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('ref_id')->nullable();
             $table->string('token')->nullable();
             $table->text('description')->nullable();
-            $table->enum('gateway_name', ['zarinpal', 'pay']);
+            $table->enum('gateway_name', \App\Models\Transaction::getGatewayNames()); // Use the constants here
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });

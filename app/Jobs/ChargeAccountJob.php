@@ -50,7 +50,8 @@ class ChargeAccountJob implements ShouldQueue
                 OrderItem::setStatus($orderItem, $result['status']);
                 if ($result['status'] !== OrderItem::STATUS_CHARGED) {
                     $orderStatus = Order::STATUS_PAID_AND_NOT_COMPLETED;
-                    Order::setStatus($this->order, Order::STATUS_PAID_AND_NOT_COMPLETED, $result['message'] ? $orderItem->id . ': ' . $result['message'] : null);
+                    $message = $result['message'] ? ($orderItem->id . ': ' . $result['message']) : null;
+                    Order::setStatus($this->order, Order::STATUS_PAID_AND_NOT_COMPLETED, $message);
                 }
             }
         }

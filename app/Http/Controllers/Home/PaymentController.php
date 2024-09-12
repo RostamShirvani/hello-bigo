@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Models\ProductVariation;
 use App\PaymentGateway\Pay;
+use App\PaymentGateway\Payment;
 use App\PaymentGateway\Zarinpal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -32,6 +33,22 @@ class PaymentController extends Controller
         if (array_key_exists('error', $amounts)) {
             alert()->error('توجه!', $amounts['error']);
             return redirect()->route('home.index');
+        }
+
+        if(isset($amounts['paying_amount']) && $amounts['paying_amount'] == 0){
+            $payment = new Payment();
+            $createOrder = $payment->createOrder($request->get('address_id') ?? null, $amounts, null, 'free');
+            if (array_key_exists('error', $createOrder)) {
+                return $createOrder;
+            }
+            $order = $createOrder['order'];
+            $updateOrder = $payment->updateOrder('free', 'free', $order->transaction->id);
+            if (array_key_exists('error', $updateOrder)) {
+                return $updateOrder;
+            }
+            \Cart::clear();
+            alert()->success('عملیات موفق', 'پرداخت با موفقیت انجام شد.');
+            return  redirect()->route('home.orders.users_profile.index');
         }
 
         if ($request->payment_method == 'pay') {
