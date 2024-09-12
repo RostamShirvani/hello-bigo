@@ -24,7 +24,7 @@
                     <div class="login-register-wrapper">
                         <div class="login-register-tab-list nav">
                             <a class="active" data-toggle="tab" href="#lg1">
-                                <h4> ورود </h4>
+                                <h4> ورود/عضویت </h4>
                             </a>
                         </div>
                         <div class="tab-content">
@@ -34,6 +34,7 @@
                                         <form id="loginForm">
                                             <input id="cellphoneInput" placeholder="شماره تلفن خود را وارد کنید"
                                                    type="text">
+                                            <input type="hidden" name="redirect" value="{{ session('url.intended', url('/')) }}">
                                             <div id="cellphoneInputError" class="input-error-validation">
                                                 <strong id="cellphoneInputErrorText"></strong>
                                             </div>
@@ -103,10 +104,16 @@
                 {
                     '_token': "{{csrf_token()}}",
                     'otp': $('#checkOTPInput').val(),
-                    'login_token': loginToken
+                    'login_token': loginToken,
+                    'redirect': $('input[name="redirect"]').val() // Pass redirect URL as parameter
                 }, function (response, status) {
                     console.log(response, status);
-                    $(location).attr('href', "{{route('home.index')}}");
+                    // Redirect to the URL provided by the server
+                    if (response.redirect) {
+                        window.location.href = response.redirect;
+                    } else {
+                        window.location.href = "{{route('home.index')}}";
+                    }
                 }).fail(function (response) {
                 console.log(response.responseJSON);
                 $('#checkOTPInput').addClass('mb-1');

@@ -89,7 +89,7 @@ Route::get('/remove-from-cart/{rowId}', [CartController::class, 'remove'])->name
 Route::put('/cart', [CartController::class, 'update'])->name('home.cart.update');
 Route::get('/clear-cart', [CartController::class, 'clear'])->name('home.cart.clear');
 Route::post('/check-coupon', [CartController::class, 'checkCoupon'])->name('home.coupons.check');
-Route::get('/checkout', [CartController::class, 'checkout'])->name('home.orders.checkout');
+Route::get('/checkout', [CartController::class, 'checkout'])->name('home.orders.checkout')->middleware('auth');
 
 Route::post('/payment', [PaymentController::class, 'payment'])->name('home.payment');
 Route::get('/payment-verify/{gatewayName}', [PaymentController::class, 'paymentVerify'])->name('home.payment_verify');

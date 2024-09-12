@@ -18,7 +18,8 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         if ($request->method() == 'GET') {
-            return view('auth.login');
+            $redirectUrl = $request->query('redirect', url('/home'));
+            return view('auth.login', ['redirectUrl' => $redirectUrl]);
         }
         $request->validate([
             'cellphone' => 'required|iran_mobile'
@@ -87,15 +88,24 @@ class AuthController extends Controller
     }
     public function checkOtp(Request $request)
     {
+        if(isset($request->redirect)){
+            // Decode the redirect URL
+            $request['redirect'] = urldecode($request->redirect);
+        }
         $request->validate([
             'otp' => 'required|digits:6',
-            'login_token' => 'required'
+            'login_token' => 'required',
+            'redirect' => 'nullable|url'
         ]);
+
         try {
             $user = User::query()->where('login_token', $request->login_token)->firstOrFail();
             if ($user->otp == $request->otp) {
                 auth()->login($user, $remember = true);
-                return response(['ورود با موفقیت انجام شد.'], 200);
+
+                // Redirect to the previous URL or home
+                return response()->json(['redirect' => $request['redirect']], 200);
+//                return response(['ورود با موفقیت انجام شد.'], 200);
             } else {
                 return response(['errors' => ['otp' => ['کد تأییدیه نادرست است!']]], 422);
             }
