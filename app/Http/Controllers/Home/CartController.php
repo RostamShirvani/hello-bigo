@@ -106,7 +106,7 @@ class CartController extends Controller
         }
 
         alert()->success('با تشکر', 'محصول مورد نظر به سبد خرید شما اضافه شد.');
-        return redirect()->back();
+        return redirect()->route('home.cart.index');
     }
 
     public function index()
