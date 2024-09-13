@@ -64,12 +64,10 @@
                                     <td class="product-name">
                                         <a href="{{route('home.products.show', $item->associatedModel->slug)}}"> {{$item->name}} </a>
                                         <p style="font-size: 12px; color: red">
-
                                             {{\App\Models\Attribute::find($item->attributes->attribute_id)->name}}
                                             :
                                             {{$item->attributes->value}} الماس
-                                        </p>
-                                        <p style="font-size: 12px; color: red">
+                                            <br>
                                             آی دی:
                                             <?= $_SESSION['cart'][$item->id]['account_id'] ?? '-' ?><br>
                                             نام اکانت:
