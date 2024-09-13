@@ -175,8 +175,8 @@
                                                     خروج</a></li>
                                         </form>
                                     @else
-                                        <li><a href="{{route('login')}}">ورود</a></li>
-                                        <li><a href="{{route('register')}}">ایجاد حساب</a></li>
+                                        <li><a href="{{route('login')}}">ورود/عضویت</a></li>
+{{--                                        <li><a href="{{route('register')}}">ایجاد حساب</a></li>--}}
                                     @endauth
                                 </ul>
                             </div>
@@ -316,5 +316,12 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div id="newUserFormSuccess" style="display:none; color: green;">
+        Registration successful!
+    </div>
+    <div id="newUserFormError" style="display:none; color: red;">
+        <span id="newUserFormErrorText"></span>
     </div>
 </header>

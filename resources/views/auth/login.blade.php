@@ -55,6 +55,21 @@
                                                 </div>
                                             </div>
                                         </form>
+
+                                        <!-- New User Form -->
+                                        <form id="newUserForm">
+                                            <input id="name_new_user" placeholder="نام" type="text">
+                                            <input id="family_new_user" placeholder="نام خانوادگی" type="text">
+                                            <input id="password_new_user" placeholder="گذرواژه" type="password">
+                                            <input id="password_confirmation_new_user" placeholder="تأیید گذرواژه" type="password">
+                                            <div id="newUserFormError" class="input-error-validation">
+                                                <strong id="newUserFormErrorText"></strong>
+                                            </div>
+                                            <div class="button-box d-flex justify-content-between">
+                                                <button type="submit">ثبت نام</button>
+                                            </div>
+                                        </form>
+
                                     </div>
                                 </div>
                             </div>
@@ -70,6 +85,7 @@
         let loginToken;
         $('#checkOTPForm').hide();
         $('#resendOTPButton').hide();
+        $('#newUserForm').hide(); // Initially hide new user form
 
         $('#loginForm').submit(function (event) {
             // console.log($('#cellphoneInput').val());
@@ -105,14 +121,16 @@
                     '_token': "{{csrf_token()}}",
                     'otp': $('#checkOTPInput').val(),
                     'login_token': loginToken,
-                    'redirect': $('input[name="redirect"]').val() // Pass redirect URL as parameter
+                    'redirect': $('input[name="redirect"]').val()
                 }, function (response, status) {
                     console.log(response, status);
-                    // Redirect to the URL provided by the server
-                    if (response.redirect) {
+                    if (response.new_user) {
+                        // Show the new user form if the user is new
+                        $('#checkOTPForm').fadeOut();
+                        $('#newUserForm').fadeIn();
+                    } else if (response.redirect) {
+                        // Redirect existing users
                         window.location.href = response.redirect;
-                    } else {
-                        window.location.href = "{{route('home.index')}}";
                     }
                 }).fail(function (response) {
                 console.log(response.responseJSON);
@@ -150,6 +168,58 @@
                 });
             });
         });
+
+        // Handle new user registration form submission
+        {{--$('#newUserForm').submit(function (event) {--}}
+        {{--    event.preventDefault();--}}
+        {{--    $.post("{{url('/register-new-user')}}",--}}
+        {{--        {--}}
+        {{--            '_token': "{{csrf_token()}}",--}}
+        {{--            'name': $('#name_new_user').val(),--}}
+        {{--            'family': $('#family_new_user').val(),--}}
+        {{--            'password': $('#password_new_user').val(),--}}
+        {{--            'password_confirmation': $('#password_confirmation_new_user').val(),--}}
+        {{--            'login_token': loginToken--}}
+        {{--        }, function (response, status) {--}}
+        {{--            console.log(response, status);--}}
+        {{--            if (response.redirect) {--}}
+        {{--                window.location.href = response.redirect;--}}
+        {{--            }--}}
+        {{--        }).fail(function (response) {--}}
+        {{--        console.log(response.responseJSON);--}}
+        {{--        $('#newUserFormError').fadeIn();--}}
+        {{--        $('#newUserFormErrorText').html(response.responseJSON.errors.password[0]);--}}
+        {{--    });--}}
+        {{--});--}}
+
+        $('#newUserForm').submit(function (event) {
+            event.preventDefault();
+            $.post("{{url('/register-new-user')}}",
+                {
+                    '_token': "{{csrf_token()}}",
+                    'name': $('#name_new_user').val(),
+                    'family': $('#family_new_user').val(),
+                    'password': $('#password_new_user').val(),
+                    'password_confirmation': $('#password_confirmation_new_user').val(),
+                    'login_token': loginToken
+                }, function (response, status) {
+                    console.log(response, status);
+                    if (response.redirect) {
+                        // Optionally, you can show the success message before redirecting
+                        $('#newUserFormSuccess').fadeIn();
+                        setTimeout(function () {
+                            window.location.href = response.redirect;
+                        }, 2000); // Delay for 2 seconds to show the success message
+                    } else {
+                        $('#newUserFormSuccess').fadeIn(); // Show success message if no redirect
+                    }
+                }).fail(function (response) {
+                console.log(response.responseJSON);
+                $('#newUserFormError').fadeIn();
+                $('#newUserFormErrorText').html(response.responseJSON.errors.password[0]); // Display the first error message
+            });
+        });
+
 
         function timer() {
             let time = "1:01";

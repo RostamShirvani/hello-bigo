@@ -102,6 +102,7 @@ Route::any('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/check-otp', [AuthController::class, 'checkOtp']);
 Route::post('/resend-otp', [AuthController::class, 'resendOtp']);
+Route::post('/register-new-user', [AuthController::class, 'registerNewUser']);
 
 Route::prefix('profile')->name('home.')->middleware('auth')->group(function (){
     Route::get('/', [UserProfileController::class, 'index'])->name('users_profile.index');
@@ -115,6 +116,9 @@ Route::prefix('profile')->name('home.')->middleware('auth')->group(function (){
     Route::put('/addresses/{address}', [UserAddressController::class, 'update'])->name('addresses.update');
 
     Route::get('/orders', [UserProfileController::class, 'usersProfileIndex'])->name('orders.users_profile.index');
+
+    Route::post('/update-profile', [UserProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::post('/change-password', [UserProfileController::class, 'changePassword'])->name('change.password');
 });
 
 Route::get('/get-province-cities-list', [UserAddressController::class, 'getProvinceCitiesList']);

@@ -39,7 +39,8 @@ class AuthController extends Controller
                     'name' => $request->cellphone,
                     'cellphone' => $request->cellphone,
                     'otp' => $OTPCode,
-                    'login_token' => $loginToken
+                    'login_token' => $loginToken,
+                    'status' => User::STATUS_INACTIVE,
                 ]);
             }
             $user->notify(new OTPSmsNotification($OTPCode));
@@ -88,10 +89,6 @@ class AuthController extends Controller
     }
     public function checkOtp(Request $request)
     {
-        if(isset($request->redirect)){
-            // Decode the redirect URL
-            $request['redirect'] = urldecode($request->redirect);
-        }
         $request->validate([
             'otp' => 'required|digits:6',
             'login_token' => 'required',
@@ -101,11 +98,13 @@ class AuthController extends Controller
         try {
             $user = User::query()->where('login_token', $request->login_token)->firstOrFail();
             if ($user->otp == $request->otp) {
-                auth()->login($user, $remember = true);
+                // Check if this is a new user (e.g., no name set)
+                if ($user->satus == 0) {
+                    return response()->json(['new_user' => true], 200);
+                }
 
-                // Redirect to the previous URL or home
+                auth()->login($user, $remember = true);
                 return response()->json(['redirect' => $request['redirect']], 200);
-//                return response(['ورود با موفقیت انجام شد.'], 200);
             } else {
                 return response(['errors' => ['otp' => ['کد تأییدیه نادرست است!']]], 422);
             }
@@ -132,6 +131,32 @@ class AuthController extends Controller
 
             $user->notify(new OTPSmsNotification($OTPCode));
             return response(['login_token' => $loginToken], 200);
+        } catch (\Exception $exception) {
+            return response(['errors' => $exception->getMessage()], 422);
+        }
+    }
+
+    public function registerNewUser(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'password' => 'required|string|min:8|confirmed',
+            'login_token' => 'required'
+        ]);
+
+        try {
+            $user = User::query()->where('login_token', $request->login_token)->firstOrFail();
+
+            $user->update([
+                'name' => $request->name,
+                'password' => Hash::make($request->password),
+                'login_token' => null, // Clear the login token after registration
+                'status' => User::STATUS_ACTIVE // set status to active
+            ]);
+
+            auth()->login($user, $remember = true);
+
+            return response()->json(['redirect' => url('/')], 200);
         } catch (\Exception $exception) {
             return response(['errors' => $exception->getMessage()], 422);
         }
