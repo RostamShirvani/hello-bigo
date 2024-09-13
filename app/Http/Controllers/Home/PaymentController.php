@@ -16,10 +16,11 @@ class PaymentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'payment_method' => 'required',
+            'confirmation_checkbox' => ['required', 'in:1'],
 //            'address_id' => 'required',
         ]);
         if ($validator->fails()) {
-            alert()->error('توجه!', 'اتصال به درگاه پرداخت انجام نشد! لطفا آدرس پستی و درگاه پرداخت را به درستی انتخاب نموده و مجدد تلاش نمایید.');
+            alert()->error('توجه!', 'اتصال به درگاه پرداخت انجام نشد! لطفا درگاه پرداخت و تیک مربوط به شرایط و قوانین سایت را بررسی و مجدد تلاش نمایید.');
             return redirect()->back();
         }
 
