@@ -47,9 +47,9 @@ class PaymentController extends Controller
             if (array_key_exists('error', $updateOrder)) {
                 return $updateOrder;
             }
-            \Cart::clear();
+//            \Cart::clear();
             alert()->success('عملیات موفق', 'پرداخت با موفقیت انجام شد.');
-            return  redirect()->route('home.orders.users_profile.index');
+            return  redirect()->route('home.users_profile.fallback', $order);
         }
 
         if ($request->payment_method == 'pay') {
@@ -87,7 +87,7 @@ class PaymentController extends Controller
                 return redirect()->back();
             } else {
                 alert()->success('با تشکر', $payGatewayResult['success']);
-                return redirect()->route('home.orders.users_profile.index');
+                return redirect()->route('home.users_profile.fallback');
             }
         }
         if ($gatewayName == 'zarinpal') {
@@ -105,7 +105,7 @@ class PaymentController extends Controller
             } else {
                 // todo send sms to user
                 alert()->success('با تشکر', $zarinpalGatewayResult['success']);
-                return redirect()->route('home.orders.users_profile.index');
+                return redirect()->route('home.users_profile.fallback');
             }
         }
 

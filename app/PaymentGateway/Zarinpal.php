@@ -101,8 +101,11 @@ class Zarinpal extends Payment
                 if (array_key_exists('error', $updateOrder)) {
                     return $updateOrder;
                 }
-                \Cart::clear();
-                return ['success' => 'پرداخت با موفقیت انجام شد', 'شماره پیگیری: ' => $result['data']['ref_id']];
+//                \Cart::clear();
+                return [
+                    'success' => 'پرداخت با موفقیت انجام شد', 'شماره پیگیری: ' => $result['data']['ref_id'],
+                    'order' => $updateOrder
+                    ];
 //                return ['success' => 'Transaction verified successfully', 'ref_id' => $result['data']['ref_id']];
             } else {
                 return ['error' => 'Verification failed. ERR: ' . $result['errors']['code'] . ' - ' . $result['errors']['message']];

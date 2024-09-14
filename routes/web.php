@@ -116,6 +116,7 @@ Route::prefix('profile')->name('home.')->middleware('auth')->group(function (){
     Route::put('/addresses/{address}', [UserAddressController::class, 'update'])->name('addresses.update');
 
     Route::get('/orders', [UserProfileController::class, 'usersProfileIndex'])->name('orders.users_profile.index');
+    Route::get('/fallback', [UserProfileController::class, 'fallback'])->name('users_profile.fallback');
 
     Route::post('/update-profile', [UserProfileController::class, 'updateProfile'])->name('profile.update');
     Route::post('/change-password', [UserProfileController::class, 'changePassword'])->name('change.password');
