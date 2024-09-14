@@ -99,7 +99,7 @@ class AuthController extends Controller
             $user = User::query()->where('login_token', $request->login_token)->firstOrFail();
             if ($user->otp == $request->otp) {
                 // Check if this is a new user (e.g., no name set)
-                if ($user->satus == 0) {
+                if ($user->status == 0) {
                     return response()->json(['new_user' => true], 200);
                 }
 
