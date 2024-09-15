@@ -18,11 +18,13 @@ class RazerAccount extends Model
         'priority',
         'bigo_updated_at',
         'pubg_updated_at',
+        'imo_updated_at',
     ];
 
     protected $casts = [
         'bigo_updated_at' => 'datetime',
         'pubg_updated_at' => 'datetime',
+        'imo_updated_at' => 'datetime',
     ];
 
     public static function getCurrentSelectedRazerAccount()

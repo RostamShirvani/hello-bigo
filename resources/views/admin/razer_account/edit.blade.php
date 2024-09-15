@@ -48,6 +48,12 @@
                         <label class="form-check-label mr-4" for="pubg_updated_at">به روز رسانی پابجی</label>
                     </div>
 
+                    <!-- Checkbox for imo_updated_at -->
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" name="imo_updated_at" id="imo_updated_at" class="form-check-input" value="1">
+                        <label class="form-check-label mr-4" for="imo_updated_at">به روز رسانی ایمو</label>
+                    </div>
+
                     <button class="btn btn-info">ویرایش</button>
                 </form>
 
