@@ -124,6 +124,7 @@ class AuthController extends Controller
                 }
 
                 auth()->login($user, $remember = true);
+                session()->forget('url.intended');
                 return response()->json(['redirect' => $request['redirect']], 200);
             } else {
                 return response(['errors' => ['otp' => ['کد تأییدیه نادرست است!']]], 422);
