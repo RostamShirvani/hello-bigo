@@ -7,6 +7,7 @@ use App\Models\ProductVariation;
 use App\PaymentGateway\Pay;
 use App\PaymentGateway\Payment;
 use App\PaymentGateway\Zarinpal;
+use App\PaymentGateway\Zibal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,8 +18,8 @@ class PaymentController extends Controller
         $validator = Validator::make($request->all(), [
             'payment_method' => 'required',
             'confirmation_checkbox' => ['required', 'in:1'],
-//            'address_id' => 'required',
         ]);
+
         if ($validator->fails()) {
             alert()->error('توجه!', 'اتصال به درگاه پرداخت انجام نشد! لطفا درگاه پرداخت و تیک مربوط به شرایط و قوانین سایت را بررسی و مجدد تلاش نمایید.');
             return redirect()->back();
@@ -36,7 +37,7 @@ class PaymentController extends Controller
             return redirect()->route('home.index');
         }
 
-        if(isset($amounts['paying_amount']) && $amounts['paying_amount'] == 0){
+        if (isset($amounts['paying_amount']) && $amounts['paying_amount'] == 0) {
             $payment = new Payment();
             $createOrder = $payment->createOrder($request->get('address_id') ?? null, $amounts, null, 'free');
             if (array_key_exists('error', $createOrder)) {
@@ -47,11 +48,11 @@ class PaymentController extends Controller
             if (array_key_exists('error', $updateOrder)) {
                 return $updateOrder;
             }
-//            \Cart::clear();
             alert()->success('عملیات موفق', 'پرداخت با موفقیت انجام شد.');
-            return  redirect()->route('home.users_profile.fallback', $order);
+            return redirect()->route('home.users_profile.fallback', $order);
         }
 
+        // پردازش درگاه Pay
         if ($request->payment_method == 'pay') {
             $payGateway = new Pay();
             $payGatewayResult = $payGateway->send($amounts, $request->address_id);
@@ -63,6 +64,7 @@ class PaymentController extends Controller
             }
         }
 
+        // پردازش درگاه Zarinpal
         if ($request->payment_method == 'zarinpal') {
             $zarinpalGateway = new Zarinpal();
             $zarinpalGatewayResult = $zarinpalGateway->send($amounts, 'خرید تستی', $request->address_id);
@@ -73,12 +75,26 @@ class PaymentController extends Controller
                 return redirect()->to($zarinpalGatewayResult['success']);
             }
         }
+
+        // پردازش درگاه Zibal
+        if ($request->payment_method == 'zibal') {
+            $zibalGateway = new Zibal();
+            $zibalGatewayResult = $zibalGateway->send($amounts, 'خرید از فروشگاه', $request->address_id, $request->mobile);
+            if (array_key_exists('error', $zibalGatewayResult)) {
+                alert()->error('توجه!', $zibalGatewayResult['error'])->persistent('حله');
+                return redirect()->back();
+            } else {
+                return redirect()->to($zibalGatewayResult['success']);
+            }
+        }
+
         alert()->error('توجه!', 'درگاه پرداخت انتخابی، اشتباه می باشد.');
         return redirect()->back();
     }
 
     public function paymentVerify(Request $request, $gatewayName)
     {
+        // تایید پرداخت Pay
         if ($gatewayName == 'pay') {
             $payGateway = new Pay();
             $payGatewayResult = $payGateway->verify($request->token, $request->status);
@@ -87,9 +103,11 @@ class PaymentController extends Controller
                 return redirect()->back();
             } else {
                 alert()->success('با تشکر', $payGatewayResult['success']);
-                return redirect()->route('home.users_profile.fallback');
+                return redirect()->route('home.users_profile.fallback', ['order' => $payGatewayResult['order']]);
             }
         }
+
+        // تایید پرداخت Zarinpal
         if ($gatewayName == 'zarinpal') {
             $amounts = $this->getAmounts();
             if (array_key_exists('error', $amounts)) {
@@ -105,13 +123,31 @@ class PaymentController extends Controller
             } else {
                 // todo send sms to user
                 alert()->success('با تشکر', $zarinpalGatewayResult['success']);
-                return redirect()->route('home.users_profile.fallback');
+                return redirect()->route('home.users_profile.fallback', ['order' => $zarinpalGatewayResult['order']]);
+            }
+        }
+
+        // تایید پرداخت Zibal
+        if ($gatewayName == 'zibal') {
+            $amounts = $this->getAmounts();
+            if (array_key_exists('error', $amounts)) {
+                alert()->error('توجه!', $amounts['error']);
+                return redirect()->route('home.index');
+            }
+
+            $zibalGateway = new Zibal();
+            $zibalGatewayResult = $zibalGateway->verify($amounts['paying_amount'], $request->trackId);
+            if (array_key_exists('error', $zibalGatewayResult)) {
+                alert()->error('توجه!', $zibalGatewayResult['error'])->persistent('حله');
+                return redirect()->back();
+            } else {
+                alert()->success('با تشکر', $zibalGatewayResult['success']);
+                return redirect()->route('home.users_profile.fallback', ['order' => $zibalGatewayResult['order']]);
             }
         }
 
         alert()->error('توجه!', 'مسیر برگشت از درگاه پرداخت اشتباه می باشد.');
         return redirect()->route('home.orders.checkout');
-
     }
 
     public function checkCart()

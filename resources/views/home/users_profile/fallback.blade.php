@@ -16,12 +16,10 @@
         </div>
         <div class="checkout-main-area pt-70 pb-70 text-right" style="direction: rtl;">
             <div class="container">
-
                 <div class="d-flex justify-content-center text-success p-4"
                      style="border: seagreen; border-style: dashed; font-size: xx-large">
                     متشکریم، سفارش شما دریافت شد.
                 </div>
-                {{$order = \App\Models\Order::query()->first()}}
                 <div class="row your-order-area pt-3 mt-1">
                     <div class="col-lg-4">
                         شماره سفارش: {{ $order->id ?? '-' }}

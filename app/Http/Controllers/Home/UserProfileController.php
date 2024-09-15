@@ -61,9 +61,9 @@ class UserProfileController extends Controller
         return redirect()->back()->with('success', 'پسورد با موفقیت تغییر یافت.');
     }
 
-    public function fallback()
+    public function fallback(Order $order)
     {
-        return view('home.users_profile.fallback');
+        return view('home.users_profile.fallback', compact('order'));
     }
 
 }

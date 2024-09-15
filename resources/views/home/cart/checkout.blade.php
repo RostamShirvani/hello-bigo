@@ -336,17 +336,30 @@
                                             {{--                                                </p>--}}
                                             {{--                                            </div>--}}
                                         </div>
-                                        {{--                                        <div class="pay-top sin-payment">--}}
-                                        {{--                                            <input id="pay" class="input-radio" type="radio" value="pay"--}}
-                                        {{--                                                   name="payment_method">--}}
-                                        {{--                                            <label for="pay">درگاه پرداخت پی</label>--}}
-                                        {{--                                            <div class="payment-box payment_method_bacs">--}}
-                                        {{--                                                <p>--}}
-                                        {{--                                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده--}}
-                                        {{--                                                    از طراحان گرافیک است.--}}
-                                        {{--                                                </p>--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                        </div>--}}
+{{--                                        <div class="pay-top sin-payment">--}}
+{{--                                            <input id="pay" class="input-radio" type="radio" value="pay"--}}
+{{--                                                   name="payment_method">--}}
+{{--                                            <label for="pay">درگاه پرداخت پی</label>--}}
+{{--                                            <div class="payment-box payment_method_bacs">--}}
+{{--                                                <p>--}}
+{{--                                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با--}}
+{{--                                                    استفاده--}}
+{{--                                                    از طراحان گرافیک است.--}}
+{{--                                                </p>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+                                        <div class="pay-top sin-payment">
+                                            <input id="zibal" class="input-radio" type="radio" value="zibal"
+                                                   name="payment_method">
+                                            <label for="zibal">درگاه پرداخت زیبال</label>
+                                            <div class="payment-box payment_method_bacs">
+                                                <p>
+                                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                                    استفاده
+                                                    از طراحان گرافیک است.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="Place-order mt-40">
