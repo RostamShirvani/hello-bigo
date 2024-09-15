@@ -144,11 +144,21 @@ class PaymentPinController extends BaseAPIController
 
         if (isset($paymentPinsCount) && $paymentPinsCount <= 5) {
             $amount = !empty($paymentPin) ? $paymentPin->amount : $amount;
-
             try {
                 PaymentPinIsLowEvent::dispatch($amount, $value, $appType);
             } catch (Exception $exception) {
             }
+            // send to telegram bot if $paymentPinsCount is low
+            $botToken = "6420852445:AAF-LF7kN9GG9D2ruKQD-0ArY-Bvtjrt1jU";
+            $chatId = "463647617";
+            $url = 'https://api.telegram.org/bot' . $botToken . '/sendMessage';
+            Http::post($url, ['chat_id' => $chatId, 'text' =>"موجودی پین رو به اتمام است - $paymentPinsCount"]);
+            return Response::json([
+                'status' => false,
+                'message' => "موجودی پین رو به اتمام است - $paymentPinsCount",
+            ]);
+
+
         }
 
         if (!empty($paymentPin)) {
