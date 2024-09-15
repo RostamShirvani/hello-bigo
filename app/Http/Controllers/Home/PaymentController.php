@@ -142,7 +142,8 @@ class PaymentController extends Controller
                 return redirect()->back();
             } else {
                 alert()->success('با تشکر', $zibalGatewayResult['success']);
-                return redirect()->route('home.users_profile.fallback', ['order' => $zibalGatewayResult['order']]);
+                return redirect()->route('home.users_profile.fallback', ['order' => $zibalGatewayResult['order']]); // درگاه زیبال با دامنه ای که با آن ثبت شده کار می کند.
+//                return redirect(env('APP_URL') . '/fallback/' . $zibalGatewayResult['order']);
             }
         }
 

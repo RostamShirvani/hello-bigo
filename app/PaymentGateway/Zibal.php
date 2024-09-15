@@ -7,7 +7,8 @@ class Zibal extends Payment
     public function send($amounts, $description, $addressId, $mobile = null, $email = null)
     {
         $data = [
-            'merchant' => 'zibal', // از حساب تستی استفاده می‌کنیم
+//            'merchant' => 'zibal', // استفاده از حساب تستی
+            'merchant' => env('ZABAL_MERCHANT_ID'),
             'amount' => (int)$amounts['paying_amount'], // مبلغ به ریال
             'callbackUrl' => route('home.payment_verify', 'zibal'), // آدرس بازگشت برای تایید پرداخت
             'description' => $description, // توضیحات سفارش
@@ -57,7 +58,8 @@ class Zibal extends Payment
     public function verify($amount, $trackId)
     {
         $data = [
-            'merchant' => 'zibal', // استفاده از حساب تستی
+//            'merchant' => 'zibal', // استفاده از حساب تستی
+            'merchant' => env('ZABAL_MERCHANT_ID'),
             'trackId' => $trackId, // شناسه پیگیری دریافت‌شده از درخواست پرداخت
         ];
 
