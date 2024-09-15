@@ -32,7 +32,8 @@ class OTPSmsNotification extends Notification
      */
     public function via($notifiable)
     {
-        return [SmsChannel::class];
+//        return [SmsChannel::class];
+        return [\App\Channels\kavenegar\SmsChannel::class];
     }
 
     /**
