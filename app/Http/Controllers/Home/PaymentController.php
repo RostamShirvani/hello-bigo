@@ -21,7 +21,16 @@ class PaymentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            alert()->error('توجه!', 'اتصال به درگاه پرداخت انجام نشد! لطفا درگاه پرداخت و تیک مربوط به شرایط و قوانین سایت را بررسی و مجدد تلاش نمایید.');
+            $errors = $validator->errors();
+
+            if ($errors->has('payment_method')) {
+                alert()->error('توجه!', 'لطفا یک روش پرداخت را انتخاب نمایید.');
+            }
+
+            if ($errors->has('confirmation_checkbox')) {
+                alert()->error('توجه!', 'لطفا تیک مربوط به پذیرفتن شرایط و قوانین را بزنید.');
+            }
+
             return redirect()->back();
         }
 
