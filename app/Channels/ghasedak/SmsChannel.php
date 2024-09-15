@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Channels;
+namespace App\Channels\ghasedak;
 
 use Illuminate\Notifications\Notification;
 

@@ -9,13 +9,14 @@ use App\Models\GiftCharge;
 use App\Models\LoginToken\LoginToken;
 use App\Models\RazerAccount;
 use App\Models\RequestUrl\RequestUrl;
+use App\Models\Setting;
 use App\Models\SilverLink\SilverLink;
 use Illuminate\Support\Facades\Http;
 
 class BigoAPI
 {
     public const BASE_URL = 'https://m.bigopay.tv';
-    public const COOKIE = 'uniqid=qXRITBmLt7NVoZyXhsDL6uj7U4ghYv9TTgs1Xdc6qQUCRajdQ7qJ9k3g7UaUPvuniT2fYW8oh1ZiG5h9HuVix8fahzsVTj9DE67BEa8i36XyNony1Y9EgGxM1Sh8Hkpj8CKCr0Ae8brd48UuWPuiQxnWhfiCaYuCUUK2qLcISjR6z9E8M7kc48JGw8K9IiDJAWPXaJHExhGSPItkowRcTOVTmFB1f9ROQezqajRDuQlHdP1n8hgFFp8Mv3nPvrwR1nEYdqZGGb53pF1mQbuB';
+    public $cookie;
 
     public $bigoId;
     protected $fromBigoId;
@@ -23,6 +24,8 @@ class BigoAPI
 
     public function __construct($bigoId)
     {
+//        $this->cookie = 'uniqid=qXRITBmLt7NVoZyXhsDL6uj7U4ghYv9TTgs1Xdc6qQUCRajdQ7qJ9k3g7UaUPvuniT2fYW8oh1ZiG5h9HuVix8fahzsVTj9DE67BEa8i36XyNony1Y9EgGxM1Sh8Hkpj8CKCr0Ae8brd48UuWPuiQxnWhfiCaYuCUUK2qLcISjR6z9E8M7kc48JGw8K9IiDJAWPXaJHExhGSPItkowRcTOVTmFB1f9ROQezqajRDuQlHdP1n8hgFFp8Mv3nPvrwR1nEYdqZGGb53pF1mQbuB';
+        $this->cookie = Setting::get()->token;
         $this->bigoId = $bigoId;
         $loginToken = LoginToken::query()
             //            ->where('bigo_id', $bigoId)
@@ -403,7 +406,7 @@ class BigoAPI
         curl_setopt($ch, CURLOPT_TIMEOUT, 120);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
         # sending manually set cookie
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Cookie: " . self::COOKIE]);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Cookie: " . $this->cookie]);
         $response = curl_exec($ch);
 
         if ($response === false) {

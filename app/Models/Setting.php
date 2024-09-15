@@ -10,4 +10,9 @@ class Setting extends Model
     use HasFactory;
     protected $table = "settings";
     protected $guarded = [];
+
+    public static function get()
+    {
+        return Setting::query()->first();
+    }
 }
