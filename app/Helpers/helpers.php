@@ -31,9 +31,16 @@ function convertShamsiToGregorianDate($date)
     return implode("-", $arrayGregorianDate) . " " . $shamsidateSplit[3];
 }
 
-function cartTotalDiscountAmount()
+function cartTotalDiscountAmount($cartContent = null)
 {
     $cartTotalDiscountAmount = 0;
+    if ($cartContent != null) {
+        foreach ($cartContent as $item) {
+            if ($item->attributes->is_sale) {
+                $cartTotalDiscountAmount += $item->quantity * ($item->attributes->price - $item->attributes->sale_price);
+            }
+        }
+    }
     foreach (\Cart::getContent() as $item) {
         if ($item->attributes->is_sale) {
             $cartTotalDiscountAmount += $item->quantity * ($item->attributes->price - $item->attributes->sale_price);

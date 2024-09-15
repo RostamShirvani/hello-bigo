@@ -47,6 +47,33 @@
                                         <div class="your-order-middle">
                                             <ul>
                                                     <?php session_start(); ?>
+                                                @foreach($cartContent as $item)
+                                                    <li class="d-flex justify-content-between">
+                                                        <div>
+                                                            <a href="{{route('home.products.show', $item->associatedModel->slug)}}"> {{$item->name}} </a>
+                                                            <p style="font-size: 12px; color: red">
+                                                                {{\App\Models\Attribute::find($item->attributes->attribute_id)->name}}
+                                                                :
+                                                                {{$item->attributes->value}} الماس
+                                                                <br>
+                                                                آی دی:
+                                                                    <?= $_SESSION['cart'][$item->id]['account_id'] ?? '-' ?>
+                                                                <br>
+                                                                نام اکانت:
+                                                                    <?= $_SESSION['cart'][$item->id]['account_name'] ?? '-' ?>
+                                                            </p>
+                                                        </div>
+                                                        <span>
+                                                        {{$item->price}} تومان
+                                                        @if($item->attributes->is_sale)
+                                                        <p style="font-size: 12px;color: red">{{$item->attributes->discount_percent}}% تخفیف
+                                                        </p>
+                                                        @endif
+                                                        </span>
+                                                    </li>
+                                                @endforeach
+
+
                                                 @foreach(\Cart::getContent() as $item)
                                                     <li class="d-flex justify-content-between">
                                                         <div>
@@ -81,19 +108,19 @@
                                             <ul>
                                                 <li> مبلغ
                                                     <span>
-                                                {{number_format(\Cart::getTotal() + cartTotalDiscountAmount())}}
+                                                {{number_format($cartContentTotal + cartTotalDiscountAmount($cartContent))}}
                                                 تومان
                                                 </span>
                                                 </li>
                                             </ul>
                                         </div>
-                                        @if(cartTotalDiscountAmount() > 0)
+                                        @if(cartTotalDiscountAmount($cartContent) > 0)
                                             <div class="your-order-info order-subtotal">
                                                 <ul>
                                                     <li>
                                                         مبلغ تخفیف کالاها :
                                                         <span style="color: red">
-                                            {{number_format(cartTotalDiscountAmount())}}
+                                            {{number_format(cartTotalDiscountAmount($cartContent))}}
                                             تومان
                                         </span>
                                                     </li>

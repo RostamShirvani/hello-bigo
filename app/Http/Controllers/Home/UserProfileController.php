@@ -63,7 +63,15 @@ class UserProfileController extends Controller
 
     public function fallback(Order $order)
     {
-        return view('home.users_profile.fallback', compact('order'));
+        // Retrieve the cart content
+        $cartContent = \Cart::getContent();
+        $cartContentTotal = \Cart::getTotal();
+
+        // Clear the cart after storing its content
+        \Cart::clear();
+
+        // Pass both the order and the cart content to the view
+        return view('home.users_profile.fallback', compact('order', 'cartContent', 'cartContentTotal'));
     }
 
 }
