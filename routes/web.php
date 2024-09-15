@@ -103,6 +103,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/check-otp', [AuthController::class, 'checkOtp']);
 Route::post('/resend-otp', [AuthController::class, 'resendOtp']);
 Route::post('/register-new-user', [AuthController::class, 'registerNewUser']);
+//Route::post('/login-with-password', [AuthController::class, 'loginWithPassword']);
 
 Route::prefix('profile')->name('home.')->middleware('auth')->group(function (){
     Route::get('/', [UserProfileController::class, 'index'])->name('users_profile.index');

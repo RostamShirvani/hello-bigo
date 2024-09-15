@@ -50,6 +50,26 @@ class AuthController extends Controller
         }
     }
 
+//    public function loginWithPassword(Request $request)
+//    {
+//        $request->validate([
+//            'cellphone' => 'required|iran_mobile',
+//            'password' => 'required|string|min:8'
+//        ]);
+//
+//        try {
+//            $user = User::where('cellphone', $request->cellphone)->firstOrFail();
+//            if (Hash::check($request->password, $user->password)) {
+//                auth()->login($user, true);
+//                return response()->json(['redirect' => url('/')], 200);
+//            } else {
+//                return response()->json(['errors' => ['password' => ['گذرواژه نادرست است!']]], 422);
+//            }
+//        } catch (\Exception $exception) {
+//            return response(['errors' => $exception->getMessage()], 422);
+//        }
+//    }
+
     public function redirectToProvider($provider)
     {
         return Socialite::driver($provider)->redirect();

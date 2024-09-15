@@ -32,16 +32,28 @@
                                 <div class="login-form-container">
                                     <div class="login-register-form">
                                         <form id="loginForm">
-                                            <input id="cellphoneInput" placeholder="شماره تلفن خود را وارد کنید"
-                                                   type="text">
+                                            <input id="cellphoneInput" placeholder="شماره تلفن خود را وارد کنید" type="text">
                                             <input type="hidden" name="redirect" value="{{ session('url.intended', url('/')) }}">
                                             <div id="cellphoneInputError" class="input-error-validation">
                                                 <strong id="cellphoneInputErrorText"></strong>
                                             </div>
+
+                                            <!-- Password input (hidden initially) -->
+                                            <div id="passwordSection" style="display: none;">
+                                                <input id="passwordInput" placeholder="گذرواژه" type="password">
+                                                <div id="passwordInputError" class="input-error-validation">
+                                                    <strong id="passwordInputErrorText"></strong>
+                                                </div>
+                                                <!-- Option to switch to OTP login -->
+                                                <p><a href="#" id="useOtpLink">ورود با رمز یکبار مصرف</a></p>
+                                                <button type="submit" id="passwordLoginButton">ورود با گذرواژه</button>
+                                            </div>
+
                                             <div class="button-box d-flex justify-content-between">
-                                                <button type="submit">ارسال</button>
+                                                <button type="submit" id="submitCellphone">ارسال</button>
                                             </div>
                                         </form>
+
                                         <form id="checkOTPForm">
                                             <input id="checkOTPInput" placeholder="رمز یک بار مصرف" type="text">
                                             <div id="checkOTPInputError" class="input-error-validation">
@@ -114,6 +126,28 @@
                 $('#cellphoneInputErrorText').html(response.responseJSON.errors.cellphone[0]);
             });
         });
+
+        // Handle password login submission
+        $('#passwordLoginButton').click(function (event) {
+            event.preventDefault();
+            const cellphone = $('#cellphoneInput').val();
+            const password = $('#passwordInput').val();
+            $.post("{{url('/login-with-password')}}",
+                {
+                    '_token': "{{csrf_token()}}",
+                    'cellphone': cellphone,
+                    'password': password
+                }, function (response) {
+                    if (response.redirect) {
+                        // Redirect the user if login is successful
+                        window.location.href = response.redirect;
+                    }
+                }).fail(function (response) {
+                $('#passwordInputErrorText').html(response.responseJSON.errors.password[0]);
+                $('#passwordInputError').fadeIn();
+            });
+        });
+
         $('#checkOTPForm').submit(function (event) {
             event.preventDefault();
             $.post("{{url('/check-otp')}}",
