@@ -21,7 +21,7 @@ class OtherPinRepository extends BaseAdminRepository
         return OtherPin::query()
             ->orderBy('id', 'desc')
             ->orderBy('used_at', 'desc')
-            ->paginate(50);
+            ->paginate(20);
     }
 
     public function store($request)

@@ -143,6 +143,7 @@
                 <div>هیچ رکوردی برای نمایش وجود ندارد.</div>
             </div>
         @endif
+        <div class="d-flex justify-content-center mt-4">{!! $otherPins->links('pagination::bootstrap-4') !!}</div>
     </div>
 @endsection
 @section('script')

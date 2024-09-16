@@ -18,10 +18,9 @@ class PaymentPinRepository extends BaseAdminRepository
     public function getPaymentPins()
     {
         return PaymentPin::query()
-             ->orderBy('id', 'desc')
+            ->orderBy('id', 'desc')
             ->orderBy('used_at', 'desc')
-->limit(3000)
-            ->get();
+            ->paginate(20);
     }
 
     public function store($request)
@@ -217,6 +216,7 @@ class PaymentPinRepository extends BaseAdminRepository
             ->where('order_id', $orderId)
             ->first();
     }
+
     public function getPaymentPinByOrderItemId($orderItemId)
     {
         return PaymentPin::query()
