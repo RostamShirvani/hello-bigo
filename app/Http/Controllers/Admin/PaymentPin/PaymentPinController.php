@@ -32,9 +32,28 @@ class PaymentPinController extends BaseAdminController
 
     public function index(Request $request)
     {
-        $paymentPins = $this->paymentPinRepository->getPaymentPins();
+        // Capture the search filters from the request
+        $searchParams = [
+            'id' => $request->input('id'),
+            'amount' => $request->input('amount'),
+            'order_id' => $request->input('order_id'),
+            'order_item_id' => $request->input('order_item_id'),
+            'used_by' => $request->input('used_by'),
+            'used_at' => $request->input('used_at'),
+            'serial_number' => $request->input('serial_number'),
+            'pin' => $request->input('pin'),
+            'value' => $request->input('value'),
+            'likee_value' => $request->input('likee_value'),
+            'used_by_mobile' => $request->input('used_by_mobile'),
+        ];
+
+        // Pass the search parameters to the repository method
+        $paymentPins = $this->paymentPinRepository->getPaymentPins($searchParams);
+
+        // Return the view with the filtered data and search parameters
         return view('admin.payment_pin.index', compact('paymentPins'));
     }
+
 
     public function create(Request $request)
     {

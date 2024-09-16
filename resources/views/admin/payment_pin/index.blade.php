@@ -31,6 +31,47 @@
             $results = $results->sortBy('amount');
             ?>
 
+            <form action="{{ route('admin.payment-pins.index') }}" method="GET">
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <input type="text" name="id" class="form-control" placeholder="id" value="{{ request('id') }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" name="amount" class="form-control" placeholder="amount" value="{{ request('amount') }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" name="order_id" class="form-control" placeholder="order_id" value="{{ request('order_id') }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" name="order_item_id" class="form-control" placeholder="order_item_id" value="{{ request('order_item_id') }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" name="used_by" class="form-control" placeholder="used_by" value="{{ request('used_by') }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" id="used_at" name="used_at" class="form-control" placeholder="1403/06/26" value="{{ request()->input('used_at') }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" name="serial_number" class="form-control" placeholder="serial_number" value="{{ request('serial_number') }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" name="pin" class="form-control" placeholder="pin" value="{{ request('pin') }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" name="value" class="form-control" placeholder="value" value="{{ request('value') }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" name="likee_value" class="form-control" placeholder="likee_value" value="{{ request('likee_value') }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" name="used_by_mobile" class="form-control" placeholder="used_by_mobile" value="{{ request('used_by_mobile') }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </form>
+
 
             <table id="itemsw" class="table table-striped" style="width: 100%">
                 <thead>
@@ -142,12 +183,19 @@
                 <div>هیچ رکوردی برای نمایش وجود ندارد.</div>
             </div>
         @endif
-        <div class="d-flex justify-content-center mt-4">{!! $paymentPins->links('pagination::bootstrap-4') !!}</div>
+        <div class="d-flex justify-content-center mt-4">{!! $paymentPins->appends(request()->query())->links() !!}
+        </div>
     </div>
 @endsection
 
 @section('script')
     <script>
+        $(document).ready(function () {
+            $('#used_at').persianDatepicker({
+                format: 'YYYY/MM/DD',
+                initialValue: false
+            });
+        });
         document.addEventListener('DOMContentLoaded', function() {
             // Select all elements with the class 'toggle-state'
             const toggleElements = document.querySelectorAll('.toggle-state');
