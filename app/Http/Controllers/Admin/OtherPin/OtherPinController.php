@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\OtherPin\StoreOtherPinRequest;
 use App\Http\Requests\Admin\OtherPin\UpdateOtherPinRequest;
 use App\Http\Requests\Admin\PaymentPin\StoreUsingRequest;
 use App\Models\OrderItem;
+use App\Models\OtherPin\OtherPin;
 use App\Repositories\Admin\OtherPinRepository;
 use App\ThirdParties\BigoAPI\BigoAPI;
 use App\ThirdParties\LikeeAPI\LikeeAPI;
@@ -300,5 +301,28 @@ class OtherPinController extends BaseAdminController
             ];
         }
 
+    }
+
+    public function toggleState(Request $request, $id)
+    {
+        $paymentPin = OtherPin::findOrFail($id);
+
+        // Get new state from the request
+        $newState = $request->input('state');
+
+        // Validate the new state
+        if (!in_array($newState, [1, 2])) {
+            return response()->json(['success' => false, 'message' => 'Invalid state'], 400);
+        }
+
+        // Update state and save
+        $paymentPin->state = $newState;
+        $paymentPin->save();
+
+        // Return the new state in the response
+        return response()->json([
+            'success' => true,
+            'newState' => $paymentPin->state
+        ]);
     }
 }

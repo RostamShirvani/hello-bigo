@@ -8,13 +8,15 @@
         <div class="row">
             <div class="col-md-12 text-left py-2">
 
-                <a href="{{ route('admin.payment-pins.create') }}" class="btn btn-primary btn-sm">&#1575;&#1601;&#1586;&#1608;&#1583;&#1606; &#1578;&#1705;&#1740;</a>
+                <a href="{{ route('admin.payment-pins.create') }}" class="btn btn-primary btn-sm">&#1575;&#1601;&#1586;&#1608;&#1583;&#1606;
+                    &#1578;&#1705;&#1740;</a>
                 <a href="{{ route('admin.payment-pins.create', ['type' => 'bulk']) }}" class="btn btn-primary btn-sm">&#1575;&#1601;&#1586;&#1608;&#1583;&#1606;
                     &#1711;&#1585;&#1608;&#1607;&#1740;</a>
                 <a href="{{ route('admin.payment-pins.create', ['type' => 'file']) }}" class="btn btn-primary btn-sm">&#1575;&#1601;&#1586;&#1608;&#1583;&#1606;
                     &#1601;&#1575;&#1740;&#1604;</a>
             </div>
- <?php
+            <?php
+
             use Carbon\Carbon;
 
             $results = \App\Models\PaymentPin\PaymentPin::select('amount')
@@ -23,10 +25,10 @@
                 ->selectRaw('SUM(CASE WHEN status = 2 THEN 1 ELSE 0 END) as used_count')
                 ->selectRaw('SUM(CASE WHEN status = 3 THEN 1 ELSE 0 END) as rejected_count')
                 ->selectRaw('SUM(CASE WHEN DATE(used_at) = CURDATE() THEN 1 ELSE 0 END) as used_count_today')
-               ->selectRaw('SUM(CASE WHEN DATE(used_at) = CURDATE() - INTERVAL 1 DAY THEN 1 ELSE 0 END) as used_count_yesterday')
+                ->selectRaw('SUM(CASE WHEN DATE(used_at) = CURDATE() - INTERVAL 1 DAY THEN 1 ELSE 0 END) as used_count_yesterday')
                 ->groupBy('amount')
                 ->get();
-                $results = $results->sortBy('amount');
+            $results = $results->sortBy('amount');
             ?>
 
 
@@ -100,13 +102,21 @@
                             @if($paymentPin->status === \App\Enums\EPaymentPinStatus::UNUSED)
                                 <span class="badge bg-success">{{ $paymentPin->status_text }}</span>
 
+                                {{--                                <div class="d-inline-block">--}}
+                                {{--                                    <span--}}
+                                {{--                                            class="badge cursor-pointer {{ $paymentPin->state == \App\Enums\EState::ENABLED ? 'bg-success' : 'bg-danger' }}"--}}
+                                {{--                                            data-stateable-id="{{ $paymentPin->id }}"--}}
+                                {{--                                            data-stateable-type="{{ \App\Models\PaymentPin\PaymentPin::class }}"--}}
+                                {{--                                    >{{ \App\Enums\EState::getTrans($paymentPin->state) }}</span>--}}
+                                {{--                                </div>--}}
                                 <div class="d-inline-block">
                                     <span
-                                            class="badge cursor-pointer {{ $paymentPin->state == \App\Enums\EState::ENABLED ? 'bg-success' : 'bg-danger' }}"
-                                            data-stateable-id="{{ $paymentPin->id }}"
-                                            data-stateable-type="{{ \App\Models\PaymentPin\PaymentPin::class }}"
+                                        class="badge cursor-pointer toggle-state {{ $paymentPin->state == \App\Enums\EState::ENABLED ? 'bg-success' : 'bg-danger' }}"
+                                        data-id="{{ $paymentPin->id }}"
+                                        data-state="{{ $paymentPin->state }}"
                                     >{{ \App\Enums\EState::getTrans($paymentPin->state) }}</span>
                                 </div>
+
                             @elseif($paymentPin->status === \App\Enums\EPaymentPinStatus::USED)
                                 <span class="badge bg-danger">{{ $paymentPin->status_text }}</span>
                             @else
@@ -133,4 +143,47 @@
             </div>
         @endif
     </div>
+@endsection
+
+@section('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select all elements with the class 'toggle-state'
+            const toggleElements = document.querySelectorAll('.toggle-state');
+
+            toggleElements.forEach(element => {
+                element.addEventListener('click', function() {
+                    let paymentPinId = this.getAttribute('data-id');
+                    let currentState = this.getAttribute('data-state');
+
+                    // Prepare the new state based on the current state
+                    let newState = (currentState == 1) ? 2 : 1;
+
+                    fetch(`/admin/payment-pins/toggle-state/${paymentPinId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({ state: newState })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Update the badge color and text based on the new state
+                                this.classList.toggle('bg-success', newState == 1);
+                                this.classList.toggle('bg-danger', newState == 2);
+                                this.textContent = (newState == 1) ? "{{ \App\Enums\EState::getTrans(\App\Enums\EState::ENABLED) }}" : "{{ \App\Enums\EState::getTrans(\App\Enums\EState::DISABLED) }}";
+
+                                // Update data-state attribute
+                                this.setAttribute('data-state', newState);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                });
+            });
+        });
+    </script>
 @endsection

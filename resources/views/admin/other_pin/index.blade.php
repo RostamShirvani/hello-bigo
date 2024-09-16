@@ -102,11 +102,18 @@
                             @if($otherPin->status === \App\Enums\EPaymentPinStatus::UNUSED)
                                 <span class="badge bg-success">{{ $otherPin->status_text }}</span>
 
+{{--                                <div class="d-inline-block">--}}
+{{--                                    <span--}}
+{{--                                            class="badge cursor-pointer {{ $otherPin->state == \App\Enums\EState::ENABLED ? 'bg-success' : 'bg-danger' }}"--}}
+{{--                                            data-stateable-id="{{ $otherPin->id }}"--}}
+{{--                                            data-stateable-type="{{ \App\Models\PaymentPin\OtherPin::class }}"--}}
+{{--                                    >{{ \App\Enums\EState::getTrans($otherPin->state) }}</span>--}}
+{{--                                </div>--}}
                                 <div class="d-inline-block">
                                     <span
-                                            class="badge cursor-pointer {{ $otherPin->state == \App\Enums\EState::ENABLED ? 'bg-success' : 'bg-danger' }}"
-                                            data-stateable-id="{{ $otherPin->id }}"
-                                            data-stateable-type="{{ \App\Models\PaymentPin\OtherPin::class }}"
+                                        class="badge cursor-pointer toggle-state {{ $otherPin->state == \App\Enums\EState::ENABLED ? 'bg-success' : 'bg-danger' }}"
+                                        data-id="{{ $otherPin->id }}"
+                                        data-state="{{ $otherPin->state }}"
                                     >{{ \App\Enums\EState::getTrans($otherPin->state) }}</span>
                                 </div>
                             @elseif($otherPin->status === \App\Enums\EPaymentPinStatus::USED)
@@ -189,5 +196,43 @@
             });
         });
 
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select all elements with the class 'toggle-state'
+            const toggleElements = document.querySelectorAll('.toggle-state');
+
+            toggleElements.forEach(element => {
+            element.addEventListener('click', function() {
+            let paymentPinId = this.getAttribute('data-id');
+            let currentState = this.getAttribute('data-state');
+
+            // Prepare the new state based on the current state
+            let newState = (currentState == 1) ? 2 : 1;
+
+            fetch(`/admin/other-pins/toggle-state/${paymentPinId}`, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+            body: JSON.stringify({ state: newState })
+        })
+            .then(response => response.json())
+            .then(data => {
+            if (data.success) {
+            // Update the badge color and text based on the new state
+            this.classList.toggle('bg-success', newState == 1);
+            this.classList.toggle('bg-danger', newState == 2);
+            this.textContent = (newState == 1) ? "{{ \App\Enums\EState::getTrans(\App\Enums\EState::ENABLED) }}" : "{{ \App\Enums\EState::getTrans(\App\Enums\EState::DISABLED) }}";
+
+            // Update data-state attribute
+            this.setAttribute('data-state', newState);
+        }
+        })
+            .catch(error => {
+            console.error('Error:', error);
+        });
+        });
+        });
+        });
     </script>
 @endsection

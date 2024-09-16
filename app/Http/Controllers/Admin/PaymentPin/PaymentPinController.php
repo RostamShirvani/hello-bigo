@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BaseAdminController;
 use App\Http\Requests\Admin\PaymentPin\StorePaymentPinRequest;
 use App\Http\Requests\Admin\PaymentPin\StoreUsingRequest;
 use App\Models\OrderItem;
+use App\Models\PaymentPin\PaymentPin;
 use App\Repositories\Admin\PaymentPinRepository;
 use App\ThirdParties\BigoAPI\BigoAPI;
 use App\ThirdParties\LikeeAPI\LikeeAPI;
@@ -267,5 +268,27 @@ class PaymentPinController extends BaseAdminController
             ];
         }
 
+    }
+    public function toggleState(Request $request, $id)
+    {
+        $paymentPin = PaymentPin::findOrFail($id);
+
+        // Get new state from the request
+        $newState = $request->input('state');
+
+        // Validate the new state
+        if (!in_array($newState, [1, 2])) {
+            return response()->json(['success' => false, 'message' => 'Invalid state'], 400);
+        }
+
+        // Update state and save
+        $paymentPin->state = $newState;
+        $paymentPin->save();
+
+        // Return the new state in the response
+        return response()->json([
+            'success' => true,
+            'newState' => $paymentPin->state
+        ]);
     }
 }

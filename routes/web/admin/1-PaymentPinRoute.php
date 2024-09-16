@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PaymentPin\PaymentPinController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/testt', function (){
@@ -28,6 +29,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:super_admin|admin'], 'namesp
                 'as' => 'storeUsing',
                 'uses' => 'PaymentPinController@storeUsing'
             ]);
+            Route::post('/toggle-state/{id}', [PaymentPinController::class, 'toggleState']);
         });
         Route::group(['middleware' => ['is.ajax'], 'prefix' => 'payment-pins-ajax', 'as' => 'payment-pins.ajax.'], function () {
             Route::post('/status', [

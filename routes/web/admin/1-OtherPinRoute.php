@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\OtherPin\OtherPinController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/testt', function (){
@@ -32,6 +33,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:super_admin|admin'], 'namesp
                 'as' => 'storeUsing',
                 'uses' => 'OtherPinController@storeUsing'
             ]);
+            Route::post('/toggle-state/{id}', [OtherPinController::class, 'toggleState']);
         });
         Route::group(['middleware' => ['is.ajax'], 'prefix' => 'other-pins-ajax', 'as' => 'other-pins.ajax.'], function () {
             Route::post('/status', [
