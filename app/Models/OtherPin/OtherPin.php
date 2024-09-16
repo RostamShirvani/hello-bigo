@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\PaymentPin;
+namespace App\Models\OtherPin;
 
 use App\Enums\EAppType;
 use App\Models\BaseModel;
@@ -13,7 +13,7 @@ class OtherPin extends BaseModel
         SoftDeletes,
         OtherPinRelationships,
         OtherPinScopes,
-        PaymentPinModifiers;
+        OtherPinModifiers;
 
     protected $table = 'other_pins';
 
@@ -45,11 +45,11 @@ class OtherPin extends BaseModel
         'extra' => 'array'
     ];
 
-    public static function getActivePaymentPinsCountByValue($value, $appType = EAppType::BIGO_LIVE)
+    public static function getActivePaymentPinsCountByValue($value, $appType)
     {
-        return PaymentPin::query()
-            ->when($appType == EAppType::LIKEE, function ($query) use ($value) {
-                $query->where('likee_value', $value);
+        return OtherPin::query()
+            ->when(function ($query) use ($appType) {
+                $query->where('app_type', $appType);
             }, function ($query) use ($value) {
                 $query->where('value', $value);
             })

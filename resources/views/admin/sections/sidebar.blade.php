@@ -12,7 +12,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item {{ request()->is('admin/dashboard') ? 'active' : '' }}">
         <a class="nav-link" href="{{route('dashboard')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span> داشبورد </span></a>
@@ -27,21 +27,21 @@
     </div>
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item">
+    <li class="nav-item {{ request()->is('admin/razer_accounts') ? 'active' : '' }}">
         <a class="nav-link" href="{{route('admin.razer_accounts.index')}}">
             <i class="fas fa-fw fa-user"></i>
             <span> اکانت ها </span></a>
     </li>
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item">
+    <li class="nav-item {{ request()->is('admin/payment-pins/using') && request()->query('app_type') === '1' ? 'active' : '' }}">
         <a class="nav-link" href="{{route('admin.payment-pins.using', ['app_type' => 1])}}">
             <i class="fas fa-fw fa-user"></i>
             <span> شارژ سریع بیگو </span></a>
     </li>
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item">
+    <li class="nav-item {{ request()->is('admin/payment-pins/using') && request()->query('app_type') === '2' ? 'active' : '' }}">
         <a class="nav-link" href="{{route('admin.payment-pins.using', ['app_type' => 2])}}">
             <i class="fas fa-fw fa-user"></i>
             <span> شارژ سریع لایکی </span></a>
@@ -64,6 +64,12 @@
                 <a class="collapse-item {{ request()->is('admin/payment-pins/create*') && request()->query('type') === 'file' ? 'active' : '' }}" href="{{ route('admin.payment-pins.create', ['type' => 'file']) }}">افزودن فایل</a>
             </div>
         </div>
+    </li>
+    <!-- Nav Item - Tables -->
+    <li class="nav-item {{ request()->is('admin/other-pins') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.other-pins.index') }}">
+            <i class="fas fa-fw fa-user"></i>
+            <span> پین های متفرقه </span></a>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -93,7 +99,7 @@
     </li>
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item">
+    <li class="nav-item {{ request()->is('admin/blacklist') ? 'active' : '' }}">
         <a class="nav-link" href="{{route('admin.blacklist.index')}}">
             <i class="fas fa-fw fa-ban"></i>
             <span> بلک لیست </span></a>
@@ -107,7 +113,7 @@
         فروشگاه
     </div>
     <!-- Nav Item - Tables -->
-    <li class="nav-item">
+    <li class="nav-item {{ request()->is('admin/brands') ? 'active' : '' }}">
         <a class="nav-link" href="{{route('admin.brands.index')}}">
             <i class="fas fa-fw fa-store"></i>
             <span> برندها </span></a>
@@ -177,13 +183,13 @@
         تنظیمات
     </div>
 
-    <li class="nav-item active">
+    <li class="nav-item {{ request()->is('admin/banners') ? 'active' : '' }}">
         <a class="nav-link" href="{{route('admin.banners.index')}}">
             <i class="fas fa-fw fa-images"></i>
             <span> بنرها </span></a>
     </li>
 
-    <li class="nav-item active">
+    <li class="nav-item {{ request()->is('admin/settings/edit') ? 'active' : '' }}">
         <a class="nav-link" href="{{route('admin.settings.edit')}}">
             <i class="fas fa-fw fa-cog"></i>
             <span> تنظیمات کلی سایت </span></a>

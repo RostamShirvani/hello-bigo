@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\PaymentPin;
+namespace App\Models\OtherPin;
 
 use App\Enums\EFeatured;
 use App\Enums\EPaymentPinStatus;
