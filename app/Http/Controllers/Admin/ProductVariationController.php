@@ -17,8 +17,8 @@ class ProductVariationController extends Controller
                 'product_id' => $product->id,
                 'value' => $variations['value'][$i],
                 'price' => $variations['price'][$i],
-//                'quantity' => $variations['quantity'][$i],
-                'quantity' => PaymentPin::getActivePaymentPinsCountByValue($variations['value'][$i],$product->app_type),
+                'quantity' => $variations['quantity'][$i],
+//                'quantity' => PaymentPin::getActivePaymentPinsCountByValue($variations['value'][$i],$product->app_type),
                 'sku' => $variations['sku'][$i],
             ]);
         }
