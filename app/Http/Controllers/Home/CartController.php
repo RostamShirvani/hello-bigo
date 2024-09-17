@@ -34,11 +34,11 @@ class CartController extends Controller
                 $productVariation = ProductVariation::find($variationData['id']);
 
                 if (!$productVariation) {
-                    return $fail('تعداد الماس انتخاب شده، یافت نشد.');
+                    return $fail('بسته الماس انتخاب شده، یافت نشد.');
                 }
 
                 if ($productVariation->freeCount() <= 0) {
-                    return $fail('تعداد الماس انتخاب شده، ناموجود می باشد، لطفا بررسی نمایید.');
+                    return $fail('بسته الماس انتخاب شده، ناموجود می باشد، لطفا بررسی نمایید.');
                 }
             }],
             'bigo_id' => (in_array($request->product_type, [EAppType::BIGO_LIVE, EAppType::LIKEE]) ? 'required' : ''),
