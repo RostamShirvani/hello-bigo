@@ -33,7 +33,25 @@ class OtherPinController extends BaseAdminController
 
     public function index(Request $request)
     {
-        $otherPins = $this->otherPinRepository->getOtherPins();
+        // Capture the search filters from the request
+        $searchParams = [
+            'id' => $request->input('id'),
+            'amount' => $request->input('amount'),
+            'order_id' => $request->input('order_id'),
+            'order_item_id' => $request->input('order_item_id'),
+            'used_by' => $request->input('used_by'),
+            'used_at' => $request->input('used_at'),
+            'status' => $request->input('status'),
+            'app_type' => $request->input('app_type'),
+            'pin' => $request->input('pin'),
+            'value' => $request->input('value'),
+            'used_by_mobile' => $request->input('used_by_mobile'),
+        ];
+
+        // Pass the search parameters to the repository method
+        $otherPins = $this->otherPinRepository->getOtherPins($searchParams);
+
+        // Return the view with the filtered data and search parameters
         return view('admin.other_pin.index', compact('otherPins'));
     }
 

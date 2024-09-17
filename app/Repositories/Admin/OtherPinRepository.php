@@ -7,6 +7,8 @@ use App\Enums\EPaymentPinStatus;
 use App\Enums\EState;
 use App\Models\OtherPin\OtherPin;
 use App\Models\PaymentPin\PaymentPin;
+use Carbon\Carbon;
+use Hekmatinasser\Verta\Verta;
 use Illuminate\Support\Facades\Auth;
 
 class OtherPinRepository extends BaseAdminRepository
@@ -16,12 +18,73 @@ class OtherPinRepository extends BaseAdminRepository
         $this->setModel($model);
     }
 
-    public function getOtherPins()
+    public function getOtherPins(array $searchParams = [])
     {
-        return OtherPin::query()
-            ->orderBy('id', 'desc')
-            ->orderBy('used_at', 'desc')
-            ->paginate(20);
+        // Start a query for the PaymentPin model
+        $query = OtherPin::query();
+
+        // Apply filters based on the search parameters
+        if (!empty($searchParams['id'])) {
+            $query->where('id', $searchParams['id']);
+        }
+
+        if (!empty($searchParams['amount'])) {
+            $query->where('amount', $searchParams['amount']);
+        }
+
+        if (!empty($searchParams['order_id'])) {
+            $query->where('order_id', 'like', '%' . $searchParams['order_id'] . '%');
+        }
+
+        if (!empty($searchParams['order_item_id'])) {
+            $query->where('order_item_id', 'like', '%' . $searchParams['order_item_id'] . '%');
+        }
+
+        if (!empty($searchParams['used_by'])) {
+            $query->where('used_by', $searchParams['used_by']);
+        }
+
+        if (!empty($searchParams['status'])) {
+            $query->where('status', $searchParams['status']);
+        }
+
+        if (!empty($searchParams['used_at'])) {
+            // Convert Jalali to Gregorian
+            $jalaliDate = $searchParams['used_at'];
+            $vStart = Verta::parse($jalaliDate); // Parse Jalali date
+            $vEnd = Verta::parse($jalaliDate)->addDay(); // Add 1 day to get the end of the day
+            $gregorianDateStart = $vStart->datetime(); // Get Gregorian datetime for the start of the day
+            $gregorianDateEnd = $vEnd->datetime(); // Get Gregorian datetime for the end of the day
+
+// Filter accounts updated between the start and end of the specific day
+            $query->whereBetween('used_at', [
+                Carbon::parse($gregorianDateStart)->format('Y-m-d H:i:s'),
+                Carbon::parse($gregorianDateEnd)->format('Y-m-d H:i:s')
+            ]);
+        }
+
+        if (!empty($searchParams['app_type'])) {
+            $query->where('app_type',  $searchParams['app_type']);
+        }
+
+        if (!empty($searchParams['pin'])) {
+            $query->where('pin', 'like', '%' . $searchParams['pin'] . '%');
+        }
+
+        if (!empty($searchParams['value'])) {
+            $query->where('value', 'like', '%' . $searchParams['value'] . '%');
+        }
+
+        if (!empty($searchParams['used_by_mobile'])) {
+            $query->where('used_by_mobile', 'like', '%' . $searchParams['used_by_mobile'] . '%');
+        }
+
+        // Add your default ordering
+        $query->orderBy('id', 'desc')
+            ->orderBy('used_at', 'desc');
+
+        // Return the paginated result
+        return $query->paginate(20);
     }
 
     public function store($request)
@@ -38,6 +101,7 @@ class OtherPinRepository extends BaseAdminRepository
 
         return $paymentPin;
     }
+
     public function update($request, $id)
     {
         $paymentPin = OtherPin::query()->findOrFail($id);
