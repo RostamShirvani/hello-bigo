@@ -39,6 +39,7 @@ class PaymentPinController extends BaseAdminController
             'order_id' => $request->input('order_id'),
             'order_item_id' => $request->input('order_item_id'),
             'used_by' => $request->input('used_by'),
+            'status' => $request->input('status'),
             'used_at' => $request->input('used_at'),
             'serial_number' => $request->input('serial_number'),
             'pin' => $request->input('pin'),

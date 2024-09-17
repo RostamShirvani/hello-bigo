@@ -43,6 +43,10 @@ class PaymentPinRepository extends BaseAdminRepository
             $query->where('used_by', $searchParams['used_by']);
         }
 
+        if (!empty($searchParams['status'])) {
+            $query->where('status', $searchParams['status']);
+        }
+
         if (!empty($searchParams['used_at'])) {
             // Convert Jalali to Gregorian
             $jalaliDate = $searchParams['used_at'];

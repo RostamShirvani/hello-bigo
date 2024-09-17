@@ -3,6 +3,14 @@
 @section('title')
     index payment pins
 @endsection
+@section('style')
+    <style>
+        .lowsize-placeholder::placeholder {
+            font-size: 10px; /* Adjust the font size here */
+            color: #aaa; /* Optionally, change the color */
+        }
+    </style>
+@endsection
 @section('content')
     <div class="m-4">
         <div class="row">
@@ -31,103 +39,123 @@
             $results = $results->sortBy('amount');
             ?>
 
-            <form action="{{ route('admin.payment-pins.index') }}" method="GET">
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <input type="text" name="id" class="form-control" placeholder="id" value="{{ request('id') }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <input type="text" name="amount" class="form-control" placeholder="amount" value="{{ request('amount') }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <input type="text" name="order_id" class="form-control" placeholder="order_id" value="{{ request('order_id') }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <input type="text" name="order_item_id" class="form-control" placeholder="order_item_id" value="{{ request('order_item_id') }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <input type="text" name="used_by" class="form-control" placeholder="used_by" value="{{ request('used_by') }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <input type="text" id="used_at" name="used_at" class="form-control" placeholder="1403/06/26" value="{{ request()->input('used_at') }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <input type="text" name="serial_number" class="form-control" placeholder="serial_number" value="{{ request('serial_number') }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <input type="text" name="pin" class="form-control" placeholder="pin" value="{{ request('pin') }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <input type="text" name="value" class="form-control" placeholder="value" value="{{ request('value') }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <input type="text" name="likee_value" class="form-control" placeholder="likee_value" value="{{ request('likee_value') }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <input type="text" name="used_by_mobile" class="form-control" placeholder="used_by_mobile" value="{{ request('used_by_mobile') }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </div>
-                </div>
-            </form>
-
-
-            <table id="itemsw" class="table table-striped" style="width: 100%">
-                <thead>
-                <tr>
-                    <th style="text-align: center;">مبلغ</th>
-                    <th style="text-align: center;">موجودی</th>
-                    <th style="text-align: center;">غیر فعال</th>
-                    <th style="text-align: center;">سفارشات</th>
-                    <th style="text-align: center;">رد شده</th>
-                    <th style="text-align: center;">سفارشات امروز</th>
-                    <th style="text-align: center;">سفارشات دیروز</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                foreach ($results as $result) {
-                    echo "<tr>";
-                    echo "<td>" . $result->amount . "</td>";
-                    echo "<td style='background-color: #1f6e44; color: white; border-radius: 5px; text-align: center;'>" . $result->free_count . "</td>";
-                    echo "<td style='background-color: #1988b9; color: white; border-radius: 5px; text-align: center;'>" . $result->free_count2 . "</td>";
-                    echo "<td style='background-color: #6e1f1f; color: white; border-radius: 5px; text-align: center;'>" . $result->used_count . "</td>";
-                    echo "<td style='background-color: #d59a05; color: white; border-radius: 5px; text-align: center;'>" . $result->rejected_count . "</td>";
-                    echo "<td style='background-color: #64326d; color: white; border-radius: 5px; text-align: center;'>" . $result->used_count_today . "</td>";
-                    echo "<td style='background-color: #1f3e44; color: white; border-radius: 5px; text-align: center;'>" . $result->used_count_yesterday . "</td>";
-                    echo "</tr>";
-                }
-                ?>
-                </tbody>
-            </table>
+                <table id="itemsw" class="table table-striped" style="width: 100%">
+                    <thead>
+                    <tr>
+                        <th style="text-align: center;">مبلغ</th>
+                        <th style="text-align: center;">موجودی</th>
+                        <th style="text-align: center;">غیر فعال</th>
+                        <th style="text-align: center;">سفارشات</th>
+                        <th style="text-align: center;">رد شده</th>
+                        <th style="text-align: center;">سفارشات امروز</th>
+                        <th style="text-align: center;">سفارشات دیروز</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    foreach ($results as $result) {
+                        echo "<tr>";
+                        echo "<td>" . $result->amount . "</td>";
+                        echo "<td style='background-color: #1f6e44; color: white; border-radius: 5px; text-align: center;'>" . $result->free_count . "</td>";
+                        echo "<td style='background-color: #1988b9; color: white; border-radius: 5px; text-align: center;'>" . $result->free_count2 . "</td>";
+                        echo "<td style='background-color: #6e1f1f; color: white; border-radius: 5px; text-align: center;'>" . $result->used_count . "</td>";
+                        echo "<td style='background-color: #d59a05; color: white; border-radius: 5px; text-align: center;'>" . $result->rejected_count . "</td>";
+                        echo "<td style='background-color: #64326d; color: white; border-radius: 5px; text-align: center;'>" . $result->used_count_today . "</td>";
+                        echo "<td style='background-color: #1f3e44; color: white; border-radius: 5px; text-align: center;'>" . $result->used_count_yesterday . "</td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                    </tbody>
+                </table>
         </div>
 
-        @if($paymentPins->count() > 0)
-            <table id="items" class="table table-striped" style="width: 100%">
-                <thead>
-                <tr>
-                    <th>مبلغ</th>
-                    <th>شماره سفارش</th>
-                    <th>شماره آیتم سفارش</th>
-                    <th>ایدی کاربر</th>
-                    <th>تاریخ استفاده</th>
-                    <th>وضعیت</th>
-                    <th>سریال</th>
-                    <th>پین</th>
-                    <th>بیگو</th>
-                    <th>لایکی</th>
-                    <th>موبایل</th>
-                </tr>
-                </thead>
-                <tbody>
+        <form action="{{ route('admin.payment-pins.index') }}" method="GET">
+        <table id="items" class="table table-striped" style="width: 100%">
+            <thead>
+            <tr>
+                <th>آیدی</th>
+                <th>مبلغ</th>
+                <th>شماره سفارش</th>
+                <th>شماره آیتم سفارش</th>
+                <th>ایدی کاربر</th>
+                <th>تاریخ استفاده</th>
+                <th>وضعیت</th>
+                <th>سریال</th>
+                <th>پین</th>
+                <th>بیگو</th>
+                <th>لایکی</th>
+                <th>موبایل</th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="text" name="id" class="form-control" placeholder=""
+                           value="{{ request('id') }}">
+                </th>
+                <th>
+                    <input type="text" name="amount" class="form-control" placeholder=""
+                           value="{{ request('amount') }}">
+                </th>
+                <th>
+                    <input type="text" name="order_id" class="form-control" placeholder=""
+                           value="{{ request('order_id') }}">
+                </th>
+                <th>
+                    <input type="text" name="order_item_id" class="form-control" placeholder=""
+                           value="{{ request('order_item_id') }}">
+                </th>
+                <th>
+                    <input type="text" name="used_by" class="form-control" placeholder=""
+                           value="{{ request('used_by') }}">
+                </th>
+                <th>
+                    <input type="text" id="used_at" name="used_at" class="form-control lowsize-placeholder"
+                           placeholder="مثال: 1403/06/26" value="{{ request()->input('used_at') }}">
+                </th>
+                <th>
+                    <select name="status" class="form-control">
+                        <option value="">همه</option>
+                        @foreach(\App\Enums\EPaymentPinStatus::all() as $key => $value)
+                            <option value="{{ $key }}" {{ request('status') == $key ? 'selected' : '' }}>
+                                {{ $value }}
+                            </option>
+                        @endforeach
+                    </select>
+                </th>
+                <th>
+                    <input type="text" name="serial_number" class="form-control" placeholder=""
+                           value="{{ request('serial_number') }}">
+                </th>
+                <th>
+                    <input type="text" name="pin" class="form-control" placeholder=""
+                           value="{{ request('pin') }}">
+                </th>
+                <th>
+                    <input type="text" name="value" class="form-control" placeholder=""
+                           value="{{ request('value') }}">
+                </th>
+                <th>
+                    <input type="text" name="likee_value" class="form-control" placeholder=""
+                           value="{{ request('likee_value') }}">
+                </th>
+                <th>
+                    <input type="text" name="used_by_mobile" class="form-control" placeholder=""
+                           value="{{ request('used_by_mobile') }}">
+                </th>
+                <th>
+                    <button type="submit" class="btn btn-primary">فیلتر</button>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @if($paymentPins->count() > 0)
                 @foreach($paymentPins as $paymentPin)
                     <tr>
+                        <td>{{ $paymentPin->id }}</td>
                         <td>${{ $paymentPin->amount }}</td>
-                        <td style="width: 50px;">
+                        <td>
                             {{ $paymentPin->order_id }}
                         </td>
-                        <td style="width: 50px;">
+                        <td>
                             {{ $paymentPin->order_item_id }}
                         </td>
                         <td>{{ $paymentPin->used_by }}</td>
@@ -170,19 +198,25 @@
                         <td>{{ $paymentPin->value }}</td>
                         <td>{{ $paymentPin->likee_value }}</td>
                         <td>{{ $paymentPin->used_by_mobile }}</td>
-
+                        <td></td>
 
                     </tr>
                 @endforeach
-                </tbody>
-            </table>
-        @else
-            <div class="container mt-4 text-center text-secondary">
-                <i class="bi bi-box" style="font-size: 3rem"></i>
+            @else
+                <tr>
+                    <td colspan="13">
+                        <div class="container mt-4 text-center text-secondary">
+                            <i class="bi bi-box" style="font-size: 3rem"></i>
 
-                <div>هیچ رکوردی برای نمایش وجود ندارد.</div>
-            </div>
-        @endif
+                            <div>هیچ رکوردی برای نمایش وجود ندارد.</div>
+                        </div>
+                    </td>
+
+                </tr>
+            @endif
+            </tbody>
+        </table>
+        </form>
         <div class="d-flex justify-content-center mt-4">{!! $paymentPins->appends(request()->query())->links() !!}
         </div>
     </div>
@@ -196,12 +230,12 @@
                 initialValue: false
             });
         });
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Select all elements with the class 'toggle-state'
             const toggleElements = document.querySelectorAll('.toggle-state');
 
             toggleElements.forEach(element => {
-                element.addEventListener('click', function() {
+                element.addEventListener('click', function () {
                     let paymentPinId = this.getAttribute('data-id');
                     let currentState = this.getAttribute('data-state');
 
@@ -214,7 +248,7 @@
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                         },
-                        body: JSON.stringify({ state: newState })
+                        body: JSON.stringify({state: newState})
                     })
                         .then(response => response.json())
                         .then(data => {
