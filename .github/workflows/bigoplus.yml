@@ -18,7 +18,3 @@ jobs:
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
           server-dir: /pay.bigoplus.ir/
-          local-dir: ./  # Assuming you want to deploy the whole project, adjust as necessary
-          method: ftp  # Use FTP (default), or try ftps if your server supports it
-          log-level: verbose  # Increase logging to debug the issue
-          passive: true  # Enable passive mode, may help if you're having network issues
