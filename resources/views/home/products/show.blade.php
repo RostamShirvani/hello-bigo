@@ -110,7 +110,10 @@
                                         </div>
                                         <div class="text-right">
                                             <label for="bigo_id" class="form-label">آی دی اکانت</label>
-                                            <input type="text" class="form-control user-preview-toggler-front" name="bigo_id" id="bigo_id" value="{{ old('bigo_id') }}">
+                                            <input type="text" class="form-control user-preview-toggler-front" name="bigo_id" id="bigo_id" value="{{ old('bigo_id') }}"
+{{--                                                   placeholder="توجه! جهت وارد کردن ایدی حتما از کیبورد انگلیسی استفاده نمایید."--}}
+                                            >
+{{--                                            <small id="keyboard-warning" style="color: red; display: none;">لطفا از کاراکترهای انگلیسی استفاده نمایید.</small>--}}
                                             <button type="button" id="check_account" class="btn btn-primary mt-2" style="border-radius: 10px;">بررسی اکانت</button>
                                             <button type="button" id="edit_account" class="btn btn-warning mt-2 d-none">ویرایش اکانت</button>
                                         </div>
@@ -356,5 +359,19 @@
             $('.quantity-value').attr('data-max', variation.quantity);
             $('.quantity-value').val(1);
         });
+
+        // document.getElementById('bigo_id').addEventListener('input', function (event) {
+        //     var input = event.target.value;
+        //     var englishRegex = /^[A-Za-z0-9]*$/;
+        //
+        //     // If the input does not match the English characters, display a warning
+        //     if (!englishRegex.test(input)) {
+        //         document.getElementById('keyboard-warning').style.display = 'block';
+        //         event.target.value = input.replace(/[^A-Za-z0-9]/g, ''); // Remove non-English characters
+        //     } else {
+        //         document.getElementById('keyboard-warning').style.display = 'none';
+        //     }
+        // });
+
     </script>
 @endsection

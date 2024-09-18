@@ -21,7 +21,16 @@ class UserController extends BaseAPIController
 
     public function getUserDetail(GetUserDetailRequest $request)
     {
+        $bigo_id = $request->input('bigo_id');
+
+        // Convert Persian numbers to English numbers
+        $bigo_id_converted = convertPersianNumbers($bigo_id);
+
+        // Continue using the $bigo_id_converted
+        $request->merge(['bigo_id' => $bigo_id_converted]);
+
         $accountId = $request->input('bigo_id');
+
         $appType = $request->input('app_type') ?? EAppType::BIGO_LIVE;
         $clientAPI = null;
 
