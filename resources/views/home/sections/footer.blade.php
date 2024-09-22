@@ -233,7 +233,7 @@
 <div class="P-loader">
     <div class="P-loader-content">
         <div class="logo-loader">
-            <img src="{{ asset('/assets/newsite/images/logo.png') }}" alt="logo">
+            <img src="{{ asset('/assets/newsite/images/logo-300x58-1-1.png') }}" alt="logo">
         </div>
         <div class="pic-loader text-center">
             <img src="{{ asset('/assets/newsite/images/three-dots.svg') }}" width="50" alt="">

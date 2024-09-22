@@ -1088,64 +1088,68 @@
                                      style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 2234px;">
                                     @foreach($products as $product)
                                         <div class="owl-item" style="width: 309.083px; margin-left: 10px;">
-                                            <div class="item" style="border-radius: 10px;">
-                                                <a href="{{route('home.products.show', $product->slug)}}"
-                                                   class="d-block hover-img-link" data-toggle="modal"
-                                                   data-target="#exampleModal">
-                                                    <img
-                                                        src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$product->primary_image)}}"
-                                                        class="img-fluid" alt="" style="border-radius: 10px;">
-                                                    <span class="icon-view">
-                                                    <strong><i class="fa fa-eye"></i></strong>
-                                                </span>
-                                                </a>
-                                                <h2 class="post-title">
-                                                    <a href="{{route('home.products.show', $product->slug)}}">
-                                                        {{$product->name}}
+                                            <a href="{{route('home.products.show', $product->slug)}}">
+                                                <div class="item" style="border-radius: 10px;">
+                                                    <a href="{{route('home.products.show', $product->slug)}}"
+                                                       class="d-block hover-img-link" data-toggle="modal"
+                                                       data-target="#exampleModal">
+                                                        <img
+                                                            src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$product->primary_image)}}"
+                                                            class="img-fluid" alt="" style="border-radius: 10px;">
+                                                        {{--                                                    <span class="icon-view">--}}
+                                                        {{--                                                    <strong><i class="fa fa-eye"></i></strong>--}}
+                                                        {{--                                                </span>--}}
                                                     </a>
-                                                </h2>
-                                                <div class="price">
-                                                    @if($product->check_quantity)
-                                                        @if($product->check_sale)
+                                                    <h2 class="post-title">
+                                                        <a href="{{route('home.products.show', $product->slug)}}">
+                                                            {{$product->name}}
+                                                        </a>
+                                                    </h2>
+                                                    <div class="price">
+                                                        @if($product->check_quantity)
+                                                            @if($product->check_sale)
 
-                                                            <del>
-                                                                <span>{{number_format($product->check_sale->price)}}<span>تومان</span></span>
-                                                            </del>
-                                                            <ins><span>{{number_format($product->check_sale->sale_price)}}<span>تومان</span></span>
-                                                            </ins>
+                                                                <del>
+                                                                    <span>{{number_format($product->check_sale->price)}}<span>تومان</span></span>
+                                                                </del>
+                                                                <ins><span>{{number_format($product->check_sale->sale_price)}}<span>تومان</span></span>
+                                                                </ins>
+                                                            @else
+                                                                <ins>
+                                                                    <span>{{number_format($product->check_price->price)}}<span>تومان</span></span>
+                                                                    -
+                                                                    <span>{{number_format($product->expensive_price->price)}}<span>تومان</span></span>
+                                                                </ins>
+                                                            @endif
                                                         @else
-                                                            <ins>
-                                                                <span>{{number_format($product->check_price->price)}}<span>تومان</span></span> -
-                                                                <span>{{number_format($product->expensive_price->price)}}<span>تومان</span></span>
-                                                            </ins>
+                                                            <del><span>ناموجود</span></del>
                                                         @endif
-                                                    @else
-                                                        <del><span>ناموجود</span></del>
-                                                    @endif
+                                                    </div>
+                                                    {{--                                                <div class="actions">--}}
+                                                    {{--                                                    <ul>--}}
+                                                    {{--                                                        <li class="action-item like">--}}
+                                                    {{--                                                            <button class="btn btn-light add-product-wishes"--}}
+                                                    {{--                                                                    type="submit"--}}
+                                                    {{--                                                                    data-toggle="tooltip" data-placement="top"--}}
+                                                    {{--                                                                    title="Tooltip on top">--}}
+                                                    {{--                                                                <i class="fa fa-heart-o"></i>--}}
+                                                    {{--                                                            </button>--}}
+                                                    {{--                                                        </li>--}}
+                                                    {{--                                                        <li class="action-item compare">--}}
+                                                    {{--                                                            <button class="btn btn-light btn-compare" type="submit">--}}
+                                                    {{--                                                                <i class="fa fa-random"></i>--}}
+                                                    {{--                                                            </button>--}}
+                                                    {{--                                                        </li>--}}
+                                                    {{--                                                        <li class="action-item add-to-cart">--}}
+                                                    {{--                                                            <button class="btn btn-light btn-add-to-cart" type="submit">--}}
+                                                    {{--                                                                <i class="fa fa-shopping-cart"></i>--}}
+                                                    {{--                                                            </button>--}}
+                                                    {{--                                                        </li>--}}
+                                                    {{--                                                    </ul>--}}
+                                                    {{--                                                </div>--}}
+                                                    <a class="btn btn-primary" href="{{route('home.products.show', $product->slug)}}">مشاهده و خرید</a>
                                                 </div>
-                                                <div class="actions">
-                                                    <ul>
-                                                        <li class="action-item like">
-                                                            <button class="btn btn-light add-product-wishes"
-                                                                    type="submit"
-                                                                    data-toggle="tooltip" data-placement="top"
-                                                                    title="Tooltip on top">
-                                                                <i class="fa fa-heart-o"></i>
-                                                            </button>
-                                                        </li>
-                                                        <li class="action-item compare">
-                                                            <button class="btn btn-light btn-compare" type="submit">
-                                                                <i class="fa fa-random"></i>
-                                                            </button>
-                                                        </li>
-                                                        <li class="action-item add-to-cart">
-                                                            <button class="btn btn-light btn-add-to-cart" type="submit">
-                                                                <i class="fa fa-shopping-cart"></i>
-                                                            </button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     @endforeach
                                 </div>
