@@ -1088,13 +1088,13 @@
                                      style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 2234px;">
                                     @foreach($products as $product)
                                         <div class="owl-item" style="width: 309.083px; margin-left: 10px;">
-                                            <div class="item">
+                                            <div class="item" style="border-radius: 10px;">
                                                 <a href="{{route('home.products.show', $product->slug)}}"
                                                    class="d-block hover-img-link" data-toggle="modal"
                                                    data-target="#exampleModal">
                                                     <img
                                                         src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$product->primary_image)}}"
-                                                        class="img-fluid" alt="">
+                                                        class="img-fluid" alt="" style="border-radius: 10px;">
                                                     <span class="icon-view">
                                                     <strong><i class="fa fa-eye"></i></strong>
                                                 </span>

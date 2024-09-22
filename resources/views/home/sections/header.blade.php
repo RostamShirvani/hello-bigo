@@ -16,87 +16,87 @@
                             <div class="header-search-box">
                                 <form action="#" class="form-search">
                                     <input type="search" class="header-search-input" name="search-input"
-{{--                                    <input type="search" class="header-search-input" name="search-input"--}}
-{{--                                           placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…"--}}
+                                        {{--                                    <input type="search" class="header-search-input" name="search-input"--}}
+                                        {{--                                           placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…"--}}
                                     >
                                     <div class="action-btns">
                                         <button class="btn btn-search"
-{{--                                                type="submit"--}}
+                                                {{--                                                type="submit"--}}
                                                 type="button"
                                         >
                                             <img src="{{ asset('/assets/newsite/images/search.png') }}" alt="search">
                                         </button>
-{{--                                        <div class="search-filter">--}}
-{{--                                            <div class="form-ui">--}}
-{{--                                                <div class="custom-select-ui">--}}
-{{--                                                    <select class="right">--}}
-{{--                                                        <option>همه دسته ها</option>--}}
-{{--                                                        <option>کالای دیجیتال</option>--}}
-{{--                                                        <option>آرایشی بهداشتی</option>--}}
-{{--                                                        <option>ابزاری اداری</option>--}}
-{{--                                                        <option>مد پوشاک</option>--}}
-{{--                                                        <option>خانه آشپز خانه</option>--}}
-{{--                                                        <option>لوازم تحریر و هنر</option>--}}
-{{--                                                        <option>کودک و نوزاد</option>--}}
-{{--                                                    </select>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        {{--                                        <div class="search-filter">--}}
+                                        {{--                                            <div class="form-ui">--}}
+                                        {{--                                                <div class="custom-select-ui">--}}
+                                        {{--                                                    <select class="right">--}}
+                                        {{--                                                        <option>همه دسته ها</option>--}}
+                                        {{--                                                        <option>کالای دیجیتال</option>--}}
+                                        {{--                                                        <option>آرایشی بهداشتی</option>--}}
+                                        {{--                                                        <option>ابزاری اداری</option>--}}
+                                        {{--                                                        <option>مد پوشاک</option>--}}
+                                        {{--                                                        <option>خانه آشپز خانه</option>--}}
+                                        {{--                                                        <option>لوازم تحریر و هنر</option>--}}
+                                        {{--                                                        <option>کودک و نوزاد</option>--}}
+                                        {{--                                                    </select>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
                                     </div>
                                 </form>
-{{--                                <div class="search-result">--}}
-{{--                                    <ul class="search-result-list mb-0">--}}
-{{--                                        <li>--}}
-{{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
-{{--                                                کالای دیجیتال--}}
-{{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
-{{--                                                    <i class="fa fa-angle-left"></i>--}}
-{{--                                                </button>--}}
-{{--                                            </a>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
-{{--                                                آرایشی و بهداشتی--}}
-{{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
-{{--                                                    <i class="fa fa-angle-left"></i>--}}
-{{--                                                </button>--}}
-{{--                                            </a>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
-{{--                                                گوشی موبایل--}}
-{{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
-{{--                                                    <i class="fa fa-angle-left"></i>--}}
-{{--                                                </button>--}}
-{{--                                            </a>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
-{{--                                                تبلت--}}
-{{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
-{{--                                                    <i class="fa fa-angle-left"></i>--}}
-{{--                                                </button>--}}
-{{--                                            </a>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
-{{--                                                لپ تاپ--}}
-{{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
-{{--                                                    <i class="fa fa-angle-left"></i>--}}
-{{--                                                </button>--}}
-{{--                                            </a>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
-{{--                                                دوربین--}}
-{{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
-{{--                                                    <i class="fa fa-angle-left"></i>--}}
-{{--                                                </button>--}}
-{{--                                            </a>--}}
-{{--                                        </li>--}}
-{{--                                    </ul>--}}
-{{--                                    <div class="localSearchSimple"></div>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="search-result">--}}
+                                {{--                                    <ul class="search-result-list mb-0">--}}
+                                {{--                                        <li>--}}
+                                {{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
+                                {{--                                                کالای دیجیتال--}}
+                                {{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
+                                {{--                                                    <i class="fa fa-angle-left"></i>--}}
+                                {{--                                                </button>--}}
+                                {{--                                            </a>--}}
+                                {{--                                        </li>--}}
+                                {{--                                        <li>--}}
+                                {{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
+                                {{--                                                آرایشی و بهداشتی--}}
+                                {{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
+                                {{--                                                    <i class="fa fa-angle-left"></i>--}}
+                                {{--                                                </button>--}}
+                                {{--                                            </a>--}}
+                                {{--                                        </li>--}}
+                                {{--                                        <li>--}}
+                                {{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
+                                {{--                                                گوشی موبایل--}}
+                                {{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
+                                {{--                                                    <i class="fa fa-angle-left"></i>--}}
+                                {{--                                                </button>--}}
+                                {{--                                            </a>--}}
+                                {{--                                        </li>--}}
+                                {{--                                        <li>--}}
+                                {{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
+                                {{--                                                تبلت--}}
+                                {{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
+                                {{--                                                    <i class="fa fa-angle-left"></i>--}}
+                                {{--                                                </button>--}}
+                                {{--                                            </a>--}}
+                                {{--                                        </li>--}}
+                                {{--                                        <li>--}}
+                                {{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
+                                {{--                                                لپ تاپ--}}
+                                {{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
+                                {{--                                                    <i class="fa fa-angle-left"></i>--}}
+                                {{--                                                </button>--}}
+                                {{--                                            </a>--}}
+                                {{--                                        </li>--}}
+                                {{--                                        <li>--}}
+                                {{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
+                                {{--                                                دوربین--}}
+                                {{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
+                                {{--                                                    <i class="fa fa-angle-left"></i>--}}
+                                {{--                                                </button>--}}
+                                {{--                                            </a>--}}
+                                {{--                                        </li>--}}
+                                {{--                                    </ul>--}}
+                                {{--                                    <div class="localSearchSimple"></div>--}}
+                                {{--                                </div>--}}
                             </div>
                         </div>
                     </div>
@@ -108,24 +108,30 @@
                         <div class="d-block">
                             <div class="account-box">
                                 <div class="nav-account d-block pl">
-                                        <span class="icon-account">
+                                            <span class="icon-account">
                                             <img src="{{ asset('/assets/newsite/images/man.png') }}" class="avator">
                                         </span>
                                     <span class="title-account">حساب کاربری</span>
                                     <div class="dropdown-menu">
                                         <ul class="account-uls mb-0">
-                                            <li class="account-item">
-                                                <a href="#" class="account-link">پنل کاربری</a>
-                                            </li>
-                                            <li class="account-item">
-                                                <a href="#" class="account-link">سفارشات من</a>
-                                            </li>
-                                            <li class="account-item">
-                                                <a href="#" class="account-link">تنظیمات</a>
-                                            </li>
-                                            <li class="account-item">
-                                                <a href="#" class="account-link">خروج</a>
-                                            </li>
+                                            @auth()
+                                                <li class="account-item">
+                                                    <a href="#" class="account-link">پنل کاربری</a>
+                                                </li>
+                                                <li class="account-item">
+                                                    <a href="#" class="account-link">سفارشات من</a>
+                                                </li>
+                                                <li class="account-item">
+                                                    <a href="#" class="account-link">تنظیمات</a>
+                                                </li>
+                                                <li class="account-item">
+                                                    <a href="#" class="account-link">خروج</a>
+                                                </li>
+                                            @else
+                                                <li class="account-item">
+                                                    <a class="account-link" href="{{ route('login') }}">ورود/عضویت</a>
+                                                </li>
+                                            @endauth
                                         </ul>
                                     </div>
                                 </div>
@@ -144,16 +150,17 @@
                         @endphp
                         <li id="nav-menu-item" class="menu-item nav-overlay">
                             <a href="#" class="current-link-menu">
-                                <img src="{{ asset('/assets/newsite/images/menu-main/category/smartphone.png') }}" alt="menu" width="22px">
+                                <img src="{{ asset('/assets/newsite/images/menu-main/category/smartphone.png') }}"
+                                     alt="menu" width="22px">
                                 محصولات فروشگاه
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="sub-menu is-mega-menu mega-menu-level-two">
                                 @foreach($parentCategories as $parentCategory)
                                     <li class="menu-mega-item menu-item-type-mega-menu">
-{{--                                        <a href="/" class="mega-menu-link">--}}
-{{--                                            {{ $parentCategory->name }}--}}
-{{--                                        </a>--}}
+                                        {{--                                        <a href="/" class="mega-menu-link">--}}
+                                        {{--                                            {{ $parentCategory->name }}--}}
+                                        {{--                                        </a>--}}
                                         @if($parentCategory->children->count() > 0)
                                             <ul class="sub-menu mega-menu-level-three">
                                                 @foreach($parentCategory->children as $childCategory)
@@ -167,9 +174,9 @@
                                         @endif
                                     </li>
                                 @endforeach
-{{--                                <li class="bg-image">--}}
-{{--                                    <img src="{{ asset('/assets/newsite/images/menu-main/digital.png') }}" alt="">--}}
-{{--                                </li>--}}
+                                {{--                                <li class="bg-image">--}}
+                                {{--                                    <img src="{{ asset('/assets/newsite/images/menu-main/digital.png') }}" alt="">--}}
+                                {{--                                </li>--}}
                             </ul>
                         </li>
                         <li class="divider-space-card">
@@ -179,10 +186,10 @@
                                             <i class="mdi mdi-shopping"></i>
                                         </span>
                                     <span class="title-cart">سبد خرید</span>
-                                    <span class="price-cart">25,000,000
+                                    <span class="price-cart">{{number_format(\Cart::getTotal())}}
                                             <span>تومان</span>
                                         </span>
-                                    <span class="count-cart">2</span>
+                                    <span class="count-cart">{{ count(\Cart::getContent()) }}</span>
                                 </a>
                                 <div class="widget-shopping-cart">
                                     <div class="widget-shopping-cart-content">
@@ -197,13 +204,16 @@
                                                                         <i class="mdi mdi-close"></i>
                                                                     </a>
                                                                     <a href="#" class="mini-cart-item-image d-block">
-                                                                        <img src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$item->associatedModel->primary_image)}}">
+                                                                        <img
+                                                                            src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$item->associatedModel->primary_image)}}">
                                                                     </a>
-                                                                    <span class="product-name-card">{{$item->name}}</span>
+                                                                    <span
+                                                                        class="product-name-card">{{$item->name}}</span>
                                                                     <div class="variation">
-{{--                                                                        <span class="variation-n">فروشنده :--}}
-{{--                                                                        </span>--}}
-                                                                        <span class="variation-n">{{$item->quantity}} x {{number_format($item->price)}}</span>
+                                                                        {{--                                                                        <span class="variation-n">فروشنده :--}}
+                                                                        {{--                                                                        </span>--}}
+                                                                        <span
+                                                                            class="variation-n">{{$item->quantity}} x {{number_format($item->price)}}</span>
                                                                         <p class="mb-0">
                                                                             {{\App\Models\Attribute::find($item->attributes->attribute_id)->name}}
                                                                             :
@@ -263,17 +273,18 @@
                                         </div>
                                         <div class="mini-card-button">
                                             <a href="{{route('home.cart.index')}}" class="view-card">مشاهده سبد خرید</a>
-                                            <a href="{{route('home.orders.checkout')}}" class="card-checkout">تسویه حساب</a>
+                                            <a href="{{route('home.orders.checkout')}}" class="card-checkout">تسویه
+                                                حساب</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="header-cart-interest">
-                                <a href="#" class="d-block">
-                                    <i class="fa fa-heart"></i>
-                                    <span class="counter">۲</span>
-                                </a>
-                            </div>
+                            {{--                            <div class="header-cart-interest">--}}
+                            {{--                                <a href="#" class="d-block">--}}
+                            {{--                                    <i class="fa fa-heart"></i>--}}
+                            {{--                                    <span class="counter">۲</span>--}}
+                            {{--                                </a>--}}
+                            {{--                            </div>--}}
                         </li>
                     </ul>
 
@@ -285,7 +296,9 @@
             <div class="nav-header">
                 <div class="header-cover"></div>
                 <div class="logo-wrap">
-                    <a class="logo-icon" href="#"><img alt="logo-icon" src="{{ asset('/assets/newsite/images/logo-300x58-1-1.png') }}" width="40"></a>
+                    <a class="logo-icon" href="#"><img alt="logo-icon"
+                                                       src="{{ asset('/assets/newsite/images/logo-300x58-1-1.png') }}"
+                                                       width="40"></a>
                 </div>
             </div>
             <ul class="nav-categories ul-base">
@@ -312,7 +325,7 @@
         <div class="bottom-menu-joomy">
             <ul class="mb-0">
                 <li>
-                    <a href="home-1.html">
+                    <a href="/">
                         <i class="mdi mdi-home"></i>
                         صفحه اصلی
                     </a>
@@ -326,20 +339,20 @@
                     </a>
                 </li>
                 <li>
-                    <a href="cart.html">
+                    <a href="{{route('home.cart.index')}}">
                         <i class="mdi mdi-cart"></i>
                         سبد خرید
-                        <div class="shopping-bag-item">2</div>
+                        <div class="shopping-bag-item">{{ count(\Cart::getContent()) }}</div>
                     </a>
                 </li>
+                {{--                <li>--}}
+                {{--                    <a href="#" data-toggle="modal" data-target="#exampleModalCenter">--}}
+                {{--                        <i class="mdi mdi-magnify"></i>--}}
+                {{--                        جستجو--}}
+                {{--                    </a>--}}
+                {{--                </li>--}}
                 <li>
-                    <a href="#" data-toggle="modal" data-target="#exampleModalCenter">
-                        <i class="mdi mdi-magnify"></i>
-                        جستجو
-                    </a>
-                </li>
-                <li>
-                    <a href="login.html">
+                    <a href="{{ route('home.users_profile.index') }}">
                         <i class="mdi mdi-account"></i>
                         حساب کاربری
                     </a>
@@ -370,22 +383,22 @@
                                 <button class="btn btn-search" type="submit">
                                     <img src="{{ asset('/assets/newsite/images/search.png') }}" alt="search">
                                 </button>
-{{--                                <div class="search-filter">--}}
-{{--                                    <div class="form-ui">--}}
-{{--                                        <div class="custom-select-ui">--}}
-{{--                                            <select class="right">--}}
-{{--                                                <option>همه دسته ها</option>--}}
-{{--                                                <option>کالای دیجیتال</option>--}}
-{{--                                                <option>آرایشی بهداشتی</option>--}}
-{{--                                                <option>ابزاری اداری</option>--}}
-{{--                                                <option>مد پوشاک</option>--}}
-{{--                                                <option>خانه آشپز خانه</option>--}}
-{{--                                                <option>لوازم تحریر و هنر</option>--}}
-{{--                                                <option>کودک و نوزاد</option>--}}
-{{--                                            </select>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="search-filter">--}}
+                                {{--                                    <div class="form-ui">--}}
+                                {{--                                        <div class="custom-select-ui">--}}
+                                {{--                                            <select class="right">--}}
+                                {{--                                                <option>همه دسته ها</option>--}}
+                                {{--                                                <option>کالای دیجیتال</option>--}}
+                                {{--                                                <option>آرایشی بهداشتی</option>--}}
+                                {{--                                                <option>ابزاری اداری</option>--}}
+                                {{--                                                <option>مد پوشاک</option>--}}
+                                {{--                                                <option>خانه آشپز خانه</option>--}}
+                                {{--                                                <option>لوازم تحریر و هنر</option>--}}
+                                {{--                                                <option>کودک و نوزاد</option>--}}
+                                {{--                                            </select>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
                             </div>
                         </form>
                         <div class="search-result">
