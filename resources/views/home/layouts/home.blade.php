@@ -1,19 +1,26 @@
 <!DOCTYPE html>
-<html class="no-js" lang="fa">
+<html lang="fa" dir="rtl">
 
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>ecommerce - @yield('title')</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{env('APP_NAME')}} - @yield('title')</title>
+    <!-- font---------------------------------------->
+    <link rel="stylesheet" href="{{ asset('/assets/newsite/css/vendor/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/newsite/css/vendor/materialdesignicons.css') }}">
+    <!-- plugin-------------------------------------->
+    <link rel="stylesheet" href="{{ asset('/assets/newsite/css/vendor/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/newsite/css/vendor/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/newsite/css/vendor/nice-select.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/newsite/css/vendor/jquery.jqZoom.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/newsite/css/vendor/sweetalert2.min.css') }}">
+    <!-- main-style---------------------------------->
+    <link rel="stylesheet" href="{{ asset('/assets/newsite/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/newsite/css/responsive.css') }}">
 
     <!-- Custom styles for this template-->
-    <link href="{{asset('/css/home.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('/assets/site/css/style.css') }}"/>
+{{--    <link href="{{asset('/css/home.css')}}" rel="stylesheet">--}}
+{{--    <link rel="stylesheet" href="{{ asset('/assets/site/css/style.css') }}"/>--}}
 {{--    @vite(['resources/css/app.css', 'resources/js/admin/admin.js', 'resources/js/home/home.js'])--}}
 
     @yield('style')
@@ -24,38 +31,32 @@
 
 <body>
 
-<div class="wrapper text-center">
-
-    <div id="overlayer"></div>
-    <div class="loader">
-        <span class="loader-inner"></span>
-    </div>
-
     @include('home.sections.header')
-
-    @include('home.sections.mobile_off_canvas')
 
     @yield('content')
 
     @include('home.sections.footer')
-
-</div>
-
-<!-- JavaScript-->
-<script src="{{ asset('/js/home/jquery-1.12.4.min.js') }}"></script>
-<script src="{{ asset('/js/home/plugins.js') }}"></script>
+</body>
+<!-- file js---------------------------------------------------->
+<script src="{{ asset('/assets/newsite/js/vendor/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('/assets/newsite/js/vendor/bootstrap.js') }}"></script>
+<!-- plugin----------------------------------------------------->
+<script src="{{ asset('/assets/newsite/js/vendor/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('/assets/newsite/js/vendor/jquery.countdown.js') }}"></script>
+<script src="{{ asset('/assets/newsite/js/vendor/jquery.nice-select.min.js') }}"></script>
+<script src="{{ asset('/assets/newsite/js/vendor/jquery.jqZoom.js') }}"></script>
+<script src="{{ asset('/assets/newsite/js/vendor/sweetalert2.all.min.js') }}"></script>
 <script src="{{ asset('/js/home.js') }}"></script>
 <script src="{{ asset('/assets/admin/js/script.js') }}"></script>
+<!-- main js---------------------------------------------------->
+<script src="{{ asset('/assets/newsite/js/main.js') }}"></script>
 @include('sweetalert::alert')
 @yield('script')
-
-<script>
-    $(window).load(function(){
-        $(".loader").delay(300).fadeOut("slow");
-        $("#overlayer").delay(300).fadeOut("slow");
-    });
-</script>
 {!!  GoogleReCaptchaV3::init() !!}
-</body>
-
+{{--<script>--}}
+{{--    $(window).load(function(){--}}
+{{--        $(".loader").delay(300).fadeOut("slow");--}}
+{{--        $("#overlayer").delay(300).fadeOut("slow");--}}
+{{--    });--}}
+{{--</script>--}}
 </html>
