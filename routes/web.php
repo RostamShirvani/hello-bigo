@@ -119,7 +119,7 @@ Route::prefix('profile')->name('home.')->middleware('auth')->group(function (){
     Route::post('/addresses', [UserAddressController::class, 'store'])->name('addresses.store');
     Route::put('/addresses/{address}', [UserAddressController::class, 'update'])->name('addresses.update');
 
-    Route::get('/orders', [UserProfileController::class, 'usersProfileIndex'])->name('orders.users_profile.index');
+    Route::get('/orders', [UserProfileController::class, 'usersProfileIndex'])->name('users_profile.orders');
     Route::get('/fallback/{order}', [UserProfileController::class, 'fallback'])->name('users_profile.fallback');
 
     Route::post('/update-profile', [UserProfileController::class, 'updateProfile'])->name('profile.update');

@@ -112,22 +112,38 @@
                                             <span class="icon-account">
                                             <img src="{{ asset('/assets/newsite/images/man.png') }}" class="avator">
                                         </span>
-                                    <span class="title-account">حساب کاربری</span>
+                                    <span class="title-account">
+                                        @auth()
+                                            حساب کاربری
+                                        @else
+                                            ورود/عضویت
+                                        @endauth
+                                    </span>
                                     <div class="dropdown-menu">
                                         <ul class="account-uls mb-0">
                                             @auth()
+                                                @if(auth()->user()->hasRole('super_admin'))
+                                                    <li class="account-item">
+                                                        <a href="{{route('dashboard')}}" class="account-link">پنل
+                                                            مدیریت</a>
+                                                    </li>
+                                                @endif
                                                 <li class="account-item">
-                                                    <a href="#" class="account-link">پنل کاربری</a>
+                                                    <a href="{{route('home.users_profile.index')}}"
+                                                       class="account-link">پروفایل</a>
                                                 </li>
                                                 <li class="account-item">
-                                                    <a href="#" class="account-link">سفارشات من</a>
+                                                    <a href="{{route('home.users_profile.orders')}}"
+                                                       class="account-link">سفارشات من</a>
                                                 </li>
-                                                <li class="account-item">
-                                                    <a href="#" class="account-link">تنظیمات</a>
-                                                </li>
-                                                <li class="account-item">
-                                                    <a href="#" class="account-link">خروج</a>
-                                                </li>
+                                                <form action="{{route('logout')}}" method="post" id="logout">
+                                                    @csrf
+                                                    <li class="account-item">
+                                                        <a href=""
+                                                           onclick="event.preventDefault(); document.getElementById('logout').submit();"
+                                                           class="account-link">خروج</a>
+                                                    </li>
+                                                </form>
                                             @else
                                                 <li class="account-item">
                                                     <a class="account-link" href="{{ route('login') }}">ورود/عضویت</a>
