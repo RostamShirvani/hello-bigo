@@ -349,25 +349,25 @@ $(document).ready(function (e) {
     // add-product-wishes----------------------------
     // SweetAlert -----------------------------------
     // cart-item-close
-    $('.mini-cart-item-close').on('click', function () {
-        Swal.fire({
-            text: "آیا مطمئن هستید حذف شود؟",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'بله',
-            cancelButtonText: 'خیر'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    title: 'حذف شد!',
-                    confirmButtonText: 'باشه',
-                    icon: 'success'
-                })
-            }
-        })
-    });
+    // $('.mini-cart-item-close').on('click', function () {
+    //     Swal.fire({
+    //         text: "آیا مطمئن هستید حذف شود؟",
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'بله',
+    //         cancelButtonText: 'خیر'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             Swal.fire({
+    //                 title: 'حذف شد!',
+    //                 confirmButtonText: 'باشه',
+    //                 icon: 'success'
+    //             })
+    //         }
+    //     })
+    // });
     // add-to-cart
     // $('.btn-add-to-cart').on('click', function (event) {
     //     event.preventDefault();

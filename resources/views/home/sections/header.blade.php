@@ -7,7 +7,8 @@
                     <div class="col-lg-3 pr">
                         <div class="header-logo row text-right">
                             <a href="/">
-                                <img src="{{ asset('/assets/newsite/images/logo-300x58-1-1.png') }}" alt="{{ env('APP_NAME') }}">
+                                <img src="{{ asset('/assets/newsite/images/logo-300x58-1-1.png') }}"
+                                     alt="{{ env('APP_NAME') }}">
                             </a>
                         </div>
                     </div>
@@ -186,9 +187,9 @@
                                             <i class="mdi mdi-shopping"></i>
                                         </span>
                                     <span class="title-cart">سبد خرید</span>
-                                    <span class="price-cart">{{number_format(\Cart::getTotal())}}
-                                            <span>تومان</span>
-                                        </span>
+                                    <span class="price-cart">
+                                        {{number_format(\Cart::getTotal())}} تومان
+                                    </span>
                                     <span class="count-cart">{{ count(\Cart::getContent()) }}</span>
                                 </a>
                                 <div class="widget-shopping-cart">
@@ -200,10 +201,12 @@
                                                         @foreach(\Cart::getContent() as $item)
                                                             <li class="mini-cart-item">
                                                                 <div class="mini-cart-item-content">
-                                                                    <a href="#" class="mini-cart-item-close">
+                                                                    <a href="{{route('home.cart.remove', $item->id)}}"
+                                                                       class="mini-cart-item-close">
                                                                         <i class="mdi mdi-close"></i>
                                                                     </a>
-                                                                    <a href="#" class="mini-cart-item-image d-block">
+                                                                    <a href="{{route('home.products.show', $item->associatedModel->slug)}}"
+                                                                       class="mini-cart-item-image d-block">
                                                                         <img
                                                                             src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$item->associatedModel->primary_image)}}">
                                                                     </a>
@@ -212,55 +215,55 @@
                                                                     <div class="variation">
                                                                         {{--                                                                        <span class="variation-n">فروشنده :--}}
                                                                         {{--                                                                        </span>--}}
-                                                                        <span
-                                                                            class="variation-n">{{$item->quantity}} x {{number_format($item->price)}}</span>
+                                                                        {{--                                                                        <span class="variation-n">{{$item->quantity}} x {{number_format($item->price)}}</span>--}}
                                                                         <p class="mb-0">
                                                                             {{\App\Models\Attribute::find($item->attributes->attribute_id)->name}}
                                                                             :
                                                                             {{$item->attributes->value}}</p>
                                                                     </div>
-                                                                    <div class="header-basket-list-item-color-badge">
-                                                                        رنگ:
-                                                                        <span style="background: #000"></span>
-                                                                    </div>
+                                                                    {{--                                                                    <div class="header-basket-list-item-color-badge">--}}
+                                                                    {{--                                                                        رنگ:--}}
+                                                                    {{--                                                                        <span style="background: #000"></span>--}}
+                                                                    {{--                                                                    </div>--}}
                                                                     <div class="quantity">
                                                                         <span class="quantity-Price-amount">
-                                                                            {{$item->quantity}} x {{number_format($item->price)}}
+{{--                                                                            {{$item->quantity}} x {{number_format($item->price)}}--}}
+                                                                            {{number_format($item->price)}}
                                                                             <span>تومان</span>
                                                                         </span>
                                                                     </div>
                                                                 </div>
                                                             </li>
                                                         @endforeach
-                                                        <li class="mini-cart-item">
-                                                            <div class="mini-cart-item-content">
-                                                                <a href="#" class="mini-cart-item-close">
-                                                                    <i class="mdi mdi-close"></i>
-                                                                </a>
-                                                                <a href="#" class="mini-cart-item-image d-block">
-                                                                    <img
-                                                                        src="assets/images/menu-main/img-card-2.jpg">
-                                                                </a>
-                                                                <span class="product-name-card">هواوای میت
-                                                                        بوک X پرو
-                                                                        13.9 اینچ</span>
-                                                                <div class="variation">
-                                                                        <span class="variation-n">فروشنده :
-                                                                        </span>
-                                                                    <p class="mb-0">کالامارکت </p>
-                                                                </div>
-                                                                <div class="header-basket-list-item-color-badge">
-                                                                    رنگ:
-                                                                    <span style="background: #ccc"></span>
-                                                                </div>
-                                                                <div class="quantity">
-                                                                        <span class="quantity-Price-amount">
-                                                                            10,000,000
-                                                                            <span>تومان</span>
-                                                                        </span>
-                                                                </div>
-                                                            </div>
-                                                        </li>
+                                                        {{--                                                        <li class="mini-cart-item">--}}
+                                                        {{--                                                            <div class="mini-cart-item-content">--}}
+                                                        {{--                                                                <a href="#" class="mini-cart-item-close">--}}
+                                                        {{--                                                                    <i class="mdi mdi-close"></i>--}}
+                                                        {{--                                                                </a>--}}
+                                                        {{--                                                                <a href="#" class="mini-cart-item-image d-block">--}}
+                                                        {{--                                                                    <img--}}
+                                                        {{--                                                                        src="assets/images/menu-main/img-card-2.jpg">--}}
+                                                        {{--                                                                </a>--}}
+                                                        {{--                                                                <span class="product-name-card">هواوای میت--}}
+                                                        {{--                                                                        بوک X پرو--}}
+                                                        {{--                                                                        13.9 اینچ</span>--}}
+                                                        {{--                                                                <div class="variation">--}}
+                                                        {{--                                                                        <span class="variation-n">فروشنده :--}}
+                                                        {{--                                                                        </span>--}}
+                                                        {{--                                                                    <p class="mb-0">کالامارکت </p>--}}
+                                                        {{--                                                                </div>--}}
+                                                        {{--                                                                <div class="header-basket-list-item-color-badge">--}}
+                                                        {{--                                                                    رنگ:--}}
+                                                        {{--                                                                    <span style="background: #ccc"></span>--}}
+                                                        {{--                                                                </div>--}}
+                                                        {{--                                                                <div class="quantity">--}}
+                                                        {{--                                                                        <span class="quantity-Price-amount">--}}
+                                                        {{--                                                                            10,000,000--}}
+                                                        {{--                                                                            <span>تومان</span>--}}
+                                                        {{--                                                                        </span>--}}
+                                                        {{--                                                                </div>--}}
+                                                        {{--                                                            </div>--}}
+                                                        {{--                                                        </li>--}}
                                                     </ul>
                                                 </div>
                                             </div>
