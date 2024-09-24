@@ -114,7 +114,7 @@
                                         </span>
                                     <span class="title-account">
                                         @auth()
-                                            حساب کاربری
+                                            {{ auth()->user()->name }} {{ auth()->user()->family }}
                                         @else
                                             ورود/عضویت
                                         @endauth
