@@ -369,23 +369,125 @@ $(document).ready(function (e) {
         })
     });
     // add-to-cart
-    $('.btn-add-to-cart').on('click', function (event) {
-        event.preventDefault();
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 2000,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
+    // $('.btn-add-to-cart').on('click', function (event) {
+    //     event.preventDefault();
+    //     const Toast = Swal.mixin({
+    //         toast: true,
+    //         position: 'top-end',
+    //         showConfirmButton: false,
+    //         timer: 2000,
+    //         didOpen: (toast) => {
+    //             toast.addEventListener('mouseenter', Swal.stopTimer)
+    //             toast.addEventListener('mouseleave', Swal.resumeTimer)
+    //         }
+    //     })
+    //
+    //     Toast.fire({
+    //         icon: 'success',
+    //         title: 'به سبد خرید شما اضافه شد'
+    //     })
+    // });
 
-        Toast.fire({
-            icon: 'success',
-            title: 'به سبد خرید خود اضافه شد'
-        })
+    const showUserPreview = (avatar, name) => {
+        $('.user-preview .avatar').css({
+            'background-image': `url('${avatar}')`,
+        });
+        // Update the hidden input field with the account name
+        $('input[name="account_avatar_url"]').val(avatar);
+
+        $('.user-preview .name').text(name);
+        $('.user-preview').addClass('show');
+
+        // Show confirmation checkbox
+        if (name) {
+            // Update the hidden input field with the account name
+            $('input[name="account_name"]').val(name);
+            $('#confirmation-account-name').text(name);
+            $('.confirmation-section').show();
+
+            // Disable bigo_id input and hide check_account button
+            $('#bigo_id').prop('readonly', true);
+            $('#check_account').addClass('d-none');
+            $('#edit_account').removeClass('d-none'); // Show edit button
+        }
+    }
+
+    const hideUserPreview = () => {
+        $('.user-preview').removeClass('show');
+        $('.confirmation-section').hide(); // Hide the confirmation section
+
+    }
+
+    $('.user-preview-toggler').change(e => {
+        hideUserPreview();
+        const value = $('.user-preview-toggler').val();
+        const appType = $('[name=app_type]').val() ? $('[name=app_type]').val() : 1;
+
+        $.ajax({
+            url: '/api/users/getUserDetail',
+            data: {
+                bigo_id: value,
+                app_type: appType,
+            },
+            method: 'post',
+            success: response => {
+                if (response.status === true) {
+                    showUserPreview(response.avatar, response.nick_name);
+                } else {
+                    showUserPreview('', 'یافت نشد');
+                }
+            },
+            error: (jqXHR, status, errorThrown) => {
+                showUserPreview('', 'یافت نشد');
+            },
+            complete: response => {
+
+            }
+        });
+    });
+
+    // Event listener for the "check_account" button
+    $('#check_account').click(() => {
+        hideUserPreview(); // Hide any previous user preview
+        const value = $('.user-preview-toggler-front').val(); // Get user input
+        const appType = $('[name=app_type]').val() || 1; // Get app type
+
+        // Perform an AJAX request to get user details
+        $.ajax({
+            url: '/api/users/getUserDetail', // Replace with your API endpoint
+            data: {
+                bigo_id: value,
+                app_type: appType,
+            },
+            method: 'post',
+            success: response => {
+                // Show user preview on successful response
+                if (response.status === true) {
+                    showUserPreview(response.avatar, response.nick_name);
+                } else {
+                    // Show default message if user not found
+                    showUserPreview('', 'یافت نشد');
+                }
+            },
+            error: (jqXHR, status, errorThrown) => {
+                // Show error message in user preview
+                showUserPreview('', 'یافت نشد');
+            }
+        });
+    });
+
+    // Event listener for the "edit_account" button
+    $('#edit_account').click(() => {
+        // Enable bigo_id input and show check_account button
+        $('#bigo_id').prop('readonly', false);
+        $('#check_account').removeClass('d-none');
+        $('#edit_account').addClass('d-none'); // Hide edit button
+
+        // Uncheck the checkbox
+        $('#confirmation-checkbox').prop('checked', false);
+        // Disable the submit button
+        $('#submit-button').prop('disabled', true);
+        hideUserPreview();
     });
     // compare
     $('.btn-compare').on('click', function (event) {
@@ -628,4 +730,22 @@ $(document).ready(function (e) {
         $('.lg-outer').css('background-color', colours[index])
     });
     // product-img-----------------------------
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const bigoIdInput = document.getElementById("bigo_id");
+    const confirmationCheckbox = document.getElementById("confirmation-checkbox");
+    const submitButton = document.getElementById("submit-button");
+
+    function toggleSubmitButton() {
+        if (bigoIdInput.value.trim() !== '' && confirmationCheckbox.checked) {
+            submitButton.disabled = false;
+        } else {
+            submitButton.disabled = true;
+        }
+    }
+
+    // Listen for changes on the bigo_id input field and checkbox
+    bigoIdInput.addEventListener('input', toggleSubmitButton);
+    confirmationCheckbox.addEventListener('change', toggleSubmitButton);
 });

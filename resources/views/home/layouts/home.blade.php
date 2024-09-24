@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="{{ asset('/assets/newsite/css/vendor/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/newsite/css/vendor/materialdesignicons.css') }}">
     <!-- plugin-------------------------------------->
+    <!-- Custom styles for this template-->
+{{--    <link href="{{asset('/css/home.css')}}" rel="stylesheet">--}}
+    <link rel="stylesheet" href="{{ asset('/assets/site/css/style.css') }}"/>
+    {{--    @vite(['resources/css/app.css', 'resources/js/admin/admin.js', 'resources/js/home/home.js'])--}}
+
     <link rel="stylesheet" href="{{ asset('/assets/newsite/css/vendor/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/newsite/css/vendor/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/newsite/css/vendor/nice-select.css') }}">
@@ -18,10 +23,6 @@
     <link rel="stylesheet" href="{{ asset('/assets/newsite/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/newsite/css/responsive.css') }}">
 
-    <!-- Custom styles for this template-->
-{{--    <link href="{{asset('/css/home.css')}}" rel="stylesheet">--}}
-{{--    <link rel="stylesheet" href="{{ asset('/assets/site/css/style.css') }}"/>--}}
-{{--    @vite(['resources/css/app.css', 'resources/js/admin/admin.js', 'resources/js/home/home.js'])--}}
 
     @yield('style')
 
@@ -47,7 +48,7 @@
 <script src="{{ asset('/assets/newsite/js/vendor/jquery.jqZoom.js') }}"></script>
 <script src="{{ asset('/assets/newsite/js/vendor/sweetalert2.all.min.js') }}"></script>
 <script src="{{ asset('/js/home.js') }}"></script>
-<script src="{{ asset('/assets/admin/js/script.js') }}"></script>
+{{--<script src="{{ asset('/assets/admin/js/script.js') }}"></script>--}}
 <!-- main js---------------------------------------------------->
 <script src="{{ asset('/assets/newsite/js/main.js') }}"></script>
 @include('sweetalert::alert')
