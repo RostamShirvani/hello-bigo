@@ -452,6 +452,11 @@ $(document).ready(function (e) {
         const value = $('.user-preview-toggler-front').val(); // Get user input
         const appType = $('[name=app_type]').val() || 1; // Get app type
 
+        // Disable the button and show loading spinner
+        $('#check_account').attr('disabled', true);
+        $('#button-text').text('در حال بررسی...'); // Change text
+        $('#loading-spinner').show(); // Show spinner
+
         // Perform an AJAX request to get user details
         $.ajax({
             url: '/api/users/getUserDetail', // Replace with your API endpoint
@@ -465,13 +470,17 @@ $(document).ready(function (e) {
                 if (response.status === true) {
                     showUserPreview(response.avatar, response.nick_name);
                 } else {
-                    // Show default message if user not found
                     showUserPreview('', 'یافت نشد');
                 }
             },
             error: (jqXHR, status, errorThrown) => {
-                // Show error message in user preview
                 showUserPreview('', 'یافت نشد');
+            },
+            complete: () => {
+                // Re-enable the button and hide spinner after the request completes
+                $('#check_account').attr('disabled', false);
+                $('#button-text').text('بررسی اکانت'); // Restore original text
+                $('#loading-spinner').hide(); // Hide spinner
             }
         });
     });

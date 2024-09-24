@@ -458,9 +458,9 @@
                                                                        class="form-control user-preview-toggler-front"
                                                                        name="bigo_id" id="bigo_id"
                                                                        value="{{ old('bigo_id') }}">
-                                                                <button type="button" id="check_account"
-                                                                        class="btn btn-primary mt-2"
-                                                                        style="border-radius: 10px;">بررسی اکانت
+                                                                <button type="button" id="check_account" class="btn btn-primary mt-2" style="border-radius: 10px;">
+                                                                    <span id="button-text">بررسی اکانت</span>
+                                                                    <span id="loading-spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
                                                                 </button>
                                                                 <button type="button" id="edit_account"
                                                                         class="btn btn-warning mt-2 d-none">ویرایش اکانت
