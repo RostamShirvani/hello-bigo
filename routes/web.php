@@ -153,6 +153,8 @@ Route::get('/images/load', function () {
     return response($img)->header('Content-type', 'image/png');
 })->name('images.load');
 
+Route::get('/bigo-user/{bigoId}', [\App\Http\Controllers\API\User\UserController::class, 'getBigoUser']);
+
 //Route::get('/links', function() {
 //    if(request()->ip() === '54.36.151.105' || request()->ip() === '144.91.122.91'){
 //
