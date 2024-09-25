@@ -21,10 +21,10 @@
     <div class="container">
         <div class="row">
             <div class="col-lg">
-                <section class="page-account-box">
+                <section class="page-account-box" style="margin-top: 0 !important;">
                     <div class="col-lg-6 col-md-6 col-xs-12 mx-auto">
                         <div class="ds-userlogin">
-                            <a href="#" class="account-box-logo">digismart</a>
+                            <a href="/" class="account-box-logo">{{ env('APP_NAME') }}</a>
                             <div class="account-box">
                                 <div class="Login-to-account mt-4">
                                     <div class="account-box-content">
