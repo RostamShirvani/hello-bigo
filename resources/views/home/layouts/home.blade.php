@@ -60,4 +60,13 @@
 {{--        $("#overlayer").delay(300).fadeOut("slow");--}}
 {{--    });--}}
 {{--</script>--}}
+<script>
+    window.addEventListener('load', function() {
+        // Select the loader element
+        var loader = document.querySelector('.P-loader');
+
+        // Hide the loader by setting display to none
+        loader.style.display = 'none';
+    });
+</script>
 </html>
