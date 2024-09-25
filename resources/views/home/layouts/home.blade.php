@@ -11,7 +11,7 @@
     <!-- plugin-------------------------------------->
     <!-- Custom styles for this template-->
 {{--    <link href="{{asset('/css/home.css')}}" rel="stylesheet">--}}
-    <link rel="stylesheet" href="{{ asset('/assets/site/css/style.css') }}"/>
+{{--    <link rel="stylesheet" href="{{ asset('/assets/site/css/style.css') }}"/>--}}
     {{--    @vite(['resources/css/app.css', 'resources/js/admin/admin.js', 'resources/js/home/home.js'])--}}
 
     <link rel="stylesheet" href="{{ asset('/assets/newsite/css/vendor/bootstrap.css') }}">

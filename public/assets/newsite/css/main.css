@@ -4674,6 +4674,20 @@ span.shipping-destination {
     transition: 0.2s;
 }
 
+.account-box-content .one-time-password-button {
+    width: 50%;
+    height: 35px;
+    line-height: 14px;
+    /*margin: 20px 0;*/
+    border-radius: 20px;
+    background: #651fff !important;
+    border-color: #651fff;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+    color: white;
+}
+
 .account-box-content .form-row-account button:hover {
     opacity: 0.7;
     transition: 0.2s;
@@ -9678,4 +9692,107 @@ body.light .progress-wrap::after {
 
 body.light .progress-wrap svg.progress-circle path {
     stroke: var(--black-blue);
+}
+
+.user-preview {
+
+    background: #f5cee1;
+    background: -moz-linear-gradient(230deg, rgba(245, 206, 225, 1) 2%, rgba(189, 231, 253, 1) 98%);
+    background: -webkit-linear-gradient(230deg, rgba(245, 206, 225, 1) 2%, rgba(189, 231, 253, 1) 98%);
+    background: linear-gradient(230deg, rgba(245, 206, 225, 1) 2%, rgba(189, 231, 253, 1) 98%);
+
+    text-indent: 3rem;
+    direction: ltr;
+    border-radius: 100px;
+    position: absolute;
+    transition: .2s ease;
+    /*left: 3rem;*/
+    left: 0;
+    top: -20px;
+    width: 0;
+    height: 40px;
+    opacity: 0;
+    transform: scale(.8);
+}
+
+.user-preview-inline {
+    background: #f5cee1;
+    background: -moz-linear-gradient(230deg, rgba(245, 206, 225, 1) 2%, rgba(189, 231, 253, 1) 98%);
+    background: -webkit-linear-gradient(230deg, rgba(245, 206, 225, 1) 2%, rgba(189, 231, 253, 1) 98%);
+    background: linear-gradient(230deg, rgba(245, 206, 225, 1) 2%, rgba(189, 231, 253, 1) 98%);
+
+    text-indent: 3rem;
+    direction: ltr;
+    border-radius: 100px;
+    /* position: absolute; */
+    transition: .2s ease;
+    /* Remove left, top, and width constraints */
+    padding: 0 1rem; /* Add padding to size the background */
+    height: 40px; /* Set a visible height */
+    line-height: 40px; /* Center text vertically */
+    opacity: 1; /* Make it visible */
+    transform: scale(1); /* Reset the scale to normal */
+}
+
+
+
+.user-preview.show .avatar {
+    transform: scale(1)
+}
+
+.user-preview .avatar {
+
+    position: absolute;
+    height: 60px;
+    width: 60px;
+    background-size: cover;
+    border-radius: 100px;
+    left: -30px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+
+    border: 4px solid white;
+    z-index: 1;
+    transition: .2s ease;
+    transform: scale(0);
+    background-color: #c6e3f8;
+}
+
+.user-preview .name {
+
+    transition: .2s ease;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    transform: translateX(10px);
+    opacity: 0;
+}
+
+/*.auth-forms {*/
+/*    position: relative*/
+/*}*/
+
+.user-preview.show .name {
+    transform: translateX(0);
+    opacity: 1
+}
+
+/*.user-preview.show {*/
+/*    width: 300px;*/
+/*    opacity: 1;*/
+/*    transform: scale(1);*/
+/*}*/
+
+.user-preview.show {
+    width: 50%;
+    opacity: 1;
+    height: 40px;
 }

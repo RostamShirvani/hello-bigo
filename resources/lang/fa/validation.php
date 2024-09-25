@@ -125,6 +125,7 @@ return [
 
     'attributes'           => [
         'name'                  => 'نام',
+        'family'                => 'نام خانوادگی',
         'username'              => 'نام کاربری',
         'email'                 => 'ایمیل',
         'first_name'            => 'نام',

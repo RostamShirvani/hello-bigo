@@ -161,6 +161,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'family' => 'required|string|max:255',
             'password' => 'required|string|min:8|confirmed',
             'login_token' => 'required'
         ]);
