@@ -97,7 +97,7 @@ class Payment
             foreach (\Cart::getContent() as $item) {
                 $variation = ProductVariation::query()->findOrFail($item->attributes->id);
                 $variation->update([
-                    'quantity' => PaymentPin::getActivePaymentPinsCountByValue($variation->value,$variation->product->app_type)
+                    'quantity' => PaymentPin::getActivePaymentPinsCountByValue($variation->value, $variation->product->app_type)
 //                    'quantity' => $variation->quantity - $item->quantity
                 ]);
             }
@@ -108,6 +108,6 @@ class Payment
             return ['error' => $ex->getMessage()];
         }
         auth()->user()->notify(new PaymentReceiptNotification($order->id, $order->paying_amount, $refId));
-        return $order;
+        return ['order' => $order];
     }
 }
