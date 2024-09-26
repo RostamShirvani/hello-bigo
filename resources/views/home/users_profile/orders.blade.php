@@ -4,51 +4,33 @@
     سفارشات من
 @endsection
 @section('content')
-    <div class="breadcrumb-area pt-35 pb-35 bg-gray" style="direction: rtl;">
-        <div class="container">
-            <div class="breadcrumb-content text-center">
-                <ul>
-                    <li>
-                        <a href="{{route('home.index')}}">صفحه ای اصلی</a>
-                    </li>
-                    <li class="active">سفارشات من</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- my account wrapper start -->
-    <div class="my-account-wrapper pt-100 pb-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <!-- My Account Page Start -->
-                    <div class="myaccount-page-wrapper">
-                        <!-- My Account Tab Menu Start -->
-                        <div class="row text-right" style="direction: rtl;">
-                            @include('home.sections.profile_sidebar')
-                            <!-- My Account Tab Menu End -->
-                            <!-- My Account Tab Content Start -->
-                            <div class="col-lg-9 col-md-8">
-                                <div class="myaccount-content">
-                                    <h3>سفارشات</h3>
-                                    <div class="myaccount-table table-responsive text-center">
-                                        <table class="table table-bordered">
+    <!-- orders------------------------------->
+    <div class="container-main">
+        <div class="d-block">
+            <section class="profile-home">
+                <div class="col-lg">
+                    <div class="post-item-profile order-1 d-block">
+                        @include('home.sections.profile_sidebar')
+                        <div class="col-lg-9 col-md-9 col-xs-12 pl">
+                            <div class="profile-content">
+                                <div class="profile-stats">
+                                    <div class="table-orders">
+                                        <table class="table table-profile-orders">
                                             <thead class="thead-light">
                                             <tr>
-                                                <th>سفارش</th>
-                                                <th>تاریخ</th>
-                                                <th>وضعیت</th>
-                                                <th>جمع کل</th>
-                                                <th>عملیات</th>
+                                                <th scope="col">شماره سفارش</th>
+                                                <th scope="col">تاریخ ثبت سفارش</th>
+                                                <th scope="col">وضعیت</th>
+                                                <th scope="col">مجموع</th>
+                                                <th scope="col">جزئیات</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             @foreach($orders as $order)
                                                 <tr>
-                                                    <td>{{$order->id}}</td>
-                                                    <td> {{ verta($order->created_at)->format('H:i:s - d F Y') }}</td>
-                                                    <th>
+                                                    <td class="order-code">{{$order->id}}</td>
+                                                    <td>{{ verta($order->created_at)->format('H:i:s - d F Y') }}</td>
+                                                    <td class="Waiting text-success">
                                                         @switch($order->getRawOriginal('status'))
                                                             @case(\App\Models\Order::STATUS_PAID_AND_COMPLETED)
                                                                 <span class="text-success">{{ $order->status }}</span>
@@ -65,14 +47,14 @@
                                                             @default
                                                                 <span class="text-danger">{{ $order->status }}</span>
                                                         @endswitch
-                                                    </th>
-                                                    <td>
-                                                        {{number_format($order->paying_amount/10)}}
-                                                        تومان
                                                     </td>
-                                                    <td><a href="#" data-toggle="modal"
-                                                           data-target="#ordersDetiles-{{$order->id}}"
-                                                           class="check-btn sqr-btn "> نمایش جزئیات </a>
+                                                    <td class="totla">
+                                                        <span class="amount">{{number_format($order->paying_amount/10)}}
+                                                            <span>تومان</span>
+                                                        </span>
+                                                    </td>
+                                                    <td class="detail">
+                                                        <a href="#" data-toggle="modal" data-target="#ordersDetiles-{{$order->id}}" class="btn btn-secondary d-block">نمایش</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -80,15 +62,15 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-center mt-4">{!! $orders->links('pagination::bootstrap-4') !!}</div>
-                            </div> <!-- My Account Tab Content End -->
+                            </div>
+                            <div class="d-flex justify-content-center mt-4">{!! $orders->links('pagination::bootstrap-4') !!}</div>
                         </div>
-                    </div> <!-- My Account Page End -->
+                    </div>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
-    <!-- my account wrapper end -->
+    <!-- orders------------------------------->
     @foreach($orders as $order)
         <!-- Modal Order -->
         <div class="modal fade" id="ordersDetiles-{{$order->id}}" tabindex="-1" role="dialog">
@@ -112,8 +94,8 @@
                                                 <th>نام محصول</th>
                                                 <th>آواتار</th>
                                                 <th>وضعیت</th>
-{{--                                                <th> فی</th>--}}
-{{--                                                <th> تعداد</th>--}}
+                                                {{--                                                <th> فی</th>--}}
+                                                {{--                                                <th> تعداد</th>--}}
                                                 <th> قیمت کل</th>
                                             </tr>
                                             </thead>
@@ -139,20 +121,20 @@
                                                             {{$item->productVariation->attribute->name}}
                                                             :
                                                             {{$item->productVariation->value}} الماس
-                                                        <br>
+                                                            <br>
                                                             آی دی:
                                                             {{ $item->account_id ?? '-' }}<br>
                                                             نام اکانت:
                                                             {{ $item->account_name ?? '-' }}
                                                         </p>
                                                     </td>
-{{--                                                    <td class="product-price-cart">--}}
-{{--                                                        <span--}}
-{{--                                                            class="amount">{{number_format($item->price)}} تومان</span>--}}
-{{--                                                    </td>--}}
-{{--                                                    <td class="product-quantity">--}}
-{{--                                                        {{$item->quantity}}--}}
-{{--                                                    </td>--}}
+                                                    {{--                                                    <td class="product-price-cart">--}}
+                                                    {{--                                                        <span--}}
+                                                    {{--                                                            class="amount">{{number_format($item->price)}} تومان</span>--}}
+                                                    {{--                                                    </td>--}}
+                                                    {{--                                                    <td class="product-quantity">--}}
+                                                    {{--                                                        {{$item->quantity}}--}}
+                                                    {{--                                                    </td>--}}
                                                     <td>
                                                         <img class="avatar rounded-circle" loading="lazy" style="width: 40px; height: 40px;" src="{{$item->account_avatar_url}}">
                                                     </td>

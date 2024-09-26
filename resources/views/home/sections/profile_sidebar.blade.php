@@ -57,21 +57,21 @@
                         همه سفارش ها
                     </a>
                 </li>
-                <li class="profile-account-nav-item navigation-link-dashboard">
-                    <a href="{{route('home.addresses.index')}}" class="{{ request()->is('profile/wishlist') ? 'active' : '' }}"><i class="mdi mdi-heart"></i>
-                        لیست علاقه مندی
-                    </a>
-                </li>
-                <li class="profile-account-nav-item navigation-link-dashboard">
-                    <a href="{{route('home.wishlist.users_profile.index')}}" class="{{ request()->is('profile/addresses') ? 'active' : '' }}"><i class="mdi mdi-map-outline"></i>
-                        آدرس ها
-                    </a>
-                </li>
-                <li class="profile-account-nav-item navigation-link-dashboard">
-                    <a href="{{route('home.comments.users_profile.index')}}" class="{{ request()->is('profile/comments') ? 'active' : '' }}"><i class="mdi mdi-email-open-outline"></i>
-                        نظرات
-                    </a>
-                </li>
+{{--                <li class="profile-account-nav-item navigation-link-dashboard">--}}
+{{--                    <a href="{{route('home.addresses.index')}}" class="{{ request()->is('profile/wishlist') ? 'active' : '' }}"><i class="mdi mdi-heart"></i>--}}
+{{--                        لیست علاقه مندی--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li class="profile-account-nav-item navigation-link-dashboard">--}}
+{{--                    <a href="{{route('home.wishlist.users_profile.index')}}" class="{{ request()->is('profile/addresses') ? 'active' : '' }}"><i class="mdi mdi-map-outline"></i>--}}
+{{--                        آدرس ها--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li class="profile-account-nav-item navigation-link-dashboard">--}}
+{{--                    <a href="{{route('home.comments.users_profile.index')}}" class="{{ request()->is('profile/comments') ? 'active' : '' }}"><i class="mdi mdi-email-open-outline"></i>--}}
+{{--                        نظرات--}}
+{{--                    </a>--}}
+{{--                </li>--}}
 {{--                <li class="profile-account-nav-item navigation-link-dashboard">--}}
 {{--                    <a href="#" class="{{ request()->is('profile') ? 'active' : '' }}"><i class="mdi mdi-tooltip-text-outline"></i>--}}
 {{--                        اطلاعات حساب--}}
