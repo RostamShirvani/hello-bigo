@@ -163,7 +163,8 @@
                 <div class="align-items-center">
                     <ul class="menu-ul mega-menu-level-one">
                         @php
-                            $parentCategories = \App\Models\Category::query()->where('parent_id', 0)->get();
+//                            $parentCategories = \App\Models\Category::query()->where('parent_id', 0)->get();
+                            $products = \App\Models\Product::query()->where('is_active', 1)->get();
                         @endphp
                         <li id="nav-menu-item" class="menu-item nav-overlay">
                             <a href="#" class="current-link-menu">
@@ -173,22 +174,24 @@
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="sub-menu is-mega-menu mega-menu-level-two">
-                                @foreach($parentCategories as $parentCategory)
+{{--                                @foreach($parentCategories as $parentCategory)--}}
+                                @foreach($products as $product)
                                     <li class="menu-mega-item menu-item-type-mega-menu">
                                         {{--                                        <a href="/" class="mega-menu-link">--}}
                                         {{--                                            {{ $parentCategory->name }}--}}
                                         {{--                                        </a>--}}
-                                        @if($parentCategory->children->count() > 0)
+{{--                                        @if($parentCategory->children->count() > 0)--}}
                                             <ul class="sub-menu mega-menu-level-three">
-                                                @foreach($parentCategory->children as $childCategory)
+{{--                                                @foreach($parentCategory->children as $childCategory)--}}
                                                     <li class="menu-mega-item-three">
-                                                        <a href="{{ route('home.categories.show', $childCategory->slug) }}">
-                                                            {{ $childCategory->name }}
+{{--                                                        <a href="{{ route('home.categories.show', $childCategory->slug) }}">--}}
+                                                        <a href="{{ route('home.products.show', $product->slug) }}">
+                                                            {{ $product->name }}
                                                         </a>
                                                     </li>
-                                                @endforeach
+{{--                                                @endforeach--}}
                                             </ul>
-                                        @endif
+{{--                                        @endif--}}
                                     </li>
                                 @endforeach
                                 {{--                                <li class="bg-image">--}}
@@ -321,16 +324,16 @@
                 </div>
             </div>
             <ul class="nav-categories ul-base">
-                @foreach($parentCategories as $parentCategory)
-                    @if($parentCategory->children->count() > 0)
-                        @foreach($parentCategory->children as $childCategory)
-                            <li><a href="{{ route('home.categories.show', $childCategory->slug) }}">
-                                    {{ $childCategory->name }}
-                                </a>
-                            </li>
-                        @endforeach
-                    @endif
-                @endforeach
+{{--                @foreach($parentCategories as $parentCategory)--}}
+{{--                    @if($parentCategory->children->count() > 0)--}}
+{{--                        @foreach($parentCategory->children as $childCategory)--}}
+{{--                            <li><a href="{{ route('home.categories.show', $childCategory->slug) }}">--}}
+{{--                                    {{ $childCategory->name }}--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        @endforeach--}}
+{{--                    @endif--}}
+{{--                @endforeach--}}
 
             </ul>
         </nav>
