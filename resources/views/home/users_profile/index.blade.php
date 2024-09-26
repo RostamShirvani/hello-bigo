@@ -4,136 +4,143 @@
     صفحه ی پروفایل
 @endsection
 @section('content')
-    <div class="breadcrumb-area pt-35 pb-35 bg-gray" style="direction: rtl;">
-    <div class="container">
-        <div class="breadcrumb-content text-center">
-            <ul>
-                <li>
-                    <a href="{{route('home.index')}}">صفحه ای اصلی</a>
-                </li>
-                <li class="active"> پروفایل </li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<!-- my account wrapper start -->
-<div class="my-account-wrapper pt-100 pb-100">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <!-- My Account Page Start -->
-                <div class="myaccount-page-wrapper">
-                    <!-- My Account Tab Menu Start -->
-                    <div class="row text-right" style="direction: rtl;">
+    <!-- profile------------------------------->
+    <div class="container-main">
+        <div class="d-block">
+            <section class="profile-home">
+                <div class="col-lg">
+                    <div class="post-item-profile order-1 d-block">
                         @include('home.sections.profile_sidebar')
-                        <!-- My Account Tab Menu End -->
-                        <!-- My Account Tab Content Start -->
-                        <div class="col-lg-9 col-md-8">
-                            <div class="tab-content" id="myaccountContent">
-                                @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
-
-                                @if (session('success'))
-                                    <div class="alert alert-success">
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
-
-                                <!-- Single Tab Content Start -->
-                                <div class="myaccount-content">
-                                    <h3> پروفایل </h3>
-                                    <div class="account-details-form">
-                                        <form action="{{ route('home.profile.update') }}" method="POST">
-                                            @csrf
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="single-input-item">
-                                                        <label for="first-name" class="required">
-                                                            نام
-                                                        </label>
-                                                        <input name="name" type="text" id="first-name" value="{{ auth()->user()->name }}" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="single-input-item">
-                                                        <label for="last-name" class="required">
-                                                            نام خانوادگی
-                                                        </label>
-                                                        <input name="family" type="text" id="last-name"  value="{{ auth()->user()->family }}"/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="single-input-item">
-                                                        <label for="last-name" class="required">
-                                                            موبایل
-                                                        </label>
-                                                        <input name="cellphone" type="text" id="cellphone"  value="{{ auth()->user()->cellphone }}" disabled/>
-                                                    </div>
-                                                </div>
-{{--                                                <div class="col-lg-6">--}}
-{{--                                                    <div class="single-input-item">--}}
-{{--                                                        <label for="email" class="required"> ایمیل </label>--}}
-{{--                                                        <input type="email" id="email"  value="{{ auth()->user()->email }}" disabled />--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-                                            </div>
-
-                                            <div class="single-input-item">
-                                                <button class="check-btn sqr-btn "> تبت تغییرات </button>
-                                            </div>
-
-                                        </form>
-                                        <form action="{{ route('home.change.password') }}" method="POST">
-                                            @csrf
-                                            <fieldset>
-                                                <legend> تغییر پسورد </legend>
-                                                <div class="single-input-item">
-                                                    <label for="current_password" class="required">
-                                                        رمز عبور فعلی را وارد نمایید
-                                                    </label>
-                                                    <input name="current_password" type="password" id="current_password" />
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="single-input-item">
-                                                            <label for="new_password" class="required">
-                                                                رمز عبور جدید
-                                                            </label>
-                                                            <input name="new_password" type="password" id="new_password" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="single-input-item">
-                                                            <label for="new_password_confirmation" class="required"> تکرار
-                                                                رمز عبور </label>
-                                                            <input name="new_password_confirmation"  type="password" id="new_password_confirmation" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                            <div class="single-input-item">
-                                                <button class="check-btn sqr-btn "> تغییر رمز عبور </button>
-                                            </div>
-                                        </form>
+                        <div class="col-lg-9 col-md-9 col-xs-12 pl">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            @if (session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+                            <form action="{{ route('home.profile.update') }}" method="POST">
+                                @csrf
+                                <div class="profile-content">
+                                    <div class="profile-stats">
+                                        <table class="table table-profile">
+                                            <tbody>
+                                            <tr>
+                                                <td class="w-50">
+                                                    <div class="title">نام:</div>
+                                                    {{--                                                    <div class="value">حسن شجاعی</div>--}}
+                                                    <input name="name" type="text" id="first-name" class="value"
+                                                           value="{{ auth()->user()->name }}"/>
+                                                </td>
+                                                <td class="w-50">
+                                                    <div class="title">نام خانوادگی:</div>
+                                                    {{--                                                    <div class="value">شجاعی</div>--}}
+                                                    <input name="family" type="text" id="last-name" class="value"
+                                                           value="{{ auth()->user()->family }}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                {{--                                                <td>--}}
+                                                {{--                                                    <div class="title">موبایل:</div>--}}
+                                                {{--                                                    <div class="value">{{ auth()->user()->cellphone }}</div>--}}
+                                                {{--                                                </td>--}}
+                                                {{--                                                <td>--}}
+                                                {{--                                                    <div class="title">تاریخ عضویت:</div>--}}
+                                                {{--                                                    <div class="value">{{ auth()->user()->created_at ? dateTimeFormat(auth()->user()->created_at) : '-' }}</div>--}}
+                                                {{--                                                </td>--}}
+                                            </tr>
+                                            {{--                                            <tr>--}}
+                                            {{--                                                <td>--}}
+                                            {{--                                                    <div class="title"> دریافت خبرنامه :</div>--}}
+                                            {{--                                                    <div class="value">بله</div>--}}
+                                            {{--                                                </td>--}}
+                                            {{--                                                <td>--}}
+                                            {{--                                                    <div class="title"> کد ملی :</div>--}}
+                                            {{--                                                    <div class="value">-</div>--}}
+                                            {{--                                                </td>--}}
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        {{--                                        <div class="profile">--}}
+                                        {{--                                            <ul class="mb-0">--}}
+                                        {{--                                                <li class="profile-item">--}}
+                                        {{--                                                    <div class="title">نام و نام خانوادگی:</div>--}}
+                                        {{--                                                    <div class="value">حسن شجاعی</div>--}}
+                                        {{--                                                </li>--}}
+                                        {{--                                                <li class="profile-item">--}}
+                                        {{--                                                    <div class="title">پست الکترونیک :</div>--}}
+                                        {{--                                                    <div class="value">info@digismart.com</div>--}}
+                                        {{--                                                </li>--}}
+                                        {{--                                                <li class="profile-item">--}}
+                                        {{--                                                    <div class="title">شماره تلفن همراه:</div>--}}
+                                        {{--                                                    <div class="value">*******0991</div>--}}
+                                        {{--                                                </li>--}}
+                                        {{--                                                <li class="profile-item">--}}
+                                        {{--                                                    <div class="title">تاریخ عضویت:</div>--}}
+                                        {{--                                                    <div class="value">۱۳۹۹/۰۱/۱۲</div>--}}
+                                        {{--                                                </li>--}}
+                                        {{--                                                <li class="profile-item">--}}
+                                        {{--                                                    <div class="title"> دریافت خبرنامه :</div>--}}
+                                        {{--                                                    <div class="value">بله</div>--}}
+                                        {{--                                                </li>--}}
+                                        {{--                                                <li class="profile-item">--}}
+                                        {{--                                                    <div class="title"> کد ملی :</div>--}}
+                                        {{--                                                    <div class="value">-</div>--}}
+                                        {{--                                                </li>--}}
+                                        {{--                                            </ul>--}}
+                                        {{--                                        </div>--}}
+                                        <div class="profile-edit-action">
+                                            <button type="submit" class="link-spoiler-edit btn btn-secondary">ویرایش
+                                                اطلاعات
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                                <!-- Single Tab Content End -->
-                            </div>
-                        </div> <!-- My Account Tab Content End -->
+                            </form>
+                            <form action="{{ route('home.change.password') }}" method="POST">
+                                @csrf
+                                <div class="profile-content">
+                                    <div class="profile-stats">
+                                        <table class="table table-profile">
+                                            <tbody>
+                                            <tr>
+                                                <td class="col-span-2">
+                                                    <div class="title">رمز عبور فعلی:</div>
+                                                    <input name="current_password" type="password" required/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-50">
+                                                    <div class="title">رمز عبور جدید:</div>
+                                                    <input name="new_password" type="password" required/>
+                                                </td>
+                                                <td class="w-50">
+                                                    <div class="title">تکرار رمز عبور جدید:</div>
+                                                    <input name="new_password_confirmation"  type="password" required/>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="profile-edit-action">
+                                            <button type="submit" class="link-spoiler-edit btn btn-secondary">
+                                                تغییر رمز عبور
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div> <!-- My Account Page End -->
-            </div>
+                </div>
+            </section>
         </div>
     </div>
-</div>
-<!-- my account wrapper end -->
-
+    <!-- profile------------------------------->
 @endsection
