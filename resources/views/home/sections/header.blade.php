@@ -17,8 +17,8 @@
                             <div class="header-search-box">
                                 <form action="#" class="form-search">
                                     <input type="search" class="header-search-input" name="search-input"
-                                        {{--                                    <input type="search" class="header-search-input" name="search-input"--}}
-                                        {{--                                           placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…"--}}
+                                            {{--                                    <input type="search" class="header-search-input" name="search-input"--}}
+                                            {{--                                           placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…"--}}
                                     >
                                     <div class="action-btns">
                                         <button class="btn btn-search"
@@ -163,8 +163,8 @@
                 <div class="align-items-center">
                     <ul class="menu-ul mega-menu-level-one">
                         @php
-//                            $parentCategories = \App\Models\Category::query()->where('parent_id', 0)->get();
-                            $products = \App\Models\Product::query()->where('is_active', 1)->get();
+                            //                            $parentCategories = \App\Models\Category::query()->where('parent_id', 0)->get();
+                                                        $products = \App\Models\Product::query()->where('is_active', 1)->get();
                         @endphp
                         <li id="nav-menu-item" class="menu-item nav-overlay">
                             <a href="#" class="current-link-menu">
@@ -174,24 +174,24 @@
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="sub-menu is-mega-menu mega-menu-level-two">
-{{--                                @foreach($parentCategories as $parentCategory)--}}
+                                {{--                                @foreach($parentCategories as $parentCategory)--}}
                                 @foreach($products as $product)
                                     <li class="menu-mega-item menu-item-type-mega-menu">
                                         {{--                                        <a href="/" class="mega-menu-link">--}}
                                         {{--                                            {{ $parentCategory->name }}--}}
                                         {{--                                        </a>--}}
-{{--                                        @if($parentCategory->children->count() > 0)--}}
-                                            <ul class="sub-menu mega-menu-level-three">
-{{--                                                @foreach($parentCategory->children as $childCategory)--}}
-                                                    <li class="menu-mega-item-three">
-{{--                                                        <a href="{{ route('home.categories.show', $childCategory->slug) }}">--}}
-                                                        <a href="{{ route('home.products.show', $product->slug) }}">
-                                                            {{ $product->name }}
-                                                        </a>
-                                                    </li>
-{{--                                                @endforeach--}}
-                                            </ul>
-{{--                                        @endif--}}
+                                        {{--                                        @if($parentCategory->children->count() > 0)--}}
+                                        <ul class="sub-menu mega-menu-level-three">
+                                            {{--                                                @foreach($parentCategory->children as $childCategory)--}}
+                                            <li class="menu-mega-item-three">
+                                                {{--                                                        <a href="{{ route('home.categories.show', $childCategory->slug) }}">--}}
+                                                <a href="{{ route('home.products.show', $product->slug) }}">
+                                                    {{ $product->name }}
+                                                </a>
+                                            </li>
+                                            {{--                                                @endforeach--}}
+                                        </ul>
+                                        {{--                                        @endif--}}
                                     </li>
                                 @endforeach
                                 {{--                                <li class="bg-image">--}}
@@ -227,10 +227,10 @@
                                                                     <a href="{{route('home.products.show', $item->associatedModel->slug)}}"
                                                                        class="mini-cart-item-image d-block">
                                                                         <img
-                                                                            src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$item->associatedModel->primary_image)}}">
+                                                                                src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$item->associatedModel->primary_image)}}">
                                                                     </a>
                                                                     <span
-                                                                        class="product-name-card">{{$item->name}}</span>
+                                                                            class="product-name-card">{{$item->name}}</span>
                                                                     <div class="variation">
                                                                         {{--                                                                        <span class="variation-n">فروشنده :--}}
                                                                         {{--                                                                        </span>--}}
@@ -324,16 +324,22 @@
                 </div>
             </div>
             <ul class="nav-categories ul-base">
-{{--                @foreach($parentCategories as $parentCategory)--}}
-{{--                    @if($parentCategory->children->count() > 0)--}}
-{{--                        @foreach($parentCategory->children as $childCategory)--}}
-{{--                            <li><a href="{{ route('home.categories.show', $childCategory->slug) }}">--}}
-{{--                                    {{ $childCategory->name }}--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                        @endforeach--}}
-{{--                    @endif--}}
-{{--                @endforeach--}}
+                {{--                @foreach($parentCategories as $parentCategory)--}}
+                {{--                    @if($parentCategory->children->count() > 0)--}}
+                {{--                        @foreach($parentCategory->children as $childCategory)--}}
+                @foreach($products as $product)
+                    <li>
+                        {{--                    <a href="{{ route('home.categories.show', $childCategory->slug) }}">--}}
+                        {{--                        {{ $childCategory->name }}--}}
+                        {{--                    </a>--}}
+                        <a href="{{ route('home.products.show', $product->slug) }}">
+                            {{ $product->name }}
+                        </a>
+                    </li>
+                @endforeach
+                {{--                        @endforeach--}}
+                {{--                    @endif--}}
+                {{--                @endforeach--}}
 
             </ul>
         </nav>

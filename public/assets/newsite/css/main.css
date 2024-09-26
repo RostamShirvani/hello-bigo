@@ -4273,7 +4273,7 @@ input[type="number"] {
 .post-item-cart .content-page .cart-collaterals .checkout-summary {
     color: #464646;
     width: 100%;
-    padding: 30px;
+    /*padding: 30px;*/
 }
 
 .post-item-cart .content-page .cart-collaterals .checkout-summary ul.checkout-summary-summary li {

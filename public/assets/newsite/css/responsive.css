@@ -194,7 +194,7 @@
     }
 
     .post-item-cart .content-page .cart-form .table tbody .product-cart-price {
-        display: none;
+        /*display: none;*/
     }
 
     .post-item-cart .content-page .cart-form .table tbody .product-cart-Total {
