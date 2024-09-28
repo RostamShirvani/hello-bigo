@@ -15,7 +15,7 @@
                             <div class="profile-content">
                                 <div class="profile-stats">
                                     <div class="table-orders">
-                                        <table class="table table-profile-orders">
+                                        <table class="table table-profile-orders table-responsive">
                                             <thead class="thead-light">
                                             <tr>
                                                 <th scope="col">شماره سفارش</th>

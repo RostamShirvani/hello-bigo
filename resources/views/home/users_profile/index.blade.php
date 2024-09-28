@@ -30,7 +30,7 @@
                                 @csrf
                                 <div class="profile-content">
                                     <div class="profile-stats">
-                                        <table class="table table-profile">
+                                        <table class="table table-profile table-responsive">
                                             <tbody>
                                             <tr>
                                                 <td class="w-50">
@@ -108,7 +108,7 @@
                                 @csrf
                                 <div class="profile-content">
                                     <div class="profile-stats">
-                                        <table class="table table-profile">
+                                        <table class="table table-profile table-responsive">
                                             <tbody>
                                             <tr>
                                                 <td class="col-span-2">
