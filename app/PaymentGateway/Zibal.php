@@ -97,7 +97,7 @@ class Zibal extends Payment
                 }
                 return [
                     'success' => 'پرداخت با موفقیت انجام شد. ' . 'شماره پیگیری: ' . $result['refNumber'],
-                    'order' => $updateOrder
+                    'order' => $updateOrder['order']
                 ];
             } else {
                 return ['error' => 'Verification failed. ERR: ' . $result['result'] . ' - ' . $result['message']];

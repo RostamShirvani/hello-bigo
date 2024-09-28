@@ -40,7 +40,7 @@ class Pay extends Payment
 //                \Cart::clear();
                 return [
                     'success' => 'پرداخت با موفقیت انجام شد. شماره ی تراکنش: ' . $result->transId,
-                    'order' => $updateOrder
+                    'order' => $updateOrder['order']
                 ];
             } else {
                 return ['error' => 'پرداخت با خطا مواجه شد. شماره ی وضعیت: ' . $result->status];

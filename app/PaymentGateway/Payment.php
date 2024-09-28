@@ -108,6 +108,6 @@ class Payment
             return ['error' => $ex->getMessage()];
         }
         auth()->user()->notify(new PaymentReceiptNotification($order->id, $order->paying_amount, $refId));
-        return $order;
+        return ['order' => $order];
     }
 }
