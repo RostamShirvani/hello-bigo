@@ -64,7 +64,7 @@
                                                             </p>
                                                         </div>
                                                         <span>
-                                                        {{$item->price}} تومان
+                                                        {{ number_format($item->price) }} تومان
                                                         @if($item->attributes->is_sale)
                                                         <p style="font-size: 12px;color: red">{{$item->attributes->discount_percent}}% تخفیف
                                                         </p>
@@ -166,8 +166,7 @@
                                         <div class="your-order-info order-total">
                                             <ul>
                                                 <li>مشخصات کاربر:
-                                                    <span>{{ auth()->user()->name . ' ' .auth()->user()->family ?? ''  }}</span><br>
-                                                    <span>{{ auth()->user()->cellphone }}</span>
+                                                    <span>{{ auth()->user()->name . ' ' .auth()->user()->family ?? ''  }}<br>{{ auth()->user()->cellphone }}</span>
                                                 </li>
                                             </ul>
                                         </div>
