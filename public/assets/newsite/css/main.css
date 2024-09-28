@@ -5862,6 +5862,14 @@ span.shipping-destination {
     outline: none !important;
 }
 
+.btn-Order {
+    background-color: #651fff;
+    border-color: #651fff;
+    border-radius: 20px;
+    font-size: 14px;
+    outline: none !important;
+}
+
 .checkout .content-checkout .thankyou-order-received {
     font-size: 13px;
     color: #999999;
@@ -9795,4 +9803,195 @@ body.light .progress-wrap svg.progress-circle path {
     width: 50%;
     opacity: 1;
     height: 40px;
+}
+
+.your-order-area {
+    padding: 40px 50px 50px;
+    border-width: 2px;
+    border-style: solid;
+    position: relative;
+    border-color: rgba(52, 53, 56, 0.1);
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .your-order-area {
+        padding: 40px 25px 50px;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .your-order-area {
+        margin-top: 30px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .your-order-area {
+        padding: 40px 12px 50px;
+        margin-top: 30px;
+    }
+}
+
+.your-order-area h3 {
+    font-size: 20px;
+    font-weight: 600;
+    position: relative;
+    margin: 0 0 45px;
+    text-transform: capitalize;
+}
+
+.your-order-area h3:before {
+    position: absolute;
+    content: "";
+    right: 0;
+    bottom: -12px;
+    background-color: #000;
+    width: 50px;
+    height: 2px;
+}
+
+.your-order-area .your-order-wrap .your-order-info {
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.your-order-area .your-order-wrap .your-order-info ul li {
+    font-size: 14px;
+    padding: 0 0 7px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.your-order-area .your-order-wrap .your-order-info ul li span {
+    float: left;
+}
+
+.your-order-area .your-order-wrap .your-order-info.order-subtotal {
+    padding: 15px 0 10px;
+}
+
+.your-order-area .your-order-wrap .your-order-info.order-subtotal ul li span {
+    font-size: 16px;
+}
+
+.your-order-area .your-order-wrap .your-order-info.order-shipping {
+    padding: 15px 0 13px;
+    display: block;
+    overflow: hidden;
+}
+
+.your-order-area .your-order-wrap .your-order-info.order-shipping ul li > p {
+    float: right;
+    font-size: 12px;
+    text-align: right;
+    color: #1f2226;
+    text-transform: capitalize;
+}
+
+.your-order-area .your-order-wrap .your-order-info.order-total {
+    padding: 15px 0 10px;
+}
+
+.your-order-area .your-order-wrap .your-order-info.order-total ul li span {
+    font-size: 16px;
+}
+
+.your-order-area .your-order-wrap .your-order-middle {
+    border-bottom: 1px solid #e8e8e8;
+    padding: 24px 0 23px;
+}
+
+.your-order-area .your-order-wrap .your-order-middle ul li {
+    font-size: 14px;
+    margin: 0 0 11px;
+    font-family: "Vazir" !important;
+}
+
+.your-order-area .your-order-wrap .your-order-middle ul li:last-child {
+    margin-bottom: 0;
+}
+
+.your-order-area .your-order-wrap .your-order-middle ul li span {
+    float: left;
+    font-size: 16px;
+    font-family: "Vazir" !important;
+}
+
+.your-order-area .your-order-wrap .payment-method {
+    margin: 17px 0 0;
+}
+
+.your-order-area .your-order-wrap .payment-method .sin-payment {
+    margin-bottom: 20px;
+}
+
+.your-order-area .your-order-wrap .payment-method .sin-payment input {
+    width: auto;
+    display: inline-block;
+    float: left;
+    height: auto;
+    margin-top: 5px;
+}
+
+.your-order-area .your-order-wrap .payment-method .sin-payment label {
+    font-size: 14px;
+    text-transform: uppercase;
+    margin: 0px 0 0 21px;
+    display: flex;
+    align-items: center;
+}
+
+@media only screen and (max-width: 767px) {
+    .your-order-area .your-order-wrap .payment-method .sin-payment label {
+        display: block;
+    }
+}
+
+.your-order-area .your-order-wrap .payment-method .sin-payment label img {
+    max-width: 140px;
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.your-order-area .your-order-wrap .payment-method .sin-payment label a {
+    text-decoration: underline;
+}
+
+.your-order-area .your-order-wrap .payment-method .sin-payment .payment-box {
+    margin: 6px 0 0;
+    display: none;
+}
+
+.your-order-area .your-order-wrap .payment-method .sin-payment .payment-box p {
+    font-size: 12px;
+    margin: 0;
+}
+
+.your-order-area .your-order-wrap .payment-method .sin-payment.sin-payment-3 input {
+    margin-top: 18px;
+}
+
+.your-order-area .Place-order button {
+    background-color: #ff3535;
+    font-size: 12px;
+    display: block;
+    cursor: pointer;
+    padding: 17px 50px 18px;
+    text-transform: uppercase;
+    font-weight: 700;
+    width: 100%;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600l;
+    text-align: center;
+    border: none;
+}
+
+.your-order-area .Place-order button:hover {
+    background-color: #212529;
+}
+
+@media only screen and (max-width: 767px) {
+    .checkout-main-area.pb-70 {
+        padding-bottom: 50px;
+    }
 }
