@@ -37,7 +37,7 @@
                                                 <input id="cellphoneInput" class="number-email-input"
                                                        placeholder="شماره موبایل خود را وارد کنید" type="text">
                                                 <input type="hidden" name="redirect"
-                                                       value="{{ session('url.intended', url('/')) }}">
+                                                       value="{{ url()->previous() }}">
                                                 <div id="cellphoneInputError" class="input-error-validation">
                                                     <strong id="cellphoneInputErrorText"></strong>
                                                 </div>
@@ -68,17 +68,19 @@
                                         <!-- New User Form -->
                                         <form id="newUserForm" class="form-account text-right">
                                             <div class="form-account-title">
-                                            <input id="name_new_user" class="number-email-input" placeholder="نام"
-                                                   type="text">
-                                            <input id="family_new_user" class="number-email-input"
-                                                   placeholder="نام خانوادگی" type="text">
-                                            <input id="password_new_user" class="number-email-input"
-                                                   placeholder="پسورد" type="password">
-                                            <input id="password_confirmation_new_user" class="number-email-input"
-                                                   placeholder="تکرار پسورد" type="password">
-                                            <div id="newUserFormError" class="input-error-validation">
-                                                <strong id="newUserFormErrorText" class="text-danger"></strong>
-                                            </div>
+                                                <input id="redirect" type="hidden"
+                                                       value="{{ url()->previous() }}">
+                                                <input id="name_new_user" class="number-email-input" placeholder="نام"
+                                                       type="text">
+                                                <input id="family_new_user" class="number-email-input"
+                                                       placeholder="نام خانوادگی" type="text">
+                                                <input id="password_new_user" class="number-email-input"
+                                                       placeholder="پسورد" type="password">
+                                                <input id="password_confirmation_new_user" class="number-email-input"
+                                                       placeholder="تکرار پسورد" type="password">
+                                                <div id="newUserFormError" class="input-error-validation">
+                                                    <strong id="newUserFormErrorText" class="text-danger"></strong>
+                                                </div>
                                             </div>
                                             <div class="form-row-account">
                                                 <button class="btn btn-primary btn-login" type="submit"
@@ -316,7 +318,8 @@
                     'family': $('#family_new_user').val(),
                     'password': $('#password_new_user').val(),
                     'password_confirmation': $('#password_confirmation_new_user').val(),
-                    'login_token': loginToken
+                    'login_token': loginToken,
+                    'redirect': $('#redirect').val(),
                 }, function (response, status) {
                     console.log(response, status);
                     if (response.redirect) {
@@ -345,7 +348,6 @@
                 }
             });
         });
-
 
 
         function timer() {
