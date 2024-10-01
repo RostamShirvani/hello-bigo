@@ -71,7 +71,7 @@
                                                                             <?= $_SESSION['cart'][$item->id]['account_name'] ?? '-' ?>
                                                                     </p>
                                                                 </div>
-                                                                <span>
+                                                                <span style="font-family: IRANSans,serif !important;">
                                                         {{number_format($item->price)}}
                                                         تومان
                                                         @if($item->attributes->is_sale)
@@ -85,16 +85,16 @@
                                                         @endforeach()
                                                     </ul>
                                                 </div>
-                                                <div class="your-order-info order-subtotal">
-                                                    <ul>
-                                                        <li> مبلغ
-                                                            <span>
-                                                {{number_format(\Cart::getTotal() + cartTotalDiscountAmount())}}
-                                                تومان
-                                                </span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+{{--                                                <div class="your-order-info order-subtotal">--}}
+{{--                                                    <ul>--}}
+{{--                                                        <li> مبلغ--}}
+{{--                                                            <span>--}}
+{{--                                                {{number_format(\Cart::getTotal() + cartTotalDiscountAmount())}}--}}
+{{--                                                تومان--}}
+{{--                                                </span>--}}
+{{--                                                        </li>--}}
+{{--                                                    </ul>--}}
+{{--                                                </div>--}}
                                                 @if(cartTotalDiscountAmount() > 0)
                                                     <div class="your-order-info order-subtotal">
                                                         <ul>
@@ -121,22 +121,22 @@
                                                         </ul>
                                                     </div>
                                                 @endif
-                                                <div class="your-order-info order-shipping">
-                                                    <ul>
-                                                        <li> هزینه ارسال
-                                                            @if(cartTotalDeliveryAmount() == 0)
-                                                                <span style="color: red">
-                                                رایگان
-                                            </span>
-                                                            @else
-                                                                <span>
-                                                {{number_format(cartTotalDeliveryAmount())}}
-                                                تومان
-                                            </span>
-                                                            @endif
-                                                        </li>
-                                                    </ul>
-                                                </div>
+{{--                                                <div class="your-order-info order-shipping">--}}
+{{--                                                    <ul>--}}
+{{--                                                        <li> هزینه ارسال--}}
+{{--                                                            @if(cartTotalDeliveryAmount() == 0)--}}
+{{--                                                                <span style="color: red">--}}
+{{--                                                رایگان--}}
+{{--                                            </span>--}}
+{{--                                                            @else--}}
+{{--                                                                <span>--}}
+{{--                                                {{number_format(cartTotalDeliveryAmount())}}--}}
+{{--                                                تومان--}}
+{{--                                            </span>--}}
+{{--                                                            @endif--}}
+{{--                                                        </li>--}}
+{{--                                                    </ul>--}}
+{{--                                                </div>--}}
                                                 <div class="your-order-info order-total">
                                                     <ul>
                                                         <li>جمع کل
