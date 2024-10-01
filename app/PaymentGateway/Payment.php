@@ -82,6 +82,10 @@ class Payment
                 'status' => Order::STATUS_PAID_AND_IN_PROGRESS
             ]);
 
+            foreach ($order->orderItems as $orderItem){
+                OrderItem::setStatus($orderItem, OrderItem::STATUS_PAID_AND_IN_PROGRESS);
+            }
+
 //            // Do charge account
 //            $model = new PaymentPin();
 //            $paymentPinRepository = new PaymentPinRepository($model);

@@ -145,6 +145,10 @@
                                                                 @break
 
                                                             @case(\App\Models\OrderItem::STATUS_NEW)
+                                                                <span class="text-gray-500">در انتظار پرداخت</span>
+                                                                @break
+
+                                                            @case(\App\Models\OrderItem::STATUS_PAID_AND_IN_PROGRESS)
                                                                 <span class="text-gray-500">در حال انجام ...</span>
                                                                 @break
 
