@@ -51,6 +51,7 @@
 {{--<script src="{{ asset('/assets/admin/js/script.js') }}"></script>--}}
 <!-- main js---------------------------------------------------->
 <script src="{{ asset('/assets/newsite/js/main.js') }}"></script>
+<script src="{{ asset('/assets/newsite/js/home.js') }}"></script>
 @include('sweetalert::alert')
 @yield('script')
 {!!  GoogleReCaptchaV3::init() !!}
