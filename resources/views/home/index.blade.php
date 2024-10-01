@@ -12,14 +12,14 @@
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
                             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+{{--                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>--}}
+{{--                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>--}}
+{{--                            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>--}}
+{{--                            <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>--}}
                         </ol>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="{{ asset('/assets/newsite/images/slider-main/sm-1.jpg') }}"
+                                <img src="{{ asset('/assets/newsite/images/slider-main/sm-1.webp') }}"
                                      class="d-block w-100" alt="...">
                             </div>
 {{--                            <div class="carousel-item">--}}
@@ -57,12 +57,12 @@
                 <div class="adplacement-container-column">
                     <a href="#" class="adplacement-item">
                         <div class="adplacement-sponsored-box">
-                            <img src="{{ asset('/assets/newsite/images/adplacement/a-1.jpg') }}">
+                            <img src="{{ asset('/assets/newsite/images/adplacement/a-1.webp') }}">
                         </div>
                     </a>
                     <a href="#" class="adplacement-item">
                         <div class="adplacement-sponsored-box">
-                            <img src="{{ asset('/assets/newsite/images/adplacement/a-2.jpg') }}">
+                            <img src="{{ asset('/assets/newsite/images/adplacement/a-2.webp') }}">
                         </div>
                     </a>
                 </div>
