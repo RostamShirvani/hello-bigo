@@ -133,7 +133,7 @@
 {{--                            </div>--}}
 {{--                        </div>--}}
 {{--                    </div>--}}
-                    <div class="col-lg-8 d-block pr">
+                    <div class="col-lg-4 d-block pr">
                         <div class="footer-more-info">
                             <div class="footer-content d-block">
                                 <div class="text pr-1">
@@ -142,6 +142,15 @@
                                     </p>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 d-block pl">
+                        <div class="shortcode-widget-area">
+                            <form action="#" class="form-newsletter">
+                                <fieldset>
+                                      <p><a href="https://trustseal.enamad.ir/?id=268824&amp;Code=MEasgRqIGwVoDAwvmegv" target="_blank" rel="noopener"><img decoding="async" style="cursor: pointer;" src="https://trustseal.enamad.ir/logo.aspx?id=268824&amp;Code=MEasgRqIGwVoDAwvmegv" alt=""></a></p>
+                                </fieldset>
+                            </form>
                         </div>
                     </div>
                     <div class="col-lg-4 d-block pl">
