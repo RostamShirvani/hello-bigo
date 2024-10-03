@@ -1,327 +1,493 @@
-<header class="header-area sticky-bar">
-    <div class="main-header-wrap">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-2 col-lg-2">
-                    <div class="logo pt-40">
-                        <a href="{{route('home.index')}}">
-                            <h3 class="font-weight-bold">{{env('APP_NAME')}}</h3>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-xl-7 col-lg-7">
-                    <div class="main-menu text-center">
-                        <nav>
-                            <ul>
-{{--                                <li class="angle-shape">--}}
-{{--                                    <a href="{{route('home.about-us')}}"> درباره ی ما </a>--}}
-{{--                                </li>--}}
-
-                                <li><a href="{{route('home.contact-us')}}"> تماس با ما </a></li>
-
-                                <li class="angle-shape">
-                                    <a href="#"> فروشگاه </a>
-
-                                    @php
-                                        $parentCategories = \App\Models\Category::query()->where('parent_id', 0)->get();
-                                    @endphp
-                                    <ul class="mega-menu">
-                                        @foreach($parentCategories as $parentCategory)
-                                            <li>
-                                                <a class="menu-title"
-                                                   href="#">{{$parentCategory->name}}</a>
-
-                                                <ul>
-                                                    @foreach($parentCategory->children as $childCategory)
-                                                        <li>
-                                                            <a href="{{route('home.categories.show', $childCategory->slug)}}">{{$childCategory->name}}</a>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-
-{{--                                <li class="angle-shape">--}}
-{{--                                    <a href="{{route('home.index')}}"> صفحه اصلی </a>--}}
-{{--                                </li>--}}
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-3">
-                    <div class="header-right-wrap pt-40">
-                        <div class="header-search">
-                            <a class="search-active" href="#"><i class="sli sli-magnifier"></i></a>
+<!-- header-------------------------------->
+<header class="header-main">
+    <div class="d-block">
+        <section class="h-main-row">
+            <div class="col-lg-9 col-md-12 col-xs-12 pr">
+                <div class="header-right">
+                    <div class="col-lg-3 pr">
+                        <div class="header-logo row text-right">
+                            <a href="/">
+                                <img src="{{ asset('/assets/newsite/images/logo-300x58-1-1.png') }}"
+                                     alt="{{ env('APP_NAME') }}">
+                            </a>
                         </div>
-                        <div class="cart-wrap">
-                            <button class="icon-cart-active">
-                            <span class="icon-cart">
-                              <i class="sli sli-bag"></i>
-                                @if(! \Cart::isEmpty())
-                                    <span class="count-style">{{\Cart::getContent()->count()}}</span>
-                                @endif
-                            </span>
-                                @if(! \Cart::isEmpty())
-                                    <span class="cart-price">
-                                        {{number_format(\Cart::getTotal())}}
-                                    </span>
-                                    <span>تومان</span>
-                                @endif
-                            </button>
-                            @if(\Cart::isEmpty())
-                                <div class="shopping-cart-content">
-                                    <div class="shopping-cart-top">
-                                        <a class="cart-close" href="#"><i class="sli sli-close"></i></a>
-                                        <h4>سبد خرید</h4>
+                    </div>
+                    <div class="col-lg-8 pr">
+                        <div class="header-search row text-right">
+                            <div class="header-search-box">
+                                <form action="#" class="form-search">
+                                    <input type="search" class="header-search-input" name="search-input"
+                                            {{--                                    <input type="search" class="header-search-input" name="search-input"--}}
+                                            {{--                                           placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…"--}}
+                                    >
+                                    <div class="action-btns">
+                                        <button class="btn btn-search"
+                                                {{--                                                type="submit"--}}
+                                                type="button"
+                                        >
+                                            <img src="{{ asset('/assets/newsite/images/search.png') }}" alt="search">
+                                        </button>
+                                        {{--                                        <div class="search-filter">--}}
+                                        {{--                                            <div class="form-ui">--}}
+                                        {{--                                                <div class="custom-select-ui">--}}
+                                        {{--                                                    <select class="right">--}}
+                                        {{--                                                        <option>همه دسته ها</option>--}}
+                                        {{--                                                        <option>کالای دیجیتال</option>--}}
+                                        {{--                                                        <option>آرایشی بهداشتی</option>--}}
+                                        {{--                                                        <option>ابزاری اداری</option>--}}
+                                        {{--                                                        <option>مد پوشاک</option>--}}
+                                        {{--                                                        <option>خانه آشپز خانه</option>--}}
+                                        {{--                                                        <option>لوازم تحریر و هنر</option>--}}
+                                        {{--                                                        <option>کودک و نوزاد</option>--}}
+                                        {{--                                                    </select>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
                                     </div>
-                                    <p>سبد خرید شما خالی است.</p>
-                                    <div class="shopping-cart-btn btn-hover text-center">
-                                        <a class="default-btn" href="{{route('home.index')}}">
-                                            فروشگاه
-                                        </a>
-                                    </div>
-                                </div>
-                            @else
-                                <div class="shopping-cart-content">
-                                    <div class="shopping-cart-top">
-                                        <a class="cart-close" href="#"><i class="sli sli-close"></i></a>
-                                        <h4>سبد خرید</h4>
-                                    </div>
-                                    <ul>
-                                        @foreach(\Cart::getContent() as $item)
-                                            <li class="single-shopping-cart">
-                                                <div class="shopping-cart-title">
-                                                    <h4>
-                                                        <a href="{{route('home.products.show', $item->associatedModel->slug)}}"> {{$item->name}} </a>
-                                                    </h4>
-                                                    <span>{{$item->quantity}} x {{number_format($item->price)}}</span>
-                                                    <div class="mb-0" style="direction: rtl;">
-                                                        <p style="font-size: 12px;">
-                                                            {{\App\Models\Attribute::find($item->attributes->attribute_id)->name}}
-                                                            :
-                                                            {{$item->attributes->value}}
-                                                        </p>
-                                                        @if($item->attributes->is_sale)
-                                                            <p style="font-size: 12px;color: red">
-                                                                {{$item->attributes->discount_percent}}%
-                                                                تخفیف
-                                                            </p>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                                <div class="shopping-cart-img">
-                                                    <a href="{{route('home.products.show', $item->associatedModel->slug)}}">
-                                                        <img alt=""
-                                                             src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$item->associatedModel->primary_image)}}"/></a>
-                                                    <div class="item-close">
-                                                        <a href="{{route('home.cart.remove', $item->id)}}"><i
-                                                                class="sli sli-close"></i></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                    <div class="shopping-cart-bottom">
-                                        <div
-                                            class="shopping-cart-total d-flex justify-content-between align-items-center"
-                                            style="direction: rtl;">
-                                            <h4>
-                                                جمع کل :
-                                            </h4>
-                                            <span class="shop-total">
-                          {{number_format(\Cart::getTotal())}} تومان
-                        </span>
-                                        </div>
-                                        <div class="shopping-cart-btn btn-hover text-center">
-                                            <a class="default-btn" href="{{route('home.orders.checkout')}}">
-                                                ثبت سفارش
-                                            </a>
-                                            <a class="default-btn" href="{{route('home.cart.index')}}">
-                                                سبد خرید
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-
-                        <div class="setting-wrap">
-                            <button class="setting-active">
-                                @auth
-                                    <?php
-                                    echo auth()->user()->name;
-                                    ?>
-                                    <i class="sli sli-settings"></i>
-                                @else
-                                    <i class="sli sli-settings"></i>
-                                @endauth
-                            </button>
-                            <div class="setting-content">
-                                <ul class="text-right">
-                                    @auth
-                                        @if(auth()->user()->hasRole('super_admin'))
-                                            <li><a href="{{route('dashboard')}}">پنل مدیریت</a></li>
-                                        @endif
-                                        <li><a href="{{route('home.users_profile.index')}}">پروفایل</a></li>
-                                        <form action="{{route('logout')}}" method="post" id="logout">
-                                            @csrf
-                                            <li><a href=""
-                                                   onclick="event.preventDefault(); document.getElementById('logout').submit();">
-                                                    خروج</a></li>
-                                        </form>
-                                    @else
-                                        <li><a href="{{route('login')}}">ورود/عضویت</a></li>
-{{--                                        <li><a href="{{route('register')}}">ایجاد حساب</a></li>--}}
-                                    @endauth
-                                </ul>
+                                </form>
+                                {{--                                <div class="search-result">--}}
+                                {{--                                    <ul class="search-result-list mb-0">--}}
+                                {{--                                        <li>--}}
+                                {{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
+                                {{--                                                کالای دیجیتال--}}
+                                {{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
+                                {{--                                                    <i class="fa fa-angle-left"></i>--}}
+                                {{--                                                </button>--}}
+                                {{--                                            </a>--}}
+                                {{--                                        </li>--}}
+                                {{--                                        <li>--}}
+                                {{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
+                                {{--                                                آرایشی و بهداشتی--}}
+                                {{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
+                                {{--                                                    <i class="fa fa-angle-left"></i>--}}
+                                {{--                                                </button>--}}
+                                {{--                                            </a>--}}
+                                {{--                                        </li>--}}
+                                {{--                                        <li>--}}
+                                {{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
+                                {{--                                                گوشی موبایل--}}
+                                {{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
+                                {{--                                                    <i class="fa fa-angle-left"></i>--}}
+                                {{--                                                </button>--}}
+                                {{--                                            </a>--}}
+                                {{--                                        </li>--}}
+                                {{--                                        <li>--}}
+                                {{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
+                                {{--                                                تبلت--}}
+                                {{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
+                                {{--                                                    <i class="fa fa-angle-left"></i>--}}
+                                {{--                                                </button>--}}
+                                {{--                                            </a>--}}
+                                {{--                                        </li>--}}
+                                {{--                                        <li>--}}
+                                {{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
+                                {{--                                                لپ تاپ--}}
+                                {{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
+                                {{--                                                    <i class="fa fa-angle-left"></i>--}}
+                                {{--                                                </button>--}}
+                                {{--                                            </a>--}}
+                                {{--                                        </li>--}}
+                                {{--                                        <li>--}}
+                                {{--                                            <a href="#"><i class="mdi mdi-clock-outline"></i>--}}
+                                {{--                                                دوربین--}}
+                                {{--                                                <button class="btn btn-light btn-continue-search" type="submit">--}}
+                                {{--                                                    <i class="fa fa-angle-left"></i>--}}
+                                {{--                                                </button>--}}
+                                {{--                                            </a>--}}
+                                {{--                                        </li>--}}
+                                {{--                                    </ul>--}}
+                                {{--                                    <div class="localSearchSimple"></div>--}}
+                                {{--                                </div>--}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- main-search start -->
-        <div class="main-search-active">
-            <div class="sidebar-search-icon">
-                <button class="search-close">
-                    <span class="sli sli-close"></span>
-                </button>
-            </div>
-            <div class="sidebar-search-input">
-                <form>
-                    <div class="form-search">
-                        <input id="search" class="input-text" value="" placeholder=" ...جستجو " type="search"/>
-                        <button>
-                            <i class="sli sli-magnifier"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="header-small-mobile">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-6">
-                    <div class="mobile-logo">
-                        <a href="{{route('home.index')}}">
-                            <h4 class="font-weight-bold">eCommerce</h4>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="header-right-wrap">
-                        <div class="cart-wrap">
-                            <button class="icon-cart-active">
-                            <span class="icon-cart">
-                              <i class="sli sli-bag"></i>
-                                @if(! \Cart::isEmpty())
-                                    <span class="count-style">{{\Cart::getContent()->count()}}</span>
-                                @endif
-                            </span>
-                                @if(! \Cart::isEmpty())
-                                    <span class="cart-price">
-                              {{number_format(\Cart::getTotal())}}
-                            </span>
-                                @endif
-                                <span>تومان</span>
-                            </button>
-                            @if(\Cart::isEmpty())
-                                <div class="shopping-cart-content">
-                                    <div class="shopping-cart-top">
-                                        <a class="cart-close" href="#"><i class="sli sli-close"></i></a>
-                                        <h4>سبد خرید</h4>
-                                    </div>
-                                    <p>سبد خرید شما خالی است.</p>
-                                    <div class="shopping-cart-btn btn-hover text-center">
-                                        <a class="default-btn" href="{{route('home.index')}}">
-                                            فروشگاه
-                                        </a>
+            <div class="col-lg-3 col-md-0 col-xs-12 pl">
+                <div class="header-left">
+                    <div class="header-account text-left">
+                        <div class="d-block">
+                            <div class="account-box">
+                                <div class="nav-account d-block pl">
+                                            <span class="icon-account">
+                                            <img src="{{ asset('/assets/newsite/images/man.png') }}" class="avator">
+                                        </span>
+                                    <span class="title-account">
+                                        @auth()
+                                            {{ auth()->user()->name }} {{ auth()->user()->family }}
+                                        @else
+                                            ورود/عضویت
+                                        @endauth
+                                    </span>
+                                    <div class="dropdown-menu">
+                                        <ul class="account-uls mb-0">
+                                            @auth()
+                                                @if(auth()->user()->hasRole('super_admin'))
+                                                    <li class="account-item">
+                                                        <a href="{{route('dashboard')}}" class="account-link">پنل
+                                                            مدیریت</a>
+                                                    </li>
+                                                @endif
+                                                <li class="account-item">
+                                                    <a href="{{route('home.users_profile.index')}}"
+                                                       class="account-link">پروفایل</a>
+                                                </li>
+                                                <li class="account-item">
+                                                    <a href="{{route('home.users_profile.orders')}}"
+                                                       class="account-link">سفارشات من</a>
+                                                </li>
+                                                <form action="{{route('logout')}}" method="post" id="logout">
+                                                    @csrf
+                                                    <li class="account-item">
+                                                        <a href=""
+                                                           onclick="event.preventDefault(); document.getElementById('logout').submit();"
+                                                           class="account-link">خروج</a>
+                                                    </li>
+                                                </form>
+                                            @else
+                                                <li class="account-item">
+                                                    <a class="account-link" href="{{ route('login') }}">ورود/عضویت</a>
+                                                </li>
+                                            @endauth
+                                        </ul>
                                     </div>
                                 </div>
-                            @else
-                                <div class="shopping-cart-content">
-                                    <div class="shopping-cart-top">
-                                        <a class="cart-close" href="#"><i class="sli sli-close"></i></a>
-                                        <h4>سبد خرید</h4>
-                                    </div>
-                                    <ul>
-                                        @foreach(\Cart::getContent() as $item)
-                                            <li class="single-shopping-cart">
-                                                <div class="shopping-cart-title">
-                                                    <h4>
-                                                        <a href="{{route('home.products.show', $item->associatedModel->slug)}}"> {{$item->name}} </a>
-                                                    </h4>
-                                                    <span>{{$item->quantity}} x {{number_format($item->price)}}</span>
-                                                    <div class="mb-0" style="direction: rtl;">
-                                                        <p style="font-size: 12px;">
-                                                            {{\App\Models\Attribute::find($item->attributes->attribute_id)->name}}
-                                                            :
-                                                            {{$item->attributes->value}}
-                                                        </p>
-                                                        @if($item->attributes->is_sale)
-                                                            <p style="font-size: 12px;color: red">
-                                                                {{$item->attributes->discount_percent}}%
-                                                                تخفیف
-                                                            </p>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                                <div class="shopping-cart-img">
-                                                    <a href="{{route('home.products.show', $item->associatedModel->slug)}}">
-                                                        <img alt=""
-                                                             src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$item->associatedModel->primary_image)}}"/></a>
-                                                    <div class="item-close">
-                                                        <a href="{{route('home.cart.remove', $item->id)}}"><i
-                                                                class="sli sli-close"></i></a>
-                                                    </div>
-                                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <nav class="header-main-nav">
+            <div class="d-block">
+                <div class="align-items-center">
+                    <ul class="menu-ul mega-menu-level-one">
+                        @php
+                            //                            $parentCategories = \App\Models\Category::query()->where('parent_id', 0)->get();
+                                                        $products = \App\Models\Product::query()->where('is_active', 1)->get();
+                        @endphp
+                        <li id="nav-menu-item" class="menu-item nav-overlay">
+                            <a href="#" class="current-link-menu">
+                                <img src="{{ asset('/assets/newsite/images/menu-main/category/smartphone.png') }}"
+                                     alt="menu" width="22px">
+                                محصولات فروشگاه
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="sub-menu is-mega-menu mega-menu-level-two">
+                                {{--                                @foreach($parentCategories as $parentCategory)--}}
+                                @foreach($products as $product)
+                                    <li class="menu-mega-item menu-item-type-mega-menu">
+                                        {{--                                        <a href="/" class="mega-menu-link">--}}
+                                        {{--                                            {{ $parentCategory->name }}--}}
+                                        {{--                                        </a>--}}
+                                        {{--                                        @if($parentCategory->children->count() > 0)--}}
+                                        <ul class="sub-menu mega-menu-level-three">
+                                            {{--                                                @foreach($parentCategory->children as $childCategory)--}}
+                                            <li class="menu-mega-item-three">
+                                                {{--                                                        <a href="{{ route('home.categories.show', $childCategory->slug) }}">--}}
+                                                <a href="{{ route('home.products.show', $product->slug) }}">
+                                                    {{ $product->name }}
+                                                </a>
                                             </li>
-                                        @endforeach
-                                    </ul>
-                                    <div class="shopping-cart-bottom">
-                                        <div
-                                            class="shopping-cart-total d-flex justify-content-between align-items-center"
-                                            style="direction: rtl;">
-                                            <h4>
-                                                جمع کل :
-                                            </h4>
-                                            <span class="shop-total">
-                          {{number_format(\Cart::getTotal())}} تومان
-                        </span>
+                                            {{--                                                @endforeach--}}
+                                        </ul>
+                                        {{--                                        @endif--}}
+                                    </li>
+                                @endforeach
+                                {{--                                <li class="bg-image">--}}
+                                {{--                                    <img src="{{ asset('/assets/newsite/images/menu-main/digital.png') }}" alt="">--}}
+                                {{--                                </li>--}}
+                            </ul>
+                        </li>
+                        <li class="divider-space-card">
+                            <div class="header-cart-basket">
+                                <a href="#" class="cart-basket-box">
+                                        <span class="icon-cart">
+                                            <i class="mdi mdi-shopping"></i>
+                                        </span>
+                                    <span class="title-cart">سبد خرید</span>
+                                    <span class="price-cart">
+                                        {{number_format(\Cart::getTotal())}} تومان
+                                    </span>
+                                    <span class="count-cart">{{ count(\Cart::getContent()) }}</span>
+                                </a>
+                                <div class="widget-shopping-cart">
+                                    <div class="widget-shopping-cart-content">
+                                        <div class="wrapper">
+                                            <div class="scrollbar" id="style-1">
+                                                <div class="force-overflow">
+                                                    <ul class="product-list-widget">
+                                                        @foreach(\Cart::getContent() as $item)
+                                                            <li class="mini-cart-item">
+                                                                <div class="mini-cart-item-content">
+                                                                    <a href="{{route('home.cart.remove', $item->id)}}"
+                                                                       class="mini-cart-item-close">
+                                                                        <i class="mdi mdi-close"></i>
+                                                                    </a>
+                                                                    <a href="{{route('home.products.show', $item->associatedModel->slug)}}"
+                                                                       class="mini-cart-item-image d-block">
+                                                                        <img
+                                                                                src="{{asset(env('PRODUCT_IMAGES_UPLOAD_PATH').$item->associatedModel->primary_image)}}">
+                                                                    </a>
+                                                                    <span
+                                                                            class="product-name-card">{{$item->name}}</span>
+                                                                    <div class="variation">
+                                                                        {{--                                                                        <span class="variation-n">فروشنده :--}}
+                                                                        {{--                                                                        </span>--}}
+                                                                        {{--                                                                        <span class="variation-n">{{$item->quantity}} x {{number_format($item->price)}}</span>--}}
+                                                                        <p class="mb-0">
+                                                                            {{\App\Models\Attribute::find($item->attributes->attribute_id)->name}}
+                                                                            :
+                                                                            {{$item->attributes->value}}</p>
+                                                                    </div>
+                                                                    {{--                                                                    <div class="header-basket-list-item-color-badge">--}}
+                                                                    {{--                                                                        رنگ:--}}
+                                                                    {{--                                                                        <span style="background: #000"></span>--}}
+                                                                    {{--                                                                    </div>--}}
+                                                                    <div class="quantity">
+                                                                        <span class="quantity-Price-amount">
+{{--                                                                            {{$item->quantity}} x {{number_format($item->price)}}--}}
+                                                                            {{number_format($item->price)}}
+                                                                            <span>تومان</span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        @endforeach
+                                                        {{--                                                        <li class="mini-cart-item">--}}
+                                                        {{--                                                            <div class="mini-cart-item-content">--}}
+                                                        {{--                                                                <a href="#" class="mini-cart-item-close">--}}
+                                                        {{--                                                                    <i class="mdi mdi-close"></i>--}}
+                                                        {{--                                                                </a>--}}
+                                                        {{--                                                                <a href="#" class="mini-cart-item-image d-block">--}}
+                                                        {{--                                                                    <img--}}
+                                                        {{--                                                                        src="assets/images/menu-main/img-card-2.jpg">--}}
+                                                        {{--                                                                </a>--}}
+                                                        {{--                                                                <span class="product-name-card">هواوای میت--}}
+                                                        {{--                                                                        بوک X پرو--}}
+                                                        {{--                                                                        13.9 اینچ</span>--}}
+                                                        {{--                                                                <div class="variation">--}}
+                                                        {{--                                                                        <span class="variation-n">فروشنده :--}}
+                                                        {{--                                                                        </span>--}}
+                                                        {{--                                                                    <p class="mb-0">کالامارکت </p>--}}
+                                                        {{--                                                                </div>--}}
+                                                        {{--                                                                <div class="header-basket-list-item-color-badge">--}}
+                                                        {{--                                                                    رنگ:--}}
+                                                        {{--                                                                    <span style="background: #ccc"></span>--}}
+                                                        {{--                                                                </div>--}}
+                                                        {{--                                                                <div class="quantity">--}}
+                                                        {{--                                                                        <span class="quantity-Price-amount">--}}
+                                                        {{--                                                                            10,000,000--}}
+                                                        {{--                                                                            <span>تومان</span>--}}
+                                                        {{--                                                                        </span>--}}
+                                                        {{--                                                                </div>--}}
+                                                        {{--                                                            </div>--}}
+                                                        {{--                                                        </li>--}}
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="shopping-cart-btn btn-hover text-center">
-                                            <a class="default-btn" href="{{route('home.orders.checkout')}}">
-                                                ثبت سفارش
-                                            </a>
-                                            <a class="default-btn" href="{{route('home.cart.index')}}">
-                                                سبد خرید
-                                            </a>
+                                        <div class="mini-card-total">
+                                            <strong>قیمت کل : </strong>
+                                            <span class="price-total"> {{number_format(\Cart::getTotal())}}
+                                                    <span>تومان</span>
+                                                </span>
+                                        </div>
+                                        <div class="mini-card-button">
+                                            <a href="{{route('home.cart.index')}}" class="view-card">مشاهده سبد خرید</a>
+                                            <a href="{{route('home.orders.checkout')}}" class="card-checkout">تسویه
+                                                حساب</a>
                                         </div>
                                     </div>
                                 </div>
-                            @endif
-                        </div>
-                        <div class="mobile-off-canvas">
-                            <a class="mobile-aside-button" href="#"><i class="sli sli-menu"></i></a>
-                        </div>
-                    </div>
+                            </div>
+                            {{--                            <div class="header-cart-interest">--}}
+                            {{--                                <a href="#" class="d-block">--}}
+                            {{--                                    <i class="fa fa-heart"></i>--}}
+                            {{--                                    <span class="counter">۲</span>--}}
+                            {{--                                </a>--}}
+                            {{--                            </div>--}}
+                        </li>
+                    </ul>
+
                 </div>
             </div>
-        </div>
-    </div>
+        </nav>
+        <!--    responsive-megamenu-mobile----------------->
+        <nav class="sidebar">
+            <div class="nav-header">
+                <div class="header-cover"></div>
+                <div class="logo-wrap">
+                    <a class="logo-icon" href="#"><img alt="logo-icon"
+                                                       src="{{ asset('/assets/newsite/images/logo-300x58-1-1.png') }}"
+                                                       width="40"></a>
+                </div>
+            </div>
+            <ul class="nav-categories ul-base">
+                {{--                @foreach($parentCategories as $parentCategory)--}}
+                {{--                    @if($parentCategory->children->count() > 0)--}}
+                {{--                        @foreach($parentCategory->children as $childCategory)--}}
+                @foreach($products as $product)
+                    <li>
+                        {{--                    <a href="{{ route('home.categories.show', $childCategory->slug) }}">--}}
+                        {{--                        {{ $childCategory->name }}--}}
+                        {{--                    </a>--}}
+                        <a href="{{ route('home.products.show', $product->slug) }}">
+                            {{ $product->name }}
+                        </a>
+                    </li>
+                @endforeach
+                {{--                        @endforeach--}}
+                {{--                    @endif--}}
+                {{--                @endforeach--}}
 
-    <div id="newUserFormSuccess" style="display:none; color: green;">
-        Registration successful!
-    </div>
-    <div id="newUserFormError" style="display:none; color: red;">
-        <span id="newUserFormErrorText"></span>
+            </ul>
+        </nav>
+        <div class="nav-btn nav-slider">
+            <span class="linee1"></span>
+            <span class="linee2"></span>
+            <span class="linee3"></span>
+        </div>
+        <div class="overlay"></div>
+        <!-- bottom-menu-joomy -->
+        <div class="bottom-menu-joomy">
+            <ul class="mb-0">
+                <li>
+                    <a href="/">
+                        <i class="mdi mdi-home"></i>
+                        صفحه اصلی
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="nav-btn nav-slider">
+                            <i class="mdi mdi-menu" aria-hidden="true"></i>
+                        </div>
+                        دسته بندی ها
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('home.cart.index')}}">
+                        <i class="mdi mdi-cart"></i>
+                        سبد خرید
+                        <div class="shopping-bag-item">{{ count(\Cart::getContent()) }}</div>
+                    </a>
+                </li>
+                {{--                <li>--}}
+                {{--                    <a href="#" data-toggle="modal" data-target="#exampleModalCenter">--}}
+                {{--                        <i class="mdi mdi-magnify"></i>--}}
+                {{--                        جستجو--}}
+                {{--                    </a>--}}
+                {{--                </li>--}}
+                <li>
+                    <a href="{{ route('home.users_profile.index') }}">
+                        <i class="mdi mdi-account"></i>
+                        حساب کاربری
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--    responsive-megamenu-mobile----------------->
     </div>
 </header>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">جستجو</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="header-search text-right">
+                    <div class="header-search-box">
+                        <form action="#" class="form-search">
+                            <input type="search" class="header-search-input" name="search-input"
+                                   placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
+                            <div class="action-btns">
+                                <button class="btn btn-search" type="submit">
+                                    <img src="{{ asset('/assets/newsite/images/search.png') }}" alt="search">
+                                </button>
+                                {{--                                <div class="search-filter">--}}
+                                {{--                                    <div class="form-ui">--}}
+                                {{--                                        <div class="custom-select-ui">--}}
+                                {{--                                            <select class="right">--}}
+                                {{--                                                <option>همه دسته ها</option>--}}
+                                {{--                                                <option>کالای دیجیتال</option>--}}
+                                {{--                                                <option>آرایشی بهداشتی</option>--}}
+                                {{--                                                <option>ابزاری اداری</option>--}}
+                                {{--                                                <option>مد پوشاک</option>--}}
+                                {{--                                                <option>خانه آشپز خانه</option>--}}
+                                {{--                                                <option>لوازم تحریر و هنر</option>--}}
+                                {{--                                                <option>کودک و نوزاد</option>--}}
+                                {{--                                            </select>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
+                            </div>
+                        </form>
+                        <div class="search-result">
+                            <ul class="search-result-list mb-0">
+                                <li>
+                                    <a href="#"><i class="mdi mdi-clock-outline"></i>
+                                        کالای دیجیتال
+                                        <button class="btn btn-light btn-continue-search" type="submit">
+                                            <i class="fa fa-angle-left"></i>
+                                        </button>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="mdi mdi-clock-outline"></i>
+                                        آرایشی و بهداشتی
+                                        <button class="btn btn-light btn-continue-search" type="submit">
+                                            <i class="fa fa-angle-left"></i>
+                                        </button>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="mdi mdi-clock-outline"></i>
+                                        گوشی موبایل
+                                        <button class="btn btn-light btn-continue-search" type="submit">
+                                            <i class="fa fa-angle-left"></i>
+                                        </button>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="mdi mdi-clock-outline"></i>
+                                        تبلت
+                                        <button class="btn btn-light btn-continue-search" type="submit">
+                                            <i class="fa fa-angle-left"></i>
+                                        </button>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="mdi mdi-clock-outline"></i>
+                                        لپ تاپ
+                                        <button class="btn btn-light btn-continue-search" type="submit">
+                                            <i class="fa fa-angle-left"></i>
+                                        </button>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="mdi mdi-clock-outline"></i>
+                                        دوربین
+                                        <button class="btn btn-light btn-continue-search" type="submit">
+                                            <i class="fa fa-angle-left"></i>
+                                        </button>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="localSearchSimple"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="nav-categories-overlay"></div>
+<div class="overlay-search-box"></div>
+<!-- header-------------------------------->

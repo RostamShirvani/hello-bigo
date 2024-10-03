@@ -8,24 +8,27 @@ use Illuminate\Database\Eloquent\Model;
 class OrderItem extends Model
 {
     use HasFactory;
+
     protected $table = "order_items";
     protected $guarded = [];
 
     const STATUS_NEW = 0;
     const STATUS_CHARGED = 1;
     const STATUS_BLACKLIST = 2;
-    const STATUS_PIN_FINISHED = 3;
-    const STATUS_PIN_INVALID = 4;
-    const STATUS_TOKEN_INACTIVE = 5;
-    const STATUS_DUPLICATE = 6;
-    const STATUS_EMPTY_CLIENT_API = 7;
-    const STATUS_MISSED_FIELDS = 8;
+    const STATUS_PAID_AND_IN_PROGRESS = 3;
+    const STATUS_PIN_FINISHED = 4;
+    const STATUS_PIN_INVALID = 5;
+    const STATUS_TOKEN_INACTIVE = 6;
+    const STATUS_DUPLICATE = 7;
+    const STATUS_EMPTY_CLIENT_API = 8;
+    const STATUS_MISSED_FIELDS = 9;
     const STATUS_UNKNOWN = 99;
 
     public function getStatusAttribute($status)
     {
         return match ($status) {
-            self::STATUS_NEW => 'در حال انجام ...',
+            self::STATUS_NEW => 'در انتظار پرداخت',
+            self::STATUS_PAID_AND_IN_PROGRESS => 'در حال انجام ...',
             self::STATUS_CHARGED => 'شارژ شده',
             self::STATUS_BLACKLIST => 'بلک لیست',
             self::STATUS_PIN_FINISHED => 'موجودی پین تمام شد',

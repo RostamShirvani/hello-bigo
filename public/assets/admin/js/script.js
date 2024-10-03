@@ -469,20 +469,20 @@ $(document).ready(function () {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const bigoIdInput = document.getElementById("bigo_id");
-    const confirmationCheckbox = document.getElementById("confirmation-checkbox");
-    const submitButton = document.getElementById("submit-button");
-
-    function toggleSubmitButton() {
-        if (bigoIdInput.value.trim() !== '' && confirmationCheckbox.checked) {
-            submitButton.disabled = false;
-        } else {
-            submitButton.disabled = true;
-        }
-    }
-
-    // Listen for changes on the bigo_id input field and checkbox
-    bigoIdInput.addEventListener('input', toggleSubmitButton);
-    confirmationCheckbox.addEventListener('change', toggleSubmitButton);
-});
+// document.addEventListener("DOMContentLoaded", function () {
+//     const bigoIdInput = document.getElementById("bigo_id");
+//     const confirmationCheckbox = document.getElementById("confirmation-checkbox");
+//     const submitButton = document.getElementById("submit-button");
+//
+//     function toggleSubmitButton() {
+//         if (bigoIdInput.value.trim() !== '' && confirmationCheckbox.checked) {
+//             submitButton.disabled = false;
+//         } else {
+//             submitButton.disabled = true;
+//         }
+//     }
+//
+//     // Listen for changes on the bigo_id input field and checkbox
+//     bigoIdInput.addEventListener('input', toggleSubmitButton);
+//     confirmationCheckbox.addEventListener('change', toggleSubmitButton);
+// });

@@ -161,8 +161,10 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'family' => 'required|string|max:255',
             'password' => 'required|string|min:8|confirmed',
-            'login_token' => 'required'
+            'login_token' => 'required',
+            'redirect' => 'nullable|url'
         ]);
 
         try {
@@ -177,7 +179,7 @@ class AuthController extends Controller
 
             auth()->login($user, $remember = true);
 
-            return response()->json(['redirect' => url('/')], 200);
+            return response()->json(['redirect' => $request->get('redirect')], 200);
         } catch (\Exception $exception) {
             return response(['errors' => $exception->getMessage()], 422);
         }

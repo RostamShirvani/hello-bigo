@@ -125,6 +125,7 @@ return [
 
     'attributes'           => [
         'name'                  => 'نام',
+        'family'                => 'نام خانوادگی',
         'username'              => 'نام کاربری',
         'email'                 => 'ایمیل',
         'first_name'            => 'نام',
@@ -162,7 +163,9 @@ return [
         'resource'              => 'نام ریسورس',
         'old_password'          => 'رمز عبور فعلی',
         'newpassword'           => 'رمز عبور جدید',
+        'new_password'           => 'رمز عبور جدید',
         'newpassword_confirmation' => 'تکرار رمز عبور جدید',
+        'new_password_confirmation' => 'تکرار رمز عبور جدید',
         'longitude'             => 'طول جغرافیایی',
         'latitude'              => 'عرض جغرافیایی',
     ],

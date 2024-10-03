@@ -54,6 +54,16 @@ class Product extends Model
                 ->first() ?? false;
     }
 
+    public function getExpensivePriceAttribute()
+    {
+        return $this->variations()
+            ->where('quantity', '>', 0)
+            ->where('price', '!=', null)
+//            ->orderBy('sale_price', 'desc')
+            ->orderBy('price', 'desc')
+            ->first() ?? false;
+    }
+
     public function getIsActiveAttribute($is_active)
     {
         return $is_active ? 'فعال' : 'غیرفعال';

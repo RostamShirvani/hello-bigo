@@ -55,7 +55,7 @@ class BigoAPI
 
             return [
                 'avatar' => $profileImage ?? '',
-                'nick_name' => $response['nick_name']['name'] ?? '',
+                'nick_name' => $response['nick_name'] ?? null,
                 'id' => $this->bigoId,
                 'level' => 2,
             ];
@@ -239,7 +239,7 @@ class BigoAPI
             if (isset($t_value) && $t_value) {
                 $selected_account = RazerAccount::getCurrentSelectedRazerAccount();
 
-                if(!$selected_account){
+                if (!$selected_account) {
                     alert()->error('عملیات ناموفق', 'اکانت فعالی یافت نشد!');
                     return redirect()->back();
                 }
@@ -360,7 +360,7 @@ class BigoAPI
             }
         }
 
-        if($requestUrl){
+        if ($requestUrl) {
             $requestUrl->count_of_used++;
             $requestUrl->used_at = now();
             $requestUrl->save();
@@ -423,29 +423,45 @@ class BigoAPI
         return $response;
     }
 
-
+//    protected function getUserDetailFromWeb()
+//    {
+//        $response = $this->sendRequest(
+//            'https://www.bigo.tv/en/' . $this->bigoId,
+//            'GET',
+//            [],
+//            true
+//        );
+//        $explode = explode('type="application/ld+json">', $response);
+//
+//        if (!empty($explode[1])) {
+//            $explode = explode('</script>', $explode[1]);
+//
+//            if (!empty($explode[0])) {
+//                $json = $explode[0];
+//                $data = json_decode($json, true);
+//
+//                return [
+//                    'nick_name' => !empty($data['author']) ? $data['author'] : null,
+//                    'avatar' => !empty($data['thumbnailUrl'][0]) ? $data['thumbnailUrl'][0] : null,
+//                ];
+//            }
+//        }
+//
+//        return null;
+//    }
     protected function getUserDetailFromWeb()
     {
-        $response = $this->sendRequest(
-            'https://www.bigo.tv/en/' . $this->bigoId,
-            'GET',
-            [],
-            true
-        );
-        $explode = explode('type="application/ld+json">', $response);
+        $url = url('/bigo-user/' . $this->bigoId);  // Use the internal route
 
-        if (!empty($explode[1])) {
-            $explode = explode('</script>', $explode[1]);
+        $response = $this->sendRequest($url, 'GET', [
+//            'bigoId' => $this->bigoId,
+        ]);
 
-            if (!empty($explode[0])) {
-                $json = $explode[0];
-                $data = json_decode($json, true);
-
-                return [
-                    'nick_name' => !empty($data['author']) ? $data['author'] : null,
-                    'avatar' => !empty($data['thumbnailUrl'][0]) ? $data['thumbnailUrl'][0] : null,
-                ];
-            }
+        if ($response) {
+            return [
+                'avatar' => $response['profile_picture'] ?? null,
+                'nick_name' => $response['username'] ?? null,
+            ];
         }
 
         return null;

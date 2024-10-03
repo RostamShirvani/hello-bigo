@@ -82,6 +82,10 @@ class Payment
                 'status' => Order::STATUS_PAID_AND_IN_PROGRESS
             ]);
 
+            foreach ($order->orderItems as $orderItem){
+                OrderItem::setStatus($orderItem, OrderItem::STATUS_PAID_AND_IN_PROGRESS);
+            }
+
 //            // Do charge account
 //            $model = new PaymentPin();
 //            $paymentPinRepository = new PaymentPinRepository($model);
@@ -97,7 +101,7 @@ class Payment
             foreach (\Cart::getContent() as $item) {
                 $variation = ProductVariation::query()->findOrFail($item->attributes->id);
                 $variation->update([
-                    'quantity' => PaymentPin::getActivePaymentPinsCountByValue($variation->value,$variation->product->app_type)
+                    'quantity' => PaymentPin::getActivePaymentPinsCountByValue($variation->value, $variation->product->app_type)
 //                    'quantity' => $variation->quantity - $item->quantity
                 ]);
             }
