@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - stage
+      - demo
 name: 🚀 Deploy website on push
 jobs:
   web-deploy:
@@ -15,6 +15,6 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: 5.9.37.15
-          username: ${{ secrets.ftp_username_stage }}
-          password: ${{ secrets.ftp_password_stage }}
+          username: ${{ secrets.ftp_username_demo }}
+          password: ${{ secrets.ftp_password_demo }}
           server-dir: /bp1.yiii.ir/
