@@ -12,7 +12,6 @@
                          alt="{{ env('APP_NAME') }}" class="logo-img">
                 </a>
             </div>
-
             <!-- Cart Icon (Right) -->
             <a href="{{ route('home.cart.index') }}" class="header-icon cart-icon">
                 <i class="mdi mdi-cart"></i>
