@@ -6,6 +6,7 @@
                 <i class="mdi mdi-account"></i>
             </a>
             <!-- Logo (Center) -->
+
             <div class="header-logo">
                 <a href="/">
                     <img src="{{ asset('/assets/newsite/images/logo-300x58-1-1.png') }}"
