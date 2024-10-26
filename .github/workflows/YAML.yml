@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - develop
+      - master
 name: 🚀 Deploy website on push
 jobs:
   web-deploy:
@@ -9,12 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ftp.yiii.ir
+          server: 5.9.37.15
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
-          server-dir: /ecommerce.yiii.ir/develop/
+          server-dir: /pay7.bigoplus.ir/
+
