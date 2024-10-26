@@ -4,7 +4,6 @@
     صفحه اصلی
 @endsection
 @section('content')
-
     <!-- slider-main--------------------------->
     <div class="container-main">
         <div class="d-block">
