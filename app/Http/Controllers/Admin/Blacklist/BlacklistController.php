@@ -18,16 +18,11 @@ class BlacklistController extends Controller
 
     }
 
-
-
     public function add()
     {
         return view('admin.blacklist.add');
 
     }
-
-
-
 
     public function edit()
     {
@@ -36,7 +31,7 @@ class BlacklistController extends Controller
         ]);
 
     }
-
+//TEST
 public function store (){
     $validate_data = Validator::make(request()->all() , [
         'name' => 'required',
